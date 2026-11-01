@@ -1,0 +1,190 @@
+:root {
+  color-scheme: light dark;
+
+  /* Brand (assets/emaki-logo/README.txt) */
+  --pink: #ffb3c7;
+  --lilac: #e6b3f0;
+  --peri: #b8b3ff;
+  --butter: #ffe3a8;
+  --mint: #a8e6cf;
+
+  /* Light theme */
+  --bg: #fff6ea;
+  --bg-alt: #fffaf3;
+  --surface: #ffffff;
+  --ink: #1e1b2e;
+  --text: #1e1b2e;
+  --text-dim: #4d4760;
+  --border: #ece3d6;
+  --accent: #6259e8;
+  --accent-hover: #5148d6;
+  --on-accent: #ffffff;
+  --accent-soft: #eceaff;
+  --focus: #6259e8;
+  --shadow: 0 1px 2px rgb(30 27 46 / 0.06), 0 12px 32px -12px rgb(30 27 46 / 0.18);
+
+  --font-text: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Outfit', var(--font-text);
+  --radius: 10px;
+  --radius-lg: 14px;
+  --wrap: 1160px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14121c;
+    --bg-alt: #1a1724;
+    --surface: #221e2e;
+    --ink: #fff6ea;
+    --text: #f5f2f8;
+    --text-dim: #b8b1c7;
+    --border: #2f2a3f;
+    --accent: #b8b3ff;
+    --accent-hover: #c9c5ff;
+    --on-accent: #1e1b2e;
+    --accent-soft: #2b2650;
+    --focus: #c9c5ff;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -16px rgb(0 0 0 / 0.6);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+  text-wrap: balance;
+}
+h1 {
+  font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+}
+h2 {
+  font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+}
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+p {
+  margin: 0 0 1rem;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+a:hover {
+  color: var(--accent-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.wrap {
+  width: min(100% - 2.5rem, var(--wrap));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.15s;
+}
+.btn svg {
+  flex: none;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  color: var(--on-accent);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-secondary:hover {
+  color: var(--text);
+  border-color: var(--text-dim);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius);
+}
+.skip:focus {
+  top: 1rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

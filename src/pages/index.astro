@@ -1,0 +1,654 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Shot from '../components/Shot.astro';
+import Feature from '../components/Feature.astro';
+import Icon from '../components/Icon.astro';
+import { APPIMAGE_URL, GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL, LICENCE_URL } from '../config';
+
+import hero from '../assets/shots/hero-editor.png';
+import artboards from '../assets/shots/artboards.png';
+import graph from '../assets/shots/graph-editor.png';
+import mockups from '../assets/shots/mockups.png';
+import colour from '../assets/shots/colour.png';
+import templates from '../assets/shots/templates.png';
+import exportShot from '../assets/shots/export.png';
+
+const formats = [
+  { name: 'MP4', note: 'H.264, for sharing anywhere' },
+  { name: 'WebM', note: 'small files for the web' },
+  { name: 'ProRes 4444', note: 'with transparency, for editing' },
+  { name: 'GIF', note: 'for chats and docs' },
+  { name: 'Lottie', note: 'vector animation for apps and sites' },
+  { name: 'PNG', note: 'a single frame or a sequence' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<Base
+  title="Emaki: motion design on your desktop"
+  description="Emaki is a desktop app for motion design. Design on artboards, animate with presets and keyframes, and export to MP4, GIF, WebM, ProRes, Lottie or PNG. Runs locally, no account."
+>
+  <header class="top">
+    <div class="wrap top-row">
+      <a href="/" class="brand" aria-label="Emaki home">
+        <Logo id="logo-top" animate height={36} />
+      </a>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#download">Download</a></li>
+          <li><a href={GITHUB_URL}>GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-copy">
+        <h1 id="hero-title">Motion design, on your desktop.</h1>
+        <p class="lede">
+          Emaki is a native app for designing and animating on artboards. Lay out a scene, bring it to life with
+          presets and keyframes, and export to video, GIF or Lottie. It runs on your computer, with no account.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href={APPIMAGE_URL}>
+            <Icon name="download" />
+            Download for Linux <span class="btn-note">(AppImage)</span>
+          </a>
+          <a class="btn btn-secondary" href={GITHUB_URL}>
+            View on GitHub
+            <Icon name="external" size={18} />
+          </a>
+        </div>
+        <p class="small">Linux now. macOS and Windows are coming soon.</p>
+      </div>
+      <div class="wrap hero-shot">
+        <div class="glow" aria-hidden="true"></div>
+        <Shot
+          src={hero}
+          eager
+          sizes="(min-width: 1200px) 1160px, 100vw"
+          alt="The Emaki editor: layers on the left, an artboard with a gradient card on its curved motion path in the middle, the Animate tab on the right and a timeline of animations below."
+        />
+      </div>
+    </section>
+
+    <div class="wrap" id="features">
+      <h2 class="visually-hidden">Features</h2>
+
+      <Feature
+        id="artboards"
+        eyebrow="Design"
+        title="Design on artboards"
+        shot={artboards}
+        alt="Two artboards side by side on the canvas, a wide landscape one and a square one, with the layers list and the artboard's size and frame rate."
+      >
+        <p>
+          The canvas is endless. Add as many artboards as you need, each with its own size, background, frame rate and
+          length.
+        </p>
+        <ul>
+          <li>Shapes, a pen for paths, and rich text you edit right on the canvas.</li>
+          <li>Import images, SVG as editable paths, video and audio.</li>
+          <li>Smart guides, masks, components and brand kits for your colours and type.</li>
+        </ul>
+      </Feature>
+
+      <Feature
+        id="animate"
+        eyebrow="Animate"
+        title="Animate with presets and keyframes"
+        shot={graph}
+        alt="The timeline with the graph editor open, showing the easing curve of a position keyframe."
+        flip
+      >
+        <p>
+          Pick an animation from the gallery and it lands on the timeline, ready to retime. Text can move by letter,
+          word or line.
+        </p>
+        <ul>
+          <li>Drag segments to retime them and edges to change their length.</li>
+          <li>Open any preset into keyframes, and shape the easing in the graph editor.</li>
+          <li>Bend a move into a curved path, or pin a layer to a point in a video.</li>
+        </ul>
+      </Feature>
+
+      <Feature
+        id="mockups"
+        eyebrow="Present"
+        title="Device mockups, live"
+        shot={mockups}
+        alt="A vertical story artboard beside the same design shown on a phone mockup, both playing in sync."
+      >
+        <p>
+          Show an artboard on a phone, laptop or TV. The mockup stays live, so every edit and every frame of the
+          animation shows on the device as you work.
+        </p>
+      </Feature>
+
+      <Feature
+        id="colour"
+        eyebrow="Colour"
+        title="Colour adjustments and looks"
+        shot={colour}
+        alt="The Adjust colour panel beside a photo, with look thumbnails and sliders for light and colour."
+        flip
+      >
+        <p>
+          Start from a look such as Warm, Faded or Teal and orange, then fine-tune it. Every thumbnail shows your own
+          layer.
+        </p>
+        <ul>
+          <li>Exposure, contrast, highlights and shadows.</li>
+          <li>Saturation, vibrance, temperature and tint, plus curves.</li>
+          <li>Compare before and after with a split view.</li>
+        </ul>
+      </Feature>
+
+      <Feature
+        id="templates"
+        eyebrow="Start fast"
+        title="Templates"
+        shot={templates}
+        alt="The Templates page: social post, logo reveal, lower third, kinetic type, vertical story, mask reveal and variable weight."
+      >
+        <p>
+          Animated starting points for social posts, logo reveals, lower thirds, kinetic type and vertical stories.
+          Swap the words and colours, and keep the motion.
+        </p>
+      </Feature>
+
+      <Feature
+        id="export"
+        eyebrow="Export"
+        title="Export anywhere"
+        shot={exportShot}
+        alt="The Export dialogue with MP4, GIF, WebM, ProRes, Lottie and PNG, the artboard to export, scale, quality and frame rate."
+        flip
+      >
+        <p>Export one artboard or all of them at once, at 1×, 2× or a size made for the platform you post to.</p>
+        <ul class="formats" aria-label="Export formats">
+          {
+            formats.map((f) => (
+              <li>
+                <strong>{f.name}</strong>
+                <span>{f.note}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="note">Sound from audio and video layers is mixed into MP4, WebM and ProRes.</p>
+      </Feature>
+
+      <Feature id="figma" eyebrow="Bring your designs" title="Figma plugin">
+        <p>
+          Select frames or layers in Figma and click <em>Copy for Emaki</em>. Press <kbd>Ctrl</kbd>+<kbd>V</kbd> in
+          Emaki and they arrive as ordinary layers, still editable and ready to animate.
+        </p>
+        <p>
+          Nothing leaves your computer: the plugin only uses your clipboard. For now you install it from{' '}
+          <a href={FIGMA_PLUGIN_URL}>the repository</a> as a development plugin.
+        </p>
+        <ol class="steps" slot="aside" aria-label="How it works">
+          <li>
+            <span class="step-icon"><Icon name="layers" size={22} /></span>
+            <span><strong>Select</strong> frames or layers in Figma</span>
+          </li>
+          <li>
+            <span class="step-icon"><Icon name="copy" size={22} /></span>
+            <span><strong>Copy</strong> them with the Emaki plugin</span>
+          </li>
+          <li>
+            <span class="step-icon"><Icon name="paste" size={22} /></span>
+            <span><strong>Paste</strong> into Emaki, ready to animate</span>
+          </li>
+        </ol>
+      </Feature>
+
+      <Feature id="private" eyebrow="Yours" title="Private by design" flip>
+        <p>
+          Emaki runs on your computer. There is no account to make and nothing to sign in to. Your projects stay on
+          your disk, as plain folders you can back up, sync or share however you like.
+        </p>
+        <ul class="cards" slot="aside">
+          <li>
+            <Icon name="user-off" size={22} />
+            <strong>No account</strong>
+            <span>Open it and start.</span>
+          </li>
+          <li>
+            <Icon name="wifi-off" size={22} />
+            <strong>Works offline</strong>
+            <span>Editing and export need no network.</span>
+          </li>
+          <li>
+            <Icon name="folder" size={22} />
+            <strong>Plain files</strong>
+            <span>A project is a folder with its media beside it.</span>
+          </li>
+          <li>
+            <Icon name="history" size={22} />
+            <strong>Safe by default</strong>
+            <span>Autosave, crash recovery and version history.</span>
+          </li>
+        </ul>
+      </Feature>
+    </div>
+
+    <section class="next" aria-labelledby="next-title">
+      <div class="wrap">
+        <p class="eyebrow">Roadmap</p>
+        <h2 id="next-title">Coming next</h2>
+        <p class="next-note">Planned, not yet in the app.</p>
+        <ul>
+          <li>
+            <h3>One design, every format</h3>
+            <p>Make story, square and landscape versions of an artboard in one step.</p>
+          </li>
+          <li>
+            <h3>Data-driven templates</h3>
+            <p>Load a spreadsheet and export one video per row.</p>
+          </li>
+          <li>
+            <h3>Auto captions</h3>
+            <p>Turn speech in a video into animated subtitles.</p>
+          </li>
+          <li>
+            <h3>Audio-driven motion</h3>
+            <p>Snap keyframes to the beat, or let loudness drive any property.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="download" id="download" aria-labelledby="download-title">
+      <div class="wrap">
+        <p class="eyebrow">Download</p>
+        <h2 id="download-title">Get Emaki</h2>
+
+        <div class="platforms">
+          <div class="platform available">
+            <h3>Linux</h3>
+            <p>One AppImage for 64-bit distributions. FFmpeg is included.</p>
+            <a class="btn btn-primary" href={APPIMAGE_URL}>
+              <Icon name="download" />
+              Download AppImage
+            </a>
+            <p class="small">
+              Then make it executable and run it:<br />
+              <code>chmod +x Emaki-*.AppImage</code>
+            </p>
+            <p class="small"><a href={RELEASES_URL}>All releases</a></p>
+          </div>
+          <div class="platform">
+            <h3>macOS</h3>
+            <p>For Apple silicon and Intel Macs.</p>
+            <span class="soon">Coming soon</span>
+          </div>
+          <div class="platform">
+            <h3>Windows</h3>
+            <p>For 64-bit Windows.</p>
+            <span class="soon">Coming soon</span>
+          </div>
+        </div>
+
+        <div class="reqs">
+          <h3>System requirements</h3>
+          <ul>
+            <li>
+              <Icon name="check" size={18} />
+              <span>A graphics card with Vulkan support (Metal on macOS, DirectX 12 on Windows). Emaki draws and exports
+                on the GPU.</span>
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span>Linux with Wayland or X11, and glibc 2.30 or newer (Ubuntu 20.04 and later, or similar).</span>
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span>FFmpeg is bundled, so every export format works out of the box.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-row">
+      <Logo id="logo-foot" height={28} />
+      <ul>
+        <li><a href={GITHUB_URL}>GitHub</a></li>
+        <li><a href={LICENCE_URL}>Licence: MIT or Apache-2.0</a></li>
+      </ul>
+      <p>© {year} Emaki</p>
+    </div>
+  </footer>
+</Base>
+
+<style>
+  /* Top bar */
+  .top {
+    padding-block: 1.25rem;
+  }
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand {
+    display: inline-flex;
+    border-radius: 6px;
+  }
+  .top nav ul {
+    display: flex;
+    gap: clamp(0.75rem, 3vw, 1.75rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .top nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.1rem;
+  }
+  .top nav a:hover {
+    color: var(--accent);
+  }
+  @media (max-width: 480px) {
+    .top nav li:first-child {
+      display: none;
+    }
+  }
+
+  /* Hero */
+  .hero {
+    padding-top: clamp(2.5rem, 7vw, 5.5rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+    overflow: hidden;
+  }
+  .hero-copy {
+    text-align: center;
+    max-width: 52rem;
+  }
+  .lede {
+    font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+    color: var(--text-dim);
+    max-width: 40rem;
+    margin: 1rem auto 2rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .btn-note {
+    font-weight: 400;
+    opacity: 0.85;
+  }
+  .small {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 1rem;
+  }
+  .hero-shot {
+    position: relative;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  .glow {
+    position: absolute;
+    inset: -8% 4% auto;
+    height: 80%;
+    background:
+      radial-gradient(closest-side at 22% 45%, color-mix(in srgb, var(--pink) 70%, transparent), transparent),
+      radial-gradient(closest-side at 55% 35%, color-mix(in srgb, var(--lilac) 60%, transparent), transparent),
+      radial-gradient(closest-side at 80% 55%, color-mix(in srgb, var(--peri) 70%, transparent), transparent),
+      radial-gradient(closest-side at 45% 70%, color-mix(in srgb, var(--mint) 55%, transparent), transparent);
+    filter: blur(40px);
+    opacity: 0.75;
+    z-index: 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    .glow {
+      opacity: 0.35;
+    }
+  }
+  .hero-shot :global(.shot) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Formats */
+  .formats {
+    list-style: none;
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: 0.5rem;
+    margin: 1.25rem 0 1rem !important;
+  }
+  .formats li {
+    margin: 0 !important;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.35;
+  }
+  .formats strong {
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .formats span {
+    font-size: 0.85rem;
+  }
+  .note {
+    font-size: 0.92rem;
+  }
+
+  kbd {
+    font-family: inherit;
+    font-size: 0.85em;
+    padding: 0.1em 0.4em;
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  /* Figma steps */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    display: grid;
+    gap: 0.75rem;
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--pink) 30%, transparent), color-mix(in srgb, var(--peri) 30%, transparent)),
+      var(--surface);
+    border: 1px solid var(--border);
+    counter-reset: step;
+  }
+  .steps li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .step-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex: none;
+  }
+
+  /* Privacy cards */
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.75rem;
+  }
+  .cards li {
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .cards :global(svg) {
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .cards span {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+
+  /* Coming next */
+  .next {
+    background: var(--bg-alt);
+    border-block: 1px solid var(--border);
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+  .next-note {
+    color: var(--text-dim);
+  }
+  .next ul {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+  }
+  .next li {
+    padding: 1.25rem;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .next li p {
+    color: var(--text-dim);
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* Download */
+  .download {
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+  .platforms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .platform {
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .platform p {
+    color: var(--text-dim);
+  }
+  .platform.available {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    box-shadow: var(--shadow);
+  }
+  .platform .small {
+    margin: 1rem 0 0;
+  }
+  code {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    padding: 0.15em 0.4em;
+    border-radius: 5px;
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+  .soon {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .reqs {
+    margin-top: 2.5rem;
+  }
+  .reqs ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .reqs li {
+    display: flex;
+    gap: 0.6rem;
+    color: var(--text-dim);
+  }
+  .reqs :global(svg) {
+    color: var(--accent);
+    margin-top: 0.3rem;
+  }
+
+  /* Footer */
+  .foot {
+    border-top: 1px solid var(--border);
+    padding-block: 2rem;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+  }
+  .foot-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+  }
+  .foot ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .foot a {
+    color: var(--text-dim);
+  }
+  .foot a:hover {
+    color: var(--accent);
+  }
+  .foot p {
+    margin: 0;
+  }
+</style>

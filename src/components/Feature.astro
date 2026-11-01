@@ -1,0 +1,59 @@
+---
+import type { ImageMetadata } from 'astro';
+import Shot from './Shot.astro';
+
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  shot?: ImageMetadata;
+  alt?: string;
+  flip?: boolean;
+}
+
+const { id, eyebrow, title, shot, alt = '', flip = false } = Astro.props;
+---
+
+<section class:list={['feature', { flip, 'no-shot': !shot }]} aria-labelledby={`${id}-title`} id={id}>
+  <div class="copy">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 id={`${id}-title`}>{title}</h2>
+    <slot />
+  </div>
+  {shot ? <Shot src={shot} alt={alt} /> : <div class="aside"><slot name="aside" /></div>}
+</section>
+
+<style>
+  .feature {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: center;
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+  .feature + :global(.feature) {
+    border-top: 1px solid var(--border);
+  }
+  @media (min-width: 900px) {
+    .feature {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+    .flip {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    .flip .copy {
+      order: 2;
+    }
+  }
+  .copy :global(p:not(.eyebrow)) {
+    color: var(--text-dim);
+    max-width: 34rem;
+  }
+  .copy :global(ul) {
+    color: var(--text-dim);
+    padding-left: 1.2rem;
+    margin: 1rem 0 0;
+  }
+  .copy :global(li + li) {
+    margin-top: 0.35rem;
+  }
+</style>
