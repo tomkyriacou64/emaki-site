@@ -45,7 +45,8 @@ const storyPoints = [
   'Masks and text on a path',
   'Templates and live device mockups',
   'Export to video, GIF and Lottie',
-  'Local-first: your files, no account',
+  'Private and offline: no account, no tracking',
+  'Completely free and open source',
 ];
 
 const year = new Date().getFullYear();
@@ -81,6 +82,11 @@ const year = new Date().getFullYear();
           timeline, and export video, GIF or Lottie. It runs on your computer, with no account.
         </p>
         <Cta tour class="hero-cta" />
+        <ul class="promises" aria-label="In short">
+          <li><Icon name="check" size={18} /> Completely free and open source</li>
+          <li><Icon name="user-off" size={18} /> No account, no tracking</li>
+          <li><Icon name="wifi-off" size={18} /> Works fully offline</li>
+        </ul>
       </div>
       <div class="wrap hero-scroll">
         <div class="glow" aria-hidden="true"></div>
@@ -215,19 +221,23 @@ const year = new Date().getFullYear();
 
       <Feature id="private" eyebrow="Yours" title="Private by design" flip>
         <p>
-          Emaki runs on your computer. There is no account to make and nothing to sign in to. Your projects stay on
-          your disk, as plain folders you can back up, sync or share however you like.
+          Emaki runs on your computer. There is no account to make, nothing to sign in to and no tracking. Your
+          projects stay on your disk, as plain folders you can back up, sync or share however you like.
+        </p>
+        <p>
+          It works fully offline. It only goes online when you ask it to: for the Google Fonts tab in the font picker,
+          or to import from Figma.
         </p>
         <ul class="cards" slot="aside">
           <li>
             <Icon name="user-off" size={22} />
-            <strong>No account</strong>
-            <span>Open it and start.</span>
+            <strong>No account, no tracking</strong>
+            <span>Open it and start. Nothing is collected.</span>
           </li>
           <li>
             <Icon name="wifi-off" size={22} />
             <strong>Works offline</strong>
-            <span>Editing and export need no network.</span>
+            <span>Designing, animating and export need no network.</span>
           </li>
           <li>
             <Icon name="folder" size={22} />
@@ -287,7 +297,7 @@ const year = new Date().getFullYear();
             open-source tools ticked every box. So I built my own, starting while on honeymoon in Japan.
           </p>
           <p>
-            Emaki is essentially Figma with animation, plus motion tracking. It's going to be free and open source, so
+            Emaki is essentially Figma with animation, plus motion tracking. It's completely free and open source, so
             anyone can use it.
           </p>
           <p class="contribute">
@@ -345,8 +355,8 @@ const year = new Date().getFullYear();
           <p class="eyebrow">Get Emaki</p>
           <h2 id="get-title">Free, and open source soon</h2>
           <p>
-            Emaki is nearly ready. It will be free to download and use, and its code will be open source under the MIT
-            and Apache 2.0 licences.
+            Emaki is nearly ready. It's completely free, and its code will be public soon under the MIT and Apache 2.0
+            licences. No account, no tracking, and your projects stay on your computer.
           </p>
           <Cta />
         </div>
@@ -470,6 +480,26 @@ const year = new Date().getFullYear();
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-dim);
+  }
+  .promises {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+  .promises li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .promises :global(svg) {
+    color: var(--accent);
   }
   .lede {
     font-size: clamp(1.1rem, 1.8vw, 1.25rem);
