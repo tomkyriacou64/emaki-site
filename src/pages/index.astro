@@ -4,11 +4,14 @@ import Logo from '../components/Logo.astro';
 import Shot from '../components/Shot.astro';
 import Feature from '../components/Feature.astro';
 import Icon from '../components/Icon.astro';
-import { APPIMAGE_URL, GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL, LICENCE_URL } from '../config';
+import HeroScroll from '../components/HeroScroll.astro';
+import Cta from '../components/Cta.astro';
+import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL, LICENCE_URL } from '../config';
 
-import hero from '../assets/shots/hero-editor.png';
+import editor from '../assets/shots/hero-editor.png';
 import artboards from '../assets/shots/artboards.png';
 import graph from '../assets/shots/graph-editor.png';
+import textPath from '../assets/shots/text-path.png';
 import mockups from '../assets/shots/mockups.png';
 import colour from '../assets/shots/colour.png';
 import templates from '../assets/shots/templates.png';
@@ -23,12 +26,34 @@ const formats = [
   { name: 'PNG', note: 'a single frame or a sequence' },
 ];
 
+const more = [
+  { icon: 'mask', title: 'Masks', text: 'Clip layers to a shape, then animate the shape to reveal them.' },
+  { icon: 'history', title: 'Version history', text: 'Save named versions of a project and go back to any of them.' },
+  { icon: 'palette', title: 'Brand kits', text: 'Colours, text styles, logos and fonts, ready in every project.' },
+  { icon: 'component', title: 'Components', text: 'Make a layer a component and place live copies, each with its own timing.' },
+  { icon: 'music', title: 'Audio and video', text: 'Trim clips on the timeline and hear the sound as you preview.' },
+  { icon: 'target', title: 'Motion tracking', text: 'Pin a layer to a point in a video, or put a design on a moving screen.' },
+  { icon: 'sparkle', title: 'Effects', text: 'Blur, frosted glass, soft shadows, blend modes and colour keying.' },
+  { icon: 'figma', title: 'Figma plugin', text: 'Copy frames in Figma and paste them in as layers, ready to animate.' },
+] as const;
+
+const storyPoints = [
+  'Design and animate in one place',
+  'Import from Figma with a plugin',
+  'Motion tracking: pin layers to points in a video',
+  'Timeline, keyframes and a graph editor',
+  'Masks and text on a path',
+  'Templates and live device mockups',
+  'Export to video, GIF and Lottie',
+  'Local-first: your files, no account',
+];
+
 const year = new Date().getFullYear();
 ---
 
 <Base
   title="Emaki: motion design on your desktop"
-  description="Emaki is a desktop app for motion design. Design on artboards, animate with presets and keyframes, and export to MP4, GIF, WebM, ProRes, Lottie or PNG. Runs locally, no account."
+  description="Emaki is a desktop app for motion design. Design on artboards, animate on a timeline and export to MP4, WebM, ProRes, GIF, Lottie or PNG. Local, no account. Free, and open source soon."
 >
   <header class="top">
     <div class="wrap top-row">
@@ -38,8 +63,9 @@ const year = new Date().getFullYear();
       <nav aria-label="Main">
         <ul>
           <li><a href="#features">Features</a></li>
-          <li><a href="#download">Download</a></li>
-          <li><a href={GITHUB_URL}>GitHub</a></li>
+          <li><a href="#name">The name</a></li>
+          <li><a href="#story">Story</a></li>
+          <li><a href="#get">Get Emaki</a></li>
         </ul>
       </nav>
     </div>
@@ -48,30 +74,34 @@ const year = new Date().getFullYear();
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-copy">
+        <p class="pill">Free · Open source soon · Linux first</p>
         <h1 id="hero-title">Motion design, on your desktop.</h1>
         <p class="lede">
-          Emaki is a native app for designing and animating on artboards. Lay out a scene, bring it to life with
-          presets and keyframes, and export to video, GIF or Lottie. It runs on your computer, with no account.
+          Emaki is a native app for designing and animating. Lay out a scene on artboards, bring it to life on a
+          timeline, and export video, GIF or Lottie. It runs on your computer, with no account.
         </p>
-        <div class="actions">
-          <a class="btn btn-primary" href={APPIMAGE_URL}>
-            <Icon name="download" />
-            Download for Linux <span class="btn-note">(AppImage)</span>
-          </a>
-          <a class="btn btn-secondary" href={GITHUB_URL}>
-            View on GitHub
-            <Icon name="external" size={18} />
-          </a>
-        </div>
-        <p class="small">Linux now. macOS and Windows are coming soon.</p>
+        <Cta tour class="hero-cta" />
       </div>
-      <div class="wrap hero-shot">
+      <div class="wrap hero-scroll">
         <div class="glow" aria-hidden="true"></div>
+        <HeroScroll />
+      </div>
+    </section>
+
+    <section class="editor" aria-labelledby="editor-title">
+      <div class="wrap">
+        <div class="editor-head">
+          <p class="eyebrow">The editor</p>
+          <h2 id="editor-title">Everything in one window</h2>
+          <p>
+            Layers and assets on the left, the canvas in the middle, design and animation settings on the right, and
+            the timeline along the bottom. Press <kbd>Space</kbd> and it plays, with sound.
+          </p>
+        </div>
         <Shot
-          src={hero}
-          eager
+          src={editor}
           sizes="(min-width: 1200px) 1160px, 100vw"
-          alt="The Emaki editor: layers on the left, an artboard with a gradient card on its curved motion path in the middle, the Animate tab on the right and a timeline of animations below."
+          alt="EDITOR_ALT"
         />
       </div>
     </section>
@@ -79,13 +109,7 @@ const year = new Date().getFullYear();
     <div class="wrap" id="features">
       <h2 class="visually-hidden">Features</h2>
 
-      <Feature
-        id="artboards"
-        eyebrow="Design"
-        title="Design on artboards"
-        shot={artboards}
-        alt="Two artboards side by side on the canvas, a wide landscape one and a square one, with the layers list and the artboard's size and frame rate."
-      >
+      <Feature id="artboards" eyebrow="Design" title="Design on artboards" shot={artboards} alt="ARTBOARDS_ALT">
         <p>
           The canvas is endless. Add as many artboards as you need, each with its own size, background, frame rate and
           length.
@@ -93,50 +117,39 @@ const year = new Date().getFullYear();
         <ul>
           <li>Shapes, a pen for paths, and rich text you edit right on the canvas.</li>
           <li>Import images, SVG as editable paths, video and audio.</li>
-          <li>Smart guides, masks, components and brand kits for your colours and type.</li>
+          <li>Smart guides, auto layout and measuring as you drag.</li>
         </ul>
       </Feature>
 
-      <Feature
-        id="animate"
-        eyebrow="Animate"
-        title="Animate with presets and keyframes"
-        shot={graph}
-        alt="The timeline with the graph editor open, showing the easing curve of a position keyframe."
-        flip
-      >
+      <Feature id="animate" eyebrow="Animate" title="Presets, keyframes and easing" shot={graph} alt="GRAPH_ALT" flip>
         <p>
-          Pick an animation from the gallery and it lands on the timeline, ready to retime. Text can move by letter,
-          word or line.
+          Pick an animation from the gallery and it lands on the timeline, ready to retime. When you want more control,
+          open it into keyframes.
         </p>
         <ul>
           <li>Drag segments to retime them and edges to change their length.</li>
-          <li>Open any preset into keyframes, and shape the easing in the graph editor.</li>
-          <li>Bend a move into a curved path, or pin a layer to a point in a video.</li>
+          <li>Shape the easing of any keyframe in the graph editor.</li>
+          <li>Bend a move into a curved path, or make a layer follow one.</li>
         </ul>
       </Feature>
 
-      <Feature
-        id="mockups"
-        eyebrow="Present"
-        title="Device mockups, live"
-        shot={mockups}
-        alt="A vertical story artboard beside the same design shown on a phone mockup, both playing in sync."
-      >
+      <Feature id="type" eyebrow="Type" title="Type that moves" shot={textPath} alt="TEXT_ALT">
+        <p>Animate text by letter, word or line, set it along a path, and animate the axes of variable fonts.</p>
+        <ul>
+          <li>Text on a path, with the path still editable.</li>
+          <li>Variable fonts, with weight and width you can keyframe.</li>
+          <li>Your installed fonts, plus Google Fonts when you ask for them.</li>
+        </ul>
+      </Feature>
+
+      <Feature id="mockups" eyebrow="Present" title="Device mockups, live" shot={mockups} alt="MOCKUPS_ALT" flip>
         <p>
           Show an artboard on a phone, laptop or TV. The mockup stays live, so every edit and every frame of the
           animation shows on the device as you work.
         </p>
       </Feature>
 
-      <Feature
-        id="colour"
-        eyebrow="Colour"
-        title="Colour adjustments and looks"
-        shot={colour}
-        alt="The Adjust colour panel beside a photo, with look thumbnails and sliders for light and colour."
-        flip
-      >
+      <Feature id="colour" eyebrow="Colour" title="Colour adjustments and looks" shot={colour} alt="COLOUR_ALT">
         <p>
           Start from a look such as Warm, Faded or Teal and orange, then fine-tune it. Every thumbnail shows your own
           layer.
@@ -148,27 +161,14 @@ const year = new Date().getFullYear();
         </ul>
       </Feature>
 
-      <Feature
-        id="templates"
-        eyebrow="Start fast"
-        title="Templates"
-        shot={templates}
-        alt="The Templates page: social post, logo reveal, lower third, kinetic type, vertical story, mask reveal and variable weight."
-      >
+      <Feature id="templates" eyebrow="Start fast" title="Templates" shot={templates} alt="TEMPLATES_ALT" flip>
         <p>
-          Animated starting points for social posts, logo reveals, lower thirds, kinetic type and vertical stories.
-          Swap the words and colours, and keep the motion.
+          Animated starting points for social posts, logo reveals, lower thirds, kinetic type, vertical stories and
+          menu boards. Swap the words and colours, and keep the motion.
         </p>
       </Feature>
 
-      <Feature
-        id="export"
-        eyebrow="Export"
-        title="Export anywhere"
-        shot={exportShot}
-        alt="The Export dialogue with MP4, GIF, WebM, ProRes, Lottie and PNG, the artboard to export, scale, quality and frame rate."
-        flip
-      >
+      <Feature id="export" eyebrow="Export" title="Export anywhere" shot={exportShot} alt="EXPORT_ALT">
         <p>Export one artboard or all of them at once, at 1×, 2× or a size made for the platform you post to.</p>
         <ul class="formats" aria-label="Export formats">
           {
@@ -183,30 +183,35 @@ const year = new Date().getFullYear();
         <p class="note">Sound from audio and video layers is mixed into MP4, WebM and ProRes.</p>
       </Feature>
 
-      <Feature id="figma" eyebrow="Bring your designs" title="Figma plugin">
-        <p>
-          Select frames or layers in Figma and click <em>Copy for Emaki</em>. Press <kbd>Ctrl</kbd>+<kbd>V</kbd> in
-          Emaki and they arrive as ordinary layers, still editable and ready to animate.
+      <section class="more" aria-labelledby="more-title">
+        <p class="eyebrow">And more</p>
+        <h2 id="more-title">The rest of the toolbox</h2>
+        <ul>
+          {
+            more.map((m) => (
+              <li>
+                <span class="more-icon">
+                  <Icon name={m.icon} size={22} />
+                </span>
+                <h3>{m.title}</h3>
+                <p>{m.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="more-note">
+          The Figma plugin copies through your clipboard, so nothing leaves your computer.
+          {
+            FIGMA_PLUGIN_URL ? (
+              <>
+                For now you install it from <a href={FIGMA_PLUGIN_URL}>the repository</a> as a development plugin.
+              </>
+            ) : (
+              <>It comes with the source code, to install as a development plugin.</>
+            )
+          }
         </p>
-        <p>
-          Nothing leaves your computer: the plugin only uses your clipboard. For now you install it from{' '}
-          <a href={FIGMA_PLUGIN_URL}>the repository</a> as a development plugin.
-        </p>
-        <ol class="steps" slot="aside" aria-label="How it works">
-          <li>
-            <span class="step-icon"><Icon name="layers" size={22} /></span>
-            <span><strong>Select</strong> frames or layers in Figma</span>
-          </li>
-          <li>
-            <span class="step-icon"><Icon name="copy" size={22} /></span>
-            <span><strong>Copy</strong> them with the Emaki plugin</span>
-          </li>
-          <li>
-            <span class="step-icon"><Icon name="paste" size={22} /></span>
-            <span><strong>Paste</strong> into Emaki, ready to animate</span>
-          </li>
-        </ol>
-      </Feature>
+      </section>
 
       <Feature id="private" eyebrow="Yours" title="Private by design" flip>
         <p>
@@ -238,6 +243,76 @@ const year = new Date().getFullYear();
       </Feature>
     </div>
 
+    <section class="name" id="name" aria-labelledby="name-title">
+      <div class="wrap name-grid">
+        <div class="name-copy">
+          <p class="eyebrow">The name</p>
+          <h2 id="name-title">Emaki means picture scroll</h2>
+          <p>
+            <span lang="ja">絵巻</span>, short for <i>emakimono</i> (<span lang="ja">絵巻物</span>), are Japanese
+            illustrated handscrolls. The form flourished from the 12th century, late in the Heian period. Among the
+            best known are the Tale of Genji scrolls and the playful animals of the <i>Chōjū-jinbutsu-giga</i>.
+          </p>
+          <p>
+            You read an emaki a little at a time, unrolling it from right to left and rolling up what you have seen.
+            Scenes run into one another, so the story unfolds in time as the paper moves. A timeline in a motion editor
+            does much the same, which is where the app takes its name.
+          </p>
+        </div>
+        <dl class="gloss" lang="ja">
+          <div>
+            <dt>絵</dt>
+            <dd lang="en-GB"><i>e</i> picture</dd>
+          </div>
+          <div>
+            <dt>巻</dt>
+            <dd lang="en-GB"><i>maki</i> scroll</dd>
+          </div>
+          <div>
+            <dt>物</dt>
+            <dd lang="en-GB"><i>mono</i> thing</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="story" id="story" aria-labelledby="story-title">
+      <div class="wrap story-grid">
+        <div class="story-copy">
+          <p class="eyebrow">The story</p>
+          <h2 id="story-title">Why I built it</h2>
+          <p>
+            I run a digital signage company. For years I made our content by designing in Figma, then animating it in
+            Jitter. Jitter is good, but it was missing things I needed. I'm also a fan of open source, and none of the
+            open-source tools ticked every box. So I built my own, starting while on honeymoon in Japan.
+          </p>
+          <p>
+            Emaki is essentially Figma with animation, plus motion tracking. It's going to be free and open source, so
+            anyone can use it.
+          </p>
+          <p class="contribute">
+            Contributors are very welcome to help make it great, once the code is public.
+            {
+              GITHUB_URL && (
+                <>
+                  {' '}
+                  <a href={GITHUB_URL}>Contribute on GitHub</a>
+                </>
+              )
+            }
+          </p>
+        </div>
+        <ul class="story-list" aria-label="What Emaki does">
+          {storyPoints.map((s) => (
+            <li>
+              <Icon name="check" size={18} />
+              <span>{s}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
     <section class="next" aria-labelledby="next-title">
       <div class="wrap">
         <p class="eyebrow">Roadmap</p>
@@ -264,52 +339,54 @@ const year = new Date().getFullYear();
       </div>
     </section>
 
-    <section class="download" id="download" aria-labelledby="download-title">
+    <section class="get" id="get" aria-labelledby="get-title">
       <div class="wrap">
-        <p class="eyebrow">Download</p>
-        <h2 id="download-title">Get Emaki</h2>
+        <div class="get-head">
+          <p class="eyebrow">Get Emaki</p>
+          <h2 id="get-title">Free, and open source soon</h2>
+          <p>
+            Emaki is nearly ready. It will be free to download and use, and its code will be open source under the MIT
+            and Apache 2.0 licences.
+          </p>
+          <Cta />
+        </div>
 
         <div class="platforms">
-          <div class="platform available">
-            <h3>Linux</h3>
-            <p>One AppImage for 64-bit distributions. FFmpeg is included.</p>
-            <a class="btn btn-primary" href={APPIMAGE_URL}>
-              <Icon name="download" />
-              Download AppImage
-            </a>
-            <p class="small">
-              Then make it executable and run it:<br />
-              <code>chmod +x Emaki-*.AppImage</code>
-            </p>
-            <p class="small"><a href={RELEASES_URL}>All releases</a></p>
+          <div class="platform first">
+            <h3>Linux <span class="tag">First</span></h3>
+            <p>One AppImage for 64-bit distributions, with FFmpeg included.</p>
+            {
+              RELEASES_URL && (
+                <p class="small">
+                  <a href={RELEASES_URL}>All releases</a>
+                </p>
+              )
+            }
           </div>
           <div class="platform">
-            <h3>macOS</h3>
+            <h3>macOS <span class="tag soon">Later</span></h3>
             <p>For Apple silicon and Intel Macs.</p>
-            <span class="soon">Coming soon</span>
           </div>
           <div class="platform">
-            <h3>Windows</h3>
+            <h3>Windows <span class="tag soon">Later</span></h3>
             <p>For 64-bit Windows.</p>
-            <span class="soon">Coming soon</span>
           </div>
         </div>
 
         <div class="reqs">
-          <h3>System requirements</h3>
+          <h3>What it needs on Linux</h3>
           <ul>
             <li>
               <Icon name="check" size={18} />
-              <span>A graphics card with Vulkan support (Metal on macOS, DirectX 12 on Windows). Emaki draws and exports
-                on the GPU.</span>
+              <span>A graphics card with Vulkan support. Emaki draws and exports on the GPU.</span>
             </li>
             <li>
               <Icon name="check" size={18} />
-              <span>Linux with Wayland or X11, and glibc 2.30 or newer (Ubuntu 20.04 and later, or similar).</span>
+              <span>Wayland or X11, and glibc 2.30 or newer (Ubuntu 20.04 and later, or similar).</span>
             </li>
             <li>
               <Icon name="check" size={18} />
-              <span>FFmpeg is bundled, so every export format works out of the box.</span>
+              <span>Nothing else: FFmpeg is bundled, so every export format works out of the box.</span>
             </li>
           </ul>
         </div>
@@ -321,8 +398,8 @@ const year = new Date().getFullYear();
     <div class="wrap foot-row">
       <Logo id="logo-foot" height={28} />
       <ul>
-        <li><a href={GITHUB_URL}>GitHub</a></li>
-        <li><a href={LICENCE_URL}>Licence: MIT or Apache-2.0</a></li>
+        {GITHUB_URL && <li><a href={GITHUB_URL}>GitHub</a></li>}
+        <li>{LICENCE_URL ? <a href={LICENCE_URL}>Licence: MIT or Apache-2.0</a> : 'Code: MIT or Apache-2.0'}</li>
       </ul>
       <p>© {year} Emaki</p>
     </div>
@@ -361,7 +438,13 @@ const year = new Date().getFullYear();
   .top nav a:hover {
     color: var(--accent);
   }
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
+    .top nav li:nth-child(2),
+    .top nav li:nth-child(3) {
+      display: none;
+    }
+  }
+  @media (max-width: 380px) {
     .top nav li:first-child {
       display: none;
     }
@@ -369,13 +452,24 @@ const year = new Date().getFullYear();
 
   /* Hero */
   .hero {
-    padding-top: clamp(2.5rem, 7vw, 5.5rem);
-    padding-bottom: clamp(2rem, 5vw, 4rem);
+    padding-top: clamp(2rem, 6vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
     overflow: hidden;
   }
   .hero-copy {
     text-align: center;
     max-width: 52rem;
+  }
+  .pill {
+    display: inline-block;
+    margin: 0 0 1.25rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dim);
   }
   .lede {
     font-size: clamp(1.1rem, 1.8vw, 1.25rem);
@@ -383,46 +477,48 @@ const year = new Date().getFullYear();
     max-width: 40rem;
     margin: 1rem auto 2rem;
   }
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
+  .hero-copy :global(.hero-cta) {
     justify-content: center;
-    gap: 0.75rem;
   }
-  .btn-note {
-    font-weight: 400;
-    opacity: 0.85;
-  }
-  .small {
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    margin-top: 1rem;
-  }
-  .hero-shot {
+  .hero-scroll {
     position: relative;
     margin-top: clamp(2.5rem, 6vw, 4rem);
   }
   .glow {
     position: absolute;
-    inset: -8% 4% auto;
-    height: 80%;
+    inset: -10% 2% 0;
     background:
-      radial-gradient(closest-side at 22% 45%, color-mix(in srgb, var(--pink) 70%, transparent), transparent),
-      radial-gradient(closest-side at 55% 35%, color-mix(in srgb, var(--lilac) 60%, transparent), transparent),
-      radial-gradient(closest-side at 80% 55%, color-mix(in srgb, var(--peri) 70%, transparent), transparent),
-      radial-gradient(closest-side at 45% 70%, color-mix(in srgb, var(--mint) 55%, transparent), transparent);
-    filter: blur(40px);
-    opacity: 0.75;
+      radial-gradient(closest-side at 18% 40%, color-mix(in srgb, var(--pink) 70%, transparent), transparent),
+      radial-gradient(closest-side at 50% 25%, color-mix(in srgb, var(--lilac) 55%, transparent), transparent),
+      radial-gradient(closest-side at 82% 50%, color-mix(in srgb, var(--peri) 70%, transparent), transparent),
+      radial-gradient(closest-side at 45% 80%, color-mix(in srgb, var(--mint) 50%, transparent), transparent);
+    filter: blur(48px);
+    opacity: 0.7;
     z-index: 0;
   }
   @media (prefers-color-scheme: dark) {
     .glow {
-      opacity: 0.35;
+      opacity: 0.3;
     }
   }
-  .hero-shot :global(.shot) {
-    position: relative;
+  .hero-scroll :global(.scroll) {
     z-index: 1;
+  }
+
+  /* The editor */
+  .editor {
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  }
+  .editor-head {
+    max-width: 42rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .editor-head p:not(.eyebrow) {
+    color: var(--text-dim);
+  }
+
+  #features {
+    border-top: 1px solid var(--border);
   }
 
   /* Formats */
@@ -455,7 +551,7 @@ const year = new Date().getFullYear();
     font-size: 0.92rem;
   }
 
-  kbd {
+  :global(kbd) {
     font-family: inherit;
     font-size: 0.85em;
     padding: 0.1em 0.4em;
@@ -466,31 +562,34 @@ const year = new Date().getFullYear();
     color: var(--text);
   }
 
-  /* Figma steps */
-  .steps {
-    list-style: none;
-    margin: 0;
-    padding: clamp(1.25rem, 3vw, 2rem);
-    display: grid;
-    gap: 0.75rem;
-    border-radius: var(--radius-lg);
-    background:
-      linear-gradient(135deg, color-mix(in srgb, var(--pink) 30%, transparent), color-mix(in srgb, var(--peri) 30%, transparent)),
-      var(--surface);
-    border: 1px solid var(--border);
-    counter-reset: step;
+  /* And more */
+  .more {
+    border-top: 1px solid var(--border);
+    padding-block: clamp(3rem, 7vw, 6rem);
   }
-  .steps li {
-    display: flex;
-    align-items: center;
+  .more ul {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     gap: 1rem;
-    padding: 1rem 1.1rem;
-    border-radius: var(--radius);
+  }
+  .more li {
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
     background: var(--surface);
     border: 1px solid var(--border);
-    box-shadow: var(--shadow);
   }
-  .step-icon {
+  .more h3 {
+    margin: 0.85rem 0 0.35rem;
+  }
+  .more li p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+  .more-icon {
     display: grid;
     place-items: center;
     width: 44px;
@@ -498,7 +597,11 @@ const year = new Date().getFullYear();
     border-radius: 12px;
     background: var(--accent-soft);
     color: var(--accent);
-    flex: none;
+  }
+  .more-note {
+    margin: 1.5rem 0 0;
+    font-size: 0.92rem;
+    color: var(--text-dim);
   }
 
   /* Privacy cards */
@@ -528,9 +631,112 @@ const year = new Date().getFullYear();
     font-size: 0.95rem;
   }
 
+  /* The name */
+  .name {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+  .name-grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .name-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    }
+  }
+  .name-copy p:not(.eyebrow) {
+    color: var(--text-dim);
+    max-width: 38rem;
+  }
+  .name-copy p:not(.eyebrow) [lang='ja'] {
+    color: var(--text);
+  }
+  .gloss {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-radius: var(--radius-lg);
+    border-block: 6px solid color-mix(in srgb, var(--peri) 50%, var(--surface));
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  .gloss div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .gloss dt {
+    font-family: 'Noto Serif CJK JP', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    line-height: 1;
+    color: var(--text);
+  }
+  .gloss dd {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  .gloss dd i {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* The story */
+  .story {
+    padding-block: clamp(3rem, 8vw, 6rem);
+    border-top: 1px solid var(--border);
+  }
+  .story-grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .story-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+  .story-copy p:not(.eyebrow) {
+    color: var(--text-dim);
+    max-width: 38rem;
+  }
+  .contribute {
+    padding-left: 1rem;
+    border-left: 3px solid color-mix(in srgb, var(--pink) 70%, var(--border));
+  }
+  .story-list {
+    list-style: none;
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    display: grid;
+    gap: 0.6rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .story-list li {
+    display: flex;
+    gap: 0.6rem;
+    font-weight: 500;
+  }
+  .story-list :global(svg) {
+    color: var(--accent);
+    margin-top: 0.3rem;
+    flex: none;
+  }
+
   /* Coming next */
   .next {
-    background: var(--bg-alt);
     border-block: 1px solid var(--border);
     padding-block: clamp(3rem, 7vw, 5rem);
   }
@@ -547,7 +753,7 @@ const year = new Date().getFullYear();
   }
   .next li {
     padding: 1.25rem;
-    border: 1px dashed var(--border);
+    border: 1px dashed color-mix(in srgb, var(--text-dim) 35%, var(--border));
     border-radius: var(--radius-lg);
   }
   .next li p {
@@ -556,15 +762,25 @@ const year = new Date().getFullYear();
     font-size: 0.95rem;
   }
 
-  /* Download */
-  .download {
+  /* Get Emaki */
+  .get {
     padding-block: clamp(3rem, 8vw, 6rem);
+    background: var(--bg-alt);
+  }
+  .get-head {
+    max-width: 42rem;
+  }
+  .get-head p:not(.eyebrow) {
+    color: var(--text-dim);
+  }
+  .get-head :global(.cta) {
+    margin-top: 1.5rem;
   }
   .platforms {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
   }
   .platform {
     padding: 1.5rem;
@@ -572,30 +788,34 @@ const year = new Date().getFullYear();
     border: 1px solid var(--border);
     background: var(--surface);
   }
+  .platform h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
   .platform p {
     color: var(--text-dim);
+    margin: 0;
   }
-  .platform.available {
+  .platform.first {
     border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
     box-shadow: var(--shadow);
   }
   .platform .small {
-    margin: 1rem 0 0;
+    margin-top: 1rem;
+    font-size: 0.9rem;
   }
-  code {
-    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-    font-size: 0.85em;
-    padding: 0.15em 0.4em;
-    border-radius: 5px;
-    background: var(--accent-soft);
-    color: var(--text);
-  }
-  .soon {
+  .tag {
     display: inline-block;
-    padding: 0.35rem 0.8rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 999px;
-    font-size: 0.85rem;
+    font-family: var(--font-text);
+    font-size: 0.75rem;
     font-weight: 600;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .tag.soon {
     background: var(--bg-alt);
     border: 1px solid var(--border);
     color: var(--text-dim);
@@ -618,6 +838,7 @@ const year = new Date().getFullYear();
   .reqs :global(svg) {
     color: var(--accent);
     margin-top: 0.3rem;
+    flex: none;
   }
 
   /* Footer */
@@ -637,7 +858,7 @@ const year = new Date().getFullYear();
   .foot ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 0.5rem 1.5rem;
     list-style: none;
     margin: 0;
     padding: 0;
