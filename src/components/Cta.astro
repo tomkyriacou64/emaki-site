@@ -1,0 +1,89 @@
+---
+// The main call to action. With NOTIFY_URL set it is a link to the sign-up
+// page; without it, an honest status line and no button. A download button
+// joins it once APPIMAGE_URL is set.
+import Icon from './Icon.astro';
+import { NOTIFY_URL, APPIMAGE_URL } from '../config';
+
+interface Props {
+  /** Show a secondary link to the features. */
+  tour?: boolean;
+  class?: string;
+}
+
+const { tour = false, class: className } = Astro.props;
+---
+
+<div class:list={['cta', className]}>
+  {
+    APPIMAGE_URL && (
+      <a class="btn btn-primary" href={APPIMAGE_URL}>
+        <Icon name="download" />
+        Download for Linux <span class="btn-note">(AppImage)</span>
+      </a>
+    )
+  }
+  {
+    NOTIFY_URL ? (
+      <a class:list={['btn', APPIMAGE_URL ? 'btn-secondary' : 'btn-primary']} href={NOTIFY_URL}>
+        <Icon name="bell" />
+        Get notified when it’s out
+      </a>
+    ) : (
+      !APPIMAGE_URL && (
+        <p class="status">
+          <span class="dot" aria-hidden="true" />
+          Coming soon: free and open source
+        </p>
+      )
+    )
+  }
+  {
+    tour && (
+      <a class="btn btn-secondary" href="#features">
+        See what it does
+        <Icon name="arrow" size={18} />
+      </a>
+    )
+  }
+</div>
+
+<style>
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .btn-note {
+    font-weight: 400;
+    opacity: 0.85;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    margin: 0;
+    padding: 0.7rem 1.3rem;
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  @media (max-width: 420px) {
+    .status {
+      padding-inline: 1rem;
+      font-size: 0.95rem;
+    }
+  }
+  .dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+</style>
