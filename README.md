@@ -17,15 +17,69 @@ Upload the contents of `dist/` to any static host.
 
 ## Before publishing
 
-- **Download link:** set `APPIMAGE_URL` in `src/config.ts` to the real
-  AppImage URL (for example a GitHub release asset). Until then the
-  download buttons jump to the download section (`#download`).
+The links live in `src/config.ts`. Each one is empty for now, and an empty
+link hides whatever it drives, so the page never points at something that
+isn't there yet.
+
+- **Notify link (`NOTIFY_URL`):** the sign-up page of a mailing list
+  service, for "Get notified when it's out". There is no backend and no
+  form on the site; the button is a plain link. While it is empty, the call
+  to action reads "Coming soon: free and open source", with no button.
+- **Download link (`APPIMAGE_URL`):** the real AppImage URL (for example a
+  GitHub release asset). Set it and a "Download for Linux" button appears
+  in the hero and in Get Emaki.
+- **Source code (`GITHUB_URL`):** the public repository, once it is open.
+  Set it and the page gains the GitHub, releases, licence and Figma plugin
+  links, plus "Contribute on GitHub" in the story. Keep it empty while the
+  repository is private.
 - **Site address:** build with `SITE_URL=https://your-domain npm run build`
   (or change the fallback in `astro.config.mjs`). It makes the canonical
   link and the social card (`og:image`) absolute. The placeholder is
   `https://emaki.example`.
-- Other links (GitHub, releases, licence, Figma plugin folder) are in
-  `src/config.ts` too.
+
+## Pages
+
+- `/` (`src/pages/index.astro`): the landing page.
+- `/changelog` (`src/pages/changelog.astro`): release notes from
+  `src/data/changelog.ts`.
+- `/roadmap` (`src/pages/roadmap.astro`): Now / Next / Later from
+  `src/data/roadmap.ts`. No dates and no promises; write items from the
+  user's side.
+
+The header and footer are `SiteHeader.astro` and `SiteFooter.astro`.
+
+### Adding a release to the changelog
+
+Add an entry at the **top** of `releases` in `src/data/changelog.ts`:
+
+```ts
+{
+  version: '1.0.0',
+  date: '2026-12-01',            // YYYY-MM-DD
+  summary: 'One or two sentences.',
+  sections: [
+    { title: 'Fixed', items: ['…'] },
+    { title: 'Faster', items: ['…'] },
+    { title: 'Changed', items: ['…'] },
+    { title: 'Known limits', items: ['…'] },
+  ],
+},
+```
+
+Copy the notes from the GitHub release (`gh release view v1.0.0 -R
+tomkyriacou64/emaki --json body,publishedAt`), leaving out the download
+line and the "Generated with" footer. Text in `backticks` shows as code.
+Each release gets an anchor, such as `/changelog#v1.0.0`.
+
+## The hero
+
+`src/components/HeroScroll.astro` draws a handscroll that unrolls right to
+left on load, with a small animated scene on an artboard and a timeline
+under it. One `requestAnimationFrame` clock drives the scene, the playhead
+and the timecode; it pauses off screen and in hidden tabs, and the play
+button pauses it for good. The markup is the composed still frame, which is
+what visitors see without JavaScript or when they prefer reduced motion
+(they can still press play).
 
 ## Screenshots
 
