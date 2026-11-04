@@ -1,0 +1,98 @@
+---
+import Page from '../layouts/Page.astro';
+import { LICENCE_URL } from '../config';
+
+// Main libraries, from the app's workspace Cargo.toml; licences from their crates.
+const libraries = [
+  { name: 'egui and eframe', what: 'The interface and the window', licence: 'MIT or Apache-2.0', url: 'https://github.com/emilk/egui' },
+  { name: 'wgpu', what: 'Talking to the graphics card', licence: 'MIT or Apache-2.0', url: 'https://github.com/gfx-rs/wgpu' },
+  { name: 'Vello', what: 'Drawing on the GPU', licence: 'Apache-2.0 or MIT', url: 'https://github.com/linebender/vello' },
+  { name: 'kurbo and peniko', what: 'Curves, shapes and paint', licence: 'Apache-2.0 or MIT', url: 'https://github.com/linebender/kurbo' },
+  { name: 'cosmic-text', what: 'Text layout and shaping', licence: 'MIT or Apache-2.0', url: 'https://github.com/pop-os/cosmic-text' },
+  { name: 'usvg (resvg)', what: 'Reading SVG files', licence: 'Apache-2.0 or MIT', url: 'https://github.com/linebender/resvg' },
+  { name: 'image', what: 'Reading and writing pictures', licence: 'MIT or Apache-2.0', url: 'https://github.com/image-rs/image' },
+  { name: 'cpal', what: 'Playing sound', licence: 'Apache-2.0', url: 'https://github.com/RustAudio/cpal' },
+  { name: 'rfd', what: 'File dialogs', licence: 'MIT', url: 'https://github.com/PolyMeilex/rfd' },
+  { name: 'AccessKit', what: 'Screen reader support', licence: 'MIT or Apache-2.0', url: 'https://github.com/AccessKit/accesskit' },
+  { name: 'ureq', what: 'Google Fonts and Figma requests', licence: 'MIT or Apache-2.0', url: 'https://github.com/algesten/ureq' },
+  { name: 'serde', what: 'Reading and writing project files', licence: 'MIT or Apache-2.0', url: 'https://github.com/serde-rs/serde' },
+];
+---
+
+<Page
+  title="Licence and credits"
+  description="Emaki's licence (MIT or Apache-2.0), the FFmpeg it bundles, and the libraries, fonts and icons it is built on."
+  eyebrow="Licence and credits"
+  heading="Licence and credits"
+>
+  <p slot="intro">Emaki is free and open source, and it stands on the work of many other open-source projects.</p>
+
+  <div class="prose">
+    <h2>Emaki</h2>
+    <p>
+      Emaki's code is licensed under either the <strong>MIT licence</strong> or the <strong>Apache License 2.0</strong>,
+      at your option. {LICENCE_URL ? <a href={LICENCE_URL}>Read the licence</a> : 'The full text comes with the code.'}
+    </p>
+
+    <h2>FFmpeg</h2>
+    <p>
+      The Linux AppImage bundles <a href="https://ffmpeg.org">FFmpeg</a> (the <code>ffmpeg</code> and
+      <code>ffprobe</code> programs) for reading video and audio and for export. FFmpeg is licensed under the
+      <strong>GNU GPL version 3</strong>. Emaki itself is MIT/Apache-2.0 and only runs these programs; it isn't built
+      from FFmpeg's code.
+    </p>
+    <p>
+      FFmpeg's licence and a note on its source are inside the AppImage, in <code>usr/share/doc/emaki/</code>. The
+      source is at <a href="https://ffmpeg.org/download.html">ffmpeg.org/download.html</a>, and the build recipe and
+      exact sources of the bundled build are at
+      <a href="https://github.com/BtbN/FFmpeg-Builds">github.com/BtbN/FFmpeg-Builds</a>.
+    </p>
+
+    <h2>Libraries</h2>
+    <p>The main libraries Emaki is built with, each under its own licence:</p>
+  </div>
+
+  <div class="table-wrap">
+    <table class="table stack">
+      <thead>
+        <tr><th scope="col">Library</th><th scope="col">Used for</th><th scope="col">Licence</th></tr>
+      </thead>
+      <tbody>
+        {
+          libraries.map((l) => (
+            <tr>
+              <td>
+                <a href={l.url}>{l.name}</a>
+              </td>
+              <td data-label="Used for">{l.what}</td>
+              <td data-label="Licence">{l.licence}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <p>Plus many smaller Rust crates, each with its licence listed in the code.</p>
+
+    <h2>Fonts and icons</h2>
+    <ul>
+      <li>
+        <a href="https://github.com/rsms/inter">Inter</a>, the app's interface font, by the Inter Project Authors, under
+        the SIL Open Font License 1.1.
+      </li>
+      <li>
+        <a href="https://lucide.dev">Lucide</a> icons, in the interface and the Elements library, under the ISC
+        licence.
+      </li>
+    </ul>
+
+    <h2>This website</h2>
+    <p>
+      Built with <a href="https://astro.build">Astro</a> (MIT). It uses Inter and
+      <a href="https://github.com/Outfitio/Outfit-Fonts">Outfit</a>, both under the SIL Open Font License, served from
+      the site itself.
+    </p>
+  </div>
+</Page>

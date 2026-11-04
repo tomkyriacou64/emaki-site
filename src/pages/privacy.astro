@@ -1,0 +1,77 @@
+---
+import Page from '../layouts/Page.astro';
+---
+
+<Page
+  title="Privacy"
+  description="Emaki has no account, no telemetry, no analytics and no tracking. Here is exactly when it uses the network."
+  eyebrow="Privacy"
+  heading="Your work stays yours"
+>
+  <p slot="intro">
+    Emaki has no account, no telemetry, no analytics and no tracking. It works fully offline, and your projects stay on
+    your computer.
+  </p>
+
+  <div class="prose">
+    <h2>What Emaki never does</h2>
+    <ul>
+      <li>It never asks you to sign up or sign in.</li>
+      <li>It never sends usage data, crash reports or analytics anywhere.</li>
+      <li>It never uploads your projects or media. Projects are folders on your disk.</li>
+      <li>It never checks for updates in the background.</li>
+    </ul>
+
+    <h2>When it uses the network</h2>
+    <p>Only when you use one of these two features, and only for that feature:</p>
+    <div class="table-wrap">
+      <table class="table stack">
+        <thead>
+          <tr><th scope="col">When you…</th><th scope="col">Emaki contacts</th><th scope="col">What is sent</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Open the <strong>Google Fonts</strong> tab in the font picker</td>
+            <td data-label="Emaki contacts"><code>fonts.google.com</code></td>
+            <td data-label="What is sent">A request for the list of fonts. The list is kept for a week, so it isn't fetched every time.</td>
+          </tr>
+          <tr>
+            <td>Preview or download a Google font</td>
+            <td data-label="Emaki contacts"><code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code> and <code>raw.githubusercontent.com</code> (Google's font repository)</td>
+            <td data-label="What is sent">The name of the font you're looking at, then its files.</td>
+          </tr>
+          <tr>
+            <td>Import a frame from <strong>Figma</strong> by its link</td>
+            <td data-label="Emaki contacts"><code>api.figma.com</code> and Figma's image servers</td>
+            <td data-label="What is sent">The file and frame from the link, with the personal access token you entered.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      As with any web request, the servers you contact see your IP address. The fonts tab and Figma import are run by
+      Google and Figma under their own privacy policies.
+    </p>
+    <p>
+      The <strong>Emaki plugin for Figma</strong> uses no network at all: it copies layers to your clipboard, and you
+      paste them into Emaki.
+    </p>
+    <p>
+      Links in the app, such as <em>How to get FFmpeg</em> in About, open in your browser only when you click them.
+    </p>
+
+    <h2>What stays on your computer</h2>
+    <ul>
+      <li>Projects, as <code>.emaki</code> folders wherever you save them.</li>
+      <li>Autosave and crash-recovery copies, and version history.</li>
+      <li>Your settings, brand kits, saved elements and the fonts you've downloaded.</li>
+      <li>Your Figma token, only if you choose to remember it, kept in your settings and only ever sent to Figma.</li>
+    </ul>
+
+    <h2>This website</h2>
+    <p>
+      This site uses no cookies, no analytics and no tracking scripts. Its fonts are served from the site itself, not
+      from a font service. The only scripts play the animation at the top of the home page and the showcase clips.
+    </p>
+  </div>
+</Page>

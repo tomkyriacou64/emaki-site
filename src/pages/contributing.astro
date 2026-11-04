@@ -1,0 +1,110 @@
+---
+import Page from '../layouts/Page.astro';
+import { GITHUB_URL } from '../config';
+
+const crates = [
+  ['motion-core', 'The scene: layers, transforms, colours, geometry and ids (no interface).'],
+  ['motion-animation', 'Animations, easing, presets, and working out the scene at any time.'],
+  ['motion-timeline', 'Time to pixels on the timeline, snapping, dragging and resizing bars.'],
+  ['motion-render', 'Drawing with Vello on the GPU: shapes, text, images, effects.'],
+  ['motion-project', 'The project format, saving, media, undo and redo, crash recovery, mockups.'],
+  ['motion-export', 'Export: frame timing, PNG, FFmpeg video and GIF, Lottie, sound mixing.'],
+  ['motion-ui', 'The editor: canvas, timeline, layers, inspector and commands.'],
+  ['motion-app', 'The emaki program: window, menus, dialogs, Home, export jobs, autosave, command line.'],
+  ['motion-figma', 'Turning Figma frames into Emaki layers.'],
+  ['motion-library', 'Brand kits, saved elements and the bundled icons.'],
+  ['motion-track', 'Point tracking in video, for pinning layers to moving things.'],
+];
+---
+
+<Page
+  title="Contributing"
+  description="How to build Emaki from source, how the code is laid out, and how to propose changes once the code is public."
+  eyebrow="Contributing"
+  heading="Help make Emaki great"
+>
+  <p slot="intro">
+    {
+      GITHUB_URL ? (
+        <>
+          Bug reports, ideas and pull requests are all welcome. The code is on <a href={GITHUB_URL}>GitHub</a>.
+        </>
+      ) : (
+        <>
+          The code isn't public yet. Once it is, bug reports, ideas and pull requests are all welcome, and this page
+          is how it will work.
+        </>
+      )
+    }
+  </p>
+
+  <div class="prose">
+    <h2>Build it from source</h2>
+    <p>
+      You need Rust stable 1.95 or newer and a graphics card with Vulkan (Metal on macOS, DirectX 12 on Windows). On
+      Linux, also the ALSA development files (<code>libasound2-dev</code> or similar) for sound, and FFmpeg on your
+      <code>PATH</code> for video export.
+    </p>
+    <pre><code>cargo run --release -p motion-app -- examples/demo.emaki</code></pre>
+    <p>Before you send a change, run the same checks as the project: formatting, Clippy with warnings as errors, and every test.</p>
+    <pre><code>scripts/verify.sh</code></pre>
+
+    <h2>How the code is laid out</h2>
+    <p>A Rust workspace of small crates, from the scene model up to the app:</p>
+  </div>
+
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th scope="col">Crate</th><th scope="col">What it does</th></tr>
+      </thead>
+      <tbody>
+        {
+          crates.map(([name, what]) => (
+            <tr>
+              <td><code>{name}</code></td>
+              <td>{what}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <p>There's also <code>figma-plugin/</code> (the Figma plugin, in TypeScript) and <code>docs/</code>.</p>
+
+    <h2>Proposing a change</h2>
+    <ul>
+      <li><strong>Big changes start as an issue</strong>, so we can agree on the approach before you spend time on it.</li>
+      <li><strong>One change per pull request</strong>, with tests. Test names are sentences, such as <code>a_mockup_plays_with_the_artboard_it_shows</code>.</li>
+      <li><strong>Interface changes come with light-mode screenshots</strong>, before and after, from the screenshot tests.</li>
+      <li>Small fixes to copy and docs are welcome too.</li>
+    </ul>
+
+    <h2>Interface and copy</h2>
+    <p>The interface follows the project's UI guidelines (<code>docs/design/ui-guidelines.md</code>). In brief:</p>
+    <ul>
+      <li>Colours, sizes and spacing come from the theme's tokens, and controls from the shared widget helpers.</li>
+      <li>24 px rows, 8 px gaps and a 12 px inset; type at 11, 12, 13 or 16 px only.</li>
+      <li>Lucide icons, each with a hit area of at least 24 px and a tooltip.</li>
+      <li>Copy in British English and sentence case, in plain, direct sentences. Errors start with “Couldn’t…”.</li>
+      <li>No other apps’ names in the interface.</li>
+    </ul>
+
+    <h2>Code of conduct</h2>
+    <p>
+      Be kind and assume good intent. Emaki follows the
+      <a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct/">Contributor Covenant</a>: harassment
+      or personal attacks of any kind aren't welcome, and the maintainer may remove comments or contributors that
+      break it.
+    </p>
+
+    <h2>Security</h2>
+    <p>
+      Please don't report security problems in public issues. Once the code is public, report them privately through
+      the repository's GitHub security advisories
+      {GITHUB_URL ? <a href={`${GITHUB_URL}/security/advisories/new`}>(report a vulnerability)</a> : ''}.
+    </p>
+  </div>
+</Page>
