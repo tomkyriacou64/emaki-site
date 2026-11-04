@@ -88,20 +88,32 @@ Astro turns each into AVIF and WebP at 480/800/1200/1440 px at build time,
 so commit the originals and don't resize them by hand.
 
 To update one, replace the PNG with a new light-mode screenshot under the
-same name (or add a file and import it in `src/pages/index.astro`). Current
-sources, from the app repo's `target/shots/`:
+same name (or add a file and import it). The current ones were taken on
+4 November 2026 from the app's screenshot tests, run from the app repo with
+`MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=<dir>`:
 
-| File | Source |
+```sh
+MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04 target/emaki-cargo.sh \
+  test -p motion-ui --test ui_snapshots -- editor_screenshots keyframes_screenshot \
+  effects_media_and_motion_path_screenshots text_on_a_path_and_variable_weight_screenshot \
+  colour_section_screenshots
+XDG_DATA_HOME=$PWD/target/gate-xdg MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04/app \
+  target/emaki-cargo.sh test -p motion-app -- mockup_screenshots home_templates_screenshot app_screenshots
+```
+
+| File | Source (in `target/shots/site-2026-11-04/`) |
 | --- | --- |
-| `hero-editor.png` | `final-audit/10-curved-motion-path.png` |
-| `artboards.png` | `final-audit/00-all-artboards.png` |
-| `graph-editor.png` | `final-audit/25-graph-editor.png` |
-| `mockups.png` | `mockups/mockups-07-in-sync.png` |
-| `colour.png` | `colour/80-adjust-look-applied.png` |
-| `templates.png` | `export/13c-home-templates.png` |
-| `export.png` | `export/27-export.png` |
+| `hero-editor.png` | `10-curved-motion-path.png` |
+| `artboards.png` | `00-all-artboards.png` |
+| `graph-editor.png` | `25-graph-editor.png` |
+| `text-path.png` | `40-text-on-a-path.png` |
+| `colour.png` | `82-colour-look-popover.png` |
+| `mockups.png` | `app/mockups-07-in-sync.png` |
+| `templates.png` | `app/13c-home-templates.png` |
+| `export.png` | `app/27-export.png` |
+| `signage-tv.png` | `app/mockups-04-tv.png` |
 
-Remember to update the `alt` text in `index.astro` when a picture changes.
+Remember to update the `alt` text where a picture is used when it changes.
 
 ## Brand files
 
