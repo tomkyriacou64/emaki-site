@@ -142,29 +142,34 @@ so commit the originals and don't resize them by hand.
 
 To update one, replace the PNG with a new light-mode screenshot under the
 same name (or add a file and import it). The current ones were taken on
-4 November 2026 from the app's screenshot tests, run from the app repo with
-`MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=<dir>`:
+4 November 2026 (app main after task 068, the 0.9.3 look) from the app's
+screenshot tests in the Washi theme, which matches the site's paper and
+indigo. Run from the app repo, after any gate there has finished:
 
 ```sh
-MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04 target/emaki-cargo.sh \
+MS_UI_THEME=washi MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04-washi target/emaki-cargo.sh \
   test -p motion-ui --test ui_snapshots -- editor_screenshots keyframes_screenshot \
   effects_media_and_motion_path_screenshots text_on_a_path_and_variable_weight_screenshot \
   colour_section_screenshots
-XDG_DATA_HOME=$PWD/target/gate-xdg MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04/app \
+XDG_DATA_HOME=$PWD/target/gate-xdg MS_UI_THEME=washi MS_UI_LIGHT=1 \
+  MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04-washi/app \
   target/emaki-cargo.sh test -p motion-app -- mockup_screenshots home_templates_screenshot app_screenshots
 ```
 
-| File | Source (in `target/shots/site-2026-11-04/`) |
-| --- | --- |
-| `hero-editor.png` | `10-curved-motion-path.png` |
-| `artboards.png` | `00-all-artboards.png` |
-| `graph-editor.png` | `25-graph-editor.png` |
-| `text-path.png` | `40-text-on-a-path.png` |
-| `colour.png` | `82-colour-look-popover.png` |
-| `mockups.png` | `app/mockups-07-in-sync.png` |
-| `templates.png` | `app/13c-home-templates.png` |
-| `export.png` | `app/27-export.png` |
-| `signage-tv.png` | `app/mockups-04-tv.png` |
+| File | Source (in `target/shots/site-2026-11-04-washi/`) | Used on |
+| --- | --- | --- |
+| `mockups.png` | `app/mockups-07-in-sync.png` | Home (the pinned editor, and a full-size crop of its canvas on phones), Use cases |
+| `graph-editor.png` | `25-graph-editor.png` | Home, Animate (cropped to the graph editor) |
+| `text-path.png` | `40-text-on-a-path.png` | Home, Type (cropped to the ring of text) |
+| `colour.png` | `82-colour-look-popover.png` | Home, Colour |
+| `hero-editor.png` | `10-curved-motion-path.png` | not used |
+| `artboards.png` | `00-all-artboards.png` | not used |
+| `templates.png` | `app/13c-home-templates.png` | not used (shows Kinetic type's "MAKE IT MOVE") |
+| `export.png` | `app/27-export.png` | not used |
+| `signage-tv.png` | `app/mockups-04-tv.png` | not used |
+
+The crops are set in `src/pages/index.astro` (`<Crop x y zoom ratio>`), so
+check them after a new screenshot moves things around.
 
 Remember to update the `alt` text where a picture is used when it changes.
 
