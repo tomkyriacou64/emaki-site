@@ -1,0 +1,56 @@
+---
+import Page from '../layouts/Page.astro';
+import Clip from '../components/Clip.astro';
+import { showcaseOrder, byFile } from '../data/showcase';
+
+const clips = showcaseOrder.map(byFile);
+---
+
+<Page
+  title="Showcase"
+  description="Short looping clips made in Emaki, the desktop motion design app: menu boards, social posts, kinetic type and a logo reveal."
+  eyebrow="Showcase"
+  heading="Made in Emaki"
+>
+  <p slot="intro">
+    Every clip here was made in Emaki from one of its built-in templates and exported with Emaki 0.9.2. Open the same
+    template in the app, swap the words and colours, and the motion stays.
+  </p>
+
+  <div class="grid">
+    {clips.map((c) => <Clip clip={c} />)}
+  </div>
+
+  <p class="foot-note">
+    Exported as MP4 with <code>emaki --export</code>, then made smaller for the web. In the app you can also export WebM,
+    ProRes 4444 with transparency, GIF, Lottie and PNG. <a href="/use-cases">See what people make with it</a>
+  </p>
+</Page>
+
+<style>
+  .grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .grid > :global(.wide) {
+      grid-column: span 3;
+    }
+    .grid > :global(.tall) {
+      grid-column: span 2;
+    }
+    .grid > :global(.square) {
+      grid-column: span 2;
+    }
+  }
+  .foot-note {
+    margin-top: 3rem;
+    color: var(--text-dim);
+    max-width: 46rem;
+  }
+</style>

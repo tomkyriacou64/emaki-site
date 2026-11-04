@@ -1,0 +1,131 @@
+---
+// A short looping clip made in Emaki. It plays muted and looped while on
+// screen; with reduced motion it shows the poster frame until the visitor
+// presses play. Without JavaScript, the poster shows.
+import type { Clip } from '../data/showcase';
+
+interface Props {
+  clip: Clip;
+  /** Show the title and caption under the clip. */
+  caption?: boolean;
+  class?: string;
+}
+
+const { clip, caption = true, class: className } = Astro.props;
+const shape = clip.height > clip.width ? 'tall' : clip.height === clip.width ? 'square' : 'wide';
+---
+
+<figure class:list={['clip', shape, className]} data-clip>
+  <div class="frame">
+    <video
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster={`/showcase/${clip.file}.webp`}
+      width={clip.width}
+      height={clip.height}
+      aria-label={`${clip.title}: ${clip.caption}`}
+    >
+      <source src={`/showcase/${clip.file}.mp4`} type="video/mp4" />
+    </video>
+    <button class="toggle" type="button" aria-label={`Play ${clip.title}`} data-label={clip.title} hidden>
+      <svg class="i-play" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
+    </button>
+  </div>
+  {
+    caption && (
+      <figcaption>
+        <strong>{clip.title}</strong> {clip.caption}
+      </figcaption>
+    )
+  }
+</figure>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const seen = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      const fig = e.target as HTMLElement;
+      const video = fig.querySelector('video')!;
+      if (e.isIntersecting && fig.dataset.wanted === 'yes') video.play().catch(() => {});
+      else if (!e.isIntersecting) video.pause();
+    }
+  });
+  for (const fig of document.querySelectorAll<HTMLElement>('[data-clip]')) {
+    const video = fig.querySelector('video')!;
+    const button = fig.querySelector<HTMLButtonElement>('.toggle')!;
+    const label = button.dataset.label;
+    const show = (playing: boolean) => {
+      fig.classList.toggle('playing', playing);
+      button.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${label}`);
+    };
+    fig.dataset.wanted = reduce.matches ? 'no' : 'yes';
+    if (!reduce.matches) video.preload = 'metadata';
+    video.addEventListener('play', () => show(true));
+    video.addEventListener('pause', () => show(false));
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const play = video.paused;
+      fig.dataset.wanted = play ? 'yes' : 'no';
+      if (play) video.play().catch(() => {});
+      else video.pause();
+    });
+    seen.observe(fig);
+  }
+</script>
+
+<style>
+  .clip {
+    margin: 0;
+  }
+  .frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .toggle {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(20 18 28 / 0.6);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+  }
+  .toggle:hover {
+    background: rgb(20 18 28 / 0.8);
+  }
+  .toggle .i-pause,
+  .playing .toggle .i-play {
+    display: none;
+  }
+  .playing .toggle .i-pause {
+    display: block;
+  }
+  figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+  }
+  figcaption strong {
+    color: var(--text);
+    font-weight: 600;
+    margin-right: 0.2em;
+  }
+</style>
