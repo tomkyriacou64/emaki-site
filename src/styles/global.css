@@ -256,19 +256,34 @@ time {
   white-space: nowrap;
 }
 
-/* Inner pages (roadmap, changelog) */
+/* The title block on every inner page. The widths sit on the children, never on
+   the block, so it lines up with the content column when it is also a .wrap. */
 .page-head {
   padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 48px);
-  max-width: 48rem;
 }
 .page-head h1 {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
+  max-width: 20ch;
   margin-bottom: 16px;
 }
 .page-head p {
-  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  font-size: clamp(1.125rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
   color: var(--text-dim);
   max-width: 36rem;
+  margin: 0;
+}
+/* The one variant: the title on the left, the lede beside it (showcase, use cases, roadmap). */
+@media (min-width: 900px) {
+  .page-head.split {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 16px 64px;
+    align-items: end;
+  }
+  .page-head.split h1 {
+    margin: 0;
+  }
 }
 .page-body {
   padding-bottom: clamp(3rem, 8vw, 6rem);

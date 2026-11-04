@@ -25,22 +25,33 @@ const libraries = [
 
 <Base
   title="Licence and credits: Emaki"
-  description="Emaki's licence (MIT or Apache-2.0), the FFmpeg it bundles, and the libraries, fonts and icons it is built on."
+  description="Emaki's licence (MIT or Apache-2.0 once the code is published), the FFmpeg it bundles, and the libraries, fonts and icons it is built on."
 >
   <SiteHeader />
   <main id="main" class="wrap colophon">
-    <header class="title">
+    <div class="page-head">
       <h1>Licence and credits</h1>
-      <p>Emaki is free and open source, and it stands on the work of many other open-source projects.</p>
-    </header>
+      <p>
+        Emaki is free, and will be open source under MIT or Apache-2.0 when the code is published. It stands on the
+        work of many open-source projects.
+      </p>
+    </div>
 
     <dl class="entries">
       <div>
         <dt>Emaki</dt>
         <dd>
           <p>
-            Licensed under either the MIT licence or the Apache License 2.0, at your option.
-            {LICENCE_URL ? <a href={LICENCE_URL}>Read the licence</a> : 'The full text comes with the code.'}
+            {
+              LICENCE_URL ? (
+                <>
+                  Licensed under either the MIT licence or the Apache License 2.0, at your option.
+                  <a href={LICENCE_URL}>Read the licence</a>
+                </>
+              ) : (
+                'Free to use now. When the code is published, it will be licensed under either the MIT licence or the Apache License 2.0, at your option, with the full text alongside it.'
+              )
+            }
           </p>
         </dd>
       </div>
@@ -110,28 +121,13 @@ const libraries = [
 
 <style>
   .colophon {
-    max-width: 52rem;
-    padding-block: clamp(56px, 9vw, 112px);
-  }
-  .title {
-    text-align: center;
-    padding-bottom: clamp(40px, 6vw, 64px);
-    margin-bottom: clamp(32px, 5vw, 48px);
-    border-bottom: 1px solid var(--border-strong);
-  }
-  .title h1 {
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
-    margin-bottom: 16px;
-  }
-  .title p {
-    font-family: var(--font-serif);
-    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
-    color: var(--text-dim);
-    max-width: 30rem;
-    margin: 0 auto;
+    padding-bottom: clamp(56px, 9vw, 112px);
   }
   .entries {
+    max-width: 52rem;
     margin: 0;
+    padding-top: clamp(32px, 5vw, 48px);
+    border-top: 1px solid var(--border-strong);
     display: grid;
     gap: 32px;
   }
@@ -143,9 +139,6 @@ const libraries = [
     .entries > div {
       grid-template-columns: 9rem minmax(0, 1fr);
     }
-    dt {
-      text-align: right;
-    }
   }
   dt {
     font-size: 0.875rem;
@@ -154,8 +147,7 @@ const libraries = [
   }
   dd {
     margin: 0;
-    font-family: var(--font-serif);
-    font-size: 1.0625rem;
+    font-size: 1rem;
     line-height: 1.6;
   }
   dd p {

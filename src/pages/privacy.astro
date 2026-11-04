@@ -9,7 +9,7 @@ const never = [
   { line: 'No account', detail: 'It never asks you to sign up or sign in.' },
   { line: 'No telemetry', detail: 'It never sends usage data, crash reports or analytics anywhere.' },
   { line: 'No uploads', detail: 'Your projects and media stay in folders on your disk.' },
-  { line: 'No update checks', detail: 'Nothing runs in the background.' },
+  { line: 'No update checks', detail: 'Nothing connects in the background.' },
 ];
 ---
 
@@ -19,9 +19,11 @@ const never = [
 >
   <SiteHeader />
   <main id="main">
-    <section class="wrap statement" aria-labelledby="privacy-title">
-      <h1 id="privacy-title">Your work stays yours</h1>
-      <p class="lede">Emaki works fully offline, and your projects stay on your computer.</p>
+    <div class="wrap page-head">
+      <h1>Your work stays yours</h1>
+      <p>Emaki works fully offline, and your projects stay on your computer.</p>
+    </div>
+    <section class="wrap statement" aria-label="What Emaki never does">
       <ul class="never">
         {
           never.map((n) => (
@@ -103,18 +105,7 @@ const never = [
 
 <style>
   .statement {
-    padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px);
-  }
-  .statement h1 {
-    font-size: clamp(2.75rem, 7.5vw, 5.5rem);
-    max-width: 12ch;
-    margin-bottom: 24px;
-  }
-  .lede {
-    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
-    color: var(--text-dim);
-    max-width: 34rem;
-    margin-bottom: clamp(40px, 6vw, 64px);
+    padding-bottom: clamp(48px, 7vw, 88px);
   }
   .never {
     list-style: none;
@@ -131,14 +122,14 @@ const never = [
   }
   @media (min-width: 800px) {
     .never li {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     }
   }
   .never b {
     font-family: var(--font-head);
-    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
     font-weight: 500;
-    line-height: 1.05;
+    line-height: 1.15;
     letter-spacing: -0.02em;
   }
   .never span {

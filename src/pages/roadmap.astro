@@ -14,7 +14,7 @@ import { GITHUB_URL } from '../config';
 >
   <SiteHeader />
   <main id="main">
-    <div class="wrap head">
+    <div class="wrap page-head split">
       <h1>Where Emaki is going</h1>
       <p>
         What’s being worked on, what’s planned and the bigger ideas. There are no dates, and plans change as people use
@@ -60,25 +60,6 @@ import { GITHUB_URL } from '../config';
 </Base>
 
 <style>
-  .head {
-    display: grid;
-    gap: 16px 64px;
-    align-items: end;
-    padding-block: clamp(48px, 8vw, 96px) clamp(40px, 6vw, 64px);
-  }
-  @media (min-width: 900px) {
-    .head {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    }
-  }
-  .head h1,
-  .head p {
-    margin: 0;
-  }
-  .head p {
-    color: var(--text-dim);
-  }
-
   /* One ruler across all three groups: solid ticks for Now and Next, fading ones for Later. */
   .line {
     --cols: 1fr 2fr 1fr;

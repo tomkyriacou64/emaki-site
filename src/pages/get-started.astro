@@ -71,9 +71,9 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
 >
   <SiteHeader />
   <main id="main">
-    <div class="wrap head">
+    <div class="wrap page-head">
       <h1>From download to first export</h1>
-      <p>Emaki runs on Linux. Here's how to start it, what it needs, and five steps to a first animation.</p>
+      <p>Emaki runs on Linux. Here's how to start it, how to make a first animation, and the shortcuts worth knowing.</p>
     </div>
 
     <section class="wrap install" aria-labelledby="download">
@@ -101,7 +101,7 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
     </section>
 
     <section class="wrap needs" aria-labelledby="needs">
-      <h2 id="needs">What it needs</h2>
+      <h2 id="needs">Technical details</h2>
       <ul>
         <li><Icon name="check" size={18} /><span><b>64-bit Linux</b> with glibc 2.30 or newer (Ubuntu 20.04 and later, or similar)</span></li>
         <li><Icon name="check" size={18} /><span><b>Vulkan</b> graphics card and driver: Emaki draws and exports on the GPU</span></li>
@@ -170,18 +170,6 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
 </Base>
 
 <style>
-  .head {
-    padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 56px);
-    max-width: 52rem;
-  }
-  .head h1 {
-    margin-bottom: 16px;
-  }
-  .head p {
-    margin: 0;
-    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
-    color: var(--text-dim);
-  }
   h2 {
     font-size: clamp(1.5rem, 2.6vw, 2rem);
   }
@@ -251,6 +239,15 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     }
   }
+  .needs h2 {
+    margin: 0;
+    font-family: var(--font-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: var(--text-muted);
+  }
   .needs ul {
     list-style: none;
     margin: 0;
@@ -261,6 +258,7 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
     gap: 12px;
     padding: 12px 0;
     border-bottom: 1px solid var(--border);
+    font-size: 0.9375rem;
     color: var(--text-dim);
   }
   .needs li:first-child {
@@ -272,8 +270,8 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
   }
   .needs :global(svg) {
     flex: none;
-    margin-top: 4px;
-    color: var(--accent);
+    margin-top: 3px;
+    color: var(--text-muted);
   }
 
   /* First animation: five steps laid along a timeline, a second each. */
