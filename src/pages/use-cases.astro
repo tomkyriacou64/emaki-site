@@ -17,11 +17,11 @@ import mockups from '../assets/shots/mockups.png';
 >
   <SiteHeader />
   <main id="main">
-    <div class="wrap head">
-      <h1>Screens first, then posts, demos and stages</h1>
+    <div class="wrap page-head split">
+      <h1>Menu boards, posts, product demos and stage screens</h1>
       <p>
-        Emaki began in a digital signage company, so menu boards and window screens come first. It's just as much at
-        home with social posts, product demos and title cards for an event.
+        Emaki began in a digital signage company, so it's built around menu boards and window screens. It's just as
+        much at home with social posts, product demos and title cards for an event.
       </p>
     </div>
 
@@ -36,7 +36,7 @@ import mockups from '../assets/shots/mockups.png';
       <div class="wrap case-text">
         <div>
           <p class="kind">Digital signage</p>
-          <h2 id="signage">Menu boards that loop all day</h2>
+          <h2 id="signage">Menu boards on a loop, from opening to close</h2>
         </div>
         <div>
           <p>
@@ -76,9 +76,9 @@ import mockups from '../assets/shots/mockups.png';
             one project.
           </p>
           <ul class="specs">
-            <li>Text that animates by letter, word or line</li>
+            <li>Animate a headline by letter, word or line</li>
             <li>Export sizes made for the platform you post to, with a note when the shape doesn't match</li>
-            <li>GIF for chats and docs, MP4 or WebM for everything else</li>
+            <li>GIF to drop into a group chat, MP4 or WebM for the feed</li>
           </ul>
         </div>
       </div>
@@ -105,9 +105,9 @@ import mockups from '../assets/shots/mockups.png';
             mockup.
           </p>
           <ul class="specs">
-            <li>Device mockups that play in step with the artboard</li>
+            <li>Phone and laptop mockups showing the artboard at the frame you're editing</li>
             <li>Motion tracking and corner pin to put a design onto a screen in a video</li>
-            <li>Lottie export for animations that live inside apps and sites</li>
+            <li>Lottie, so the animation ships inside your app or site and stays sharp at any size</li>
           </ul>
         </div>
       </div>
@@ -132,7 +132,7 @@ import mockups from '../assets/shots/mockups.png';
           </p>
           <ul class="specs">
             <li>Kinetic type and logo reveal templates to start from</li>
-            <li>ProRes 4444 with transparency, for layering over other footage</li>
+            <li>ProRes 4444 with a transparent background, to sit over a camera feed or other video</li>
             <li>Sound from audio and video layers mixed into the export</li>
           </ul>
         </div>
@@ -143,26 +143,6 @@ import mockups from '../assets/shots/mockups.png';
 </Base>
 
 <style>
-  .head {
-    display: grid;
-    gap: 16px 64px;
-    align-items: end;
-    padding-block: clamp(48px, 8vw, 96px) clamp(40px, 6vw, 64px);
-  }
-  @media (min-width: 900px) {
-    .head {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    }
-  }
-  .head h1 {
-    margin: 0;
-    max-width: 16ch;
-  }
-  .head p {
-    margin: 0;
-    color: var(--text-dim);
-  }
-
   .case {
     padding-bottom: clamp(64px, 9vw, 112px);
   }

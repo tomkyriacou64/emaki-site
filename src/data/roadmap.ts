@@ -59,8 +59,8 @@ export const roadmap: RoadmapGroup[] = [
     note: 'Bigger ideas, still being thought through',
     items: [
       {
-        title: 'AI help, on your terms',
-        text: 'Ask for an animation in plain words. Off by default, every change undoable, with a model on your own computer or your own key.',
+        title: 'Describe an animation',
+        text: 'Type what you want to happen and an optional assistant builds it. Off by default, every change can be undone, and it uses a model on your computer or your own key.',
       },
       { title: 'Background removal for photos', text: 'An optional model that runs on your computer; nothing is uploaded.' },
       { title: 'Templates library', text: 'A larger set of editable templates that pick up your brand kit.' },

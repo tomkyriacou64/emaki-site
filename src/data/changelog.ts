@@ -39,25 +39,25 @@ export const releases: Release[] = [
   {
     version: '0.9.2',
     date: '2026-11-03',
-    summary: 'Stability and performance release, after a full audit of the app. Everyone on 0.9.1 should update.',
+    summary: 'Stability and performance release, after a full audit of the app.',
     sections: [
       {
         title: 'Fixed',
         items: [
-          'If autosave failed, crash-recovery copies stopped too. They are now always written.',
-          'Fixed several ways work could be lost: adding a kit’s font to its own kit emptied the font, version snapshots moved media out of the project, relinking to a different file of the same size didn’t copy it, and a damaged preferences file reset every setting (it’s now kept as a `.bad` backup).',
+          'If autosave failed, Emaki also stopped keeping the copies it uses to bring your work back after a crash. It now always keeps them.',
+          'Fixed several ways work could be lost: adding a kit’s font to its own kit emptied the font, version snapshots moved media out of the project, relinking to a different file of the same size didn’t copy it, and a damaged settings file reset every setting (the damaged file is now set aside instead of lost).',
           'Make slideshow no longer deletes layers that aren’t pictures or videos, and Paste to replace no longer deletes the targets when nothing was pasted.',
           'Fixed crashes when dragging slides or gradient stops, cutting out an empty image, and with very large style or animation-group numbers.',
-          'Exports can’t hang any more: a stuck FFmpeg times out and Cancel always works. A video that can’t be decoded now fails the export with a message instead of exporting blank. Audio decoding has a time limit. A full disk gets a plain message.',
-          'Lottie export of long, busy projects uses far less memory (20 s × 1000 layers: 6.7 GB → 0.9 GB, same output).',
-          'Chained fills, Counter → Change, Fade In and snapped spans now animate to the right end values.',
+          'Exports can’t hang any more: if FFmpeg stops responding the export gives up after a while, and Cancel always works. A video that can’t be read now stops the export with a message instead of exporting blank frames. Reading sound has a time limit too, and a full disk gets a plain message.',
+          'Lottie export of long, busy projects uses far less memory: 20 seconds of a 1000-layer project took 6.7 GB and now takes 0.9 GB, with the same result.',
+          'Some animations stopped short of where they should end: chained fills, Change on a counter, Fade in, and animations snapped to a length on the timeline. They now finish on the right values.',
           'Error messages read as sentences.',
         ],
       },
       {
         title: 'Faster',
         items: [
-          'Projects with many blurred, shadowed or glowing layers use much less memory: 1000 layers 1.9 GB → 0.37 GB, and a 5000-layer project now plays at about 400 MB instead of running out of memory.',
+          'Projects with many blurred, shadowed or glowing layers use much less memory: a 1000-layer project needs 0.37 GB instead of 1.9 GB, and a 5000-layer project now plays in about 400 MB instead of running out of memory.',
         ],
       },
       {
@@ -69,7 +69,7 @@ export const releases: Release[] = [
         items: [
           'Scenes with more than about 2000 layers (about 3000 with effects) are too complex to render or export.',
           'Very busy projects can show the occasional slow frame (about half a second) at certain points on the timeline.',
-          '`emaki --export` from the command line has no Cancel; a stuck video decoder blocks it until it times out.',
+          'Exporting from the command line (`emaki --export`) can’t be cancelled; if a video won’t play back, it waits until the time limit runs out.',
         ],
       },
     ],
@@ -77,7 +77,7 @@ export const releases: Release[] = [
   {
     version: '0.9.1',
     date: '2026-11-02',
-    summary: 'Security release. Everyone on 0.9.0 should update.',
+    summary: 'Security fixes, so projects and media from other people can’t harm your computer.',
     sections: [
       {
         title: 'Fixed',
@@ -86,7 +86,7 @@ export const releases: Release[] = [
           'Project media must be ordinary files inside the project; links to files outside it, devices and pipes are treated as missing.',
           'SVGs can no longer make Emaki read other files on your computer.',
           'FFmpeg only ever reads local files (never URLs) when opening, previewing or exporting projects.',
-          'The bundled FFmpeg is now a pinned build, checked against its SHA-256 before packaging.',
+          'The bundled FFmpeg is now one fixed build, checked against its known fingerprint (SHA-256) before packaging.',
           'Reading a video’s details times out instead of freezing the window; cancelling an export can no longer hang.',
           'Very deeply nested project files and oversized version snapshots are refused instead of crashing.',
         ],

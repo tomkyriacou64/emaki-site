@@ -26,7 +26,7 @@ const tracked = byFile('price-tag-tracking');
 // The four parts of the editor window, pinned on the screenshot (x, y as % of it).
 const parts = [
   { x: 12, y: 46, title: 'Layers', text: 'Shapes, text, images, video and sound, in groups and masks' },
-  { x: 42, y: 13, title: 'Canvas', text: 'Artboards side by side, and live device mockups that play in step with them' },
+  { x: 42, y: 13, title: 'Canvas', text: 'Artboards side by side, with live phone, laptop and TV mockups beside them' },
   { x: 88, y: 60, title: 'Inspector', text: 'Size, timing and styles, with a Design tab and an Animate tab' },
   { x: 30, y: 88, title: 'Timeline', text: 'Drag a bar to retime it, or its edges to change its length' },
 ];
@@ -40,14 +40,14 @@ const formats = [
 ];
 
 const also = [
-  { title: 'Masks', text: 'Clip layers to a shape, then animate the shape to reveal them.' },
-  { title: 'Components', text: 'Make a layer a component and place live copies, each with its own timing.' },
-  { title: 'Brand kits', text: 'Colours, text styles, logos and fonts, ready in every project.' },
-  { title: 'Version history', text: 'Save named versions of a project and go back to any of them.' },
-  { title: 'Audio and video', text: 'Trim clips on the timeline and hear the sound as you preview.' },
-  { title: 'Effects', text: 'Blur, frosted glass, soft shadows, blend modes and colour keying.' },
-  { title: 'Templates', text: 'Social posts, logo reveals, lower thirds, kinetic type, stories and menu boards.' },
-  { title: 'Figma plugin', text: 'Copy frames in Figma and paste them in as layers, ready to animate.' },
+  { title: 'Masks', text: 'Clip layers to a shape and animate the shape to reveal them' },
+  { title: 'Components', text: 'Make a layer a component and place live copies, each with its own timing' },
+  { title: 'Brand kits', text: 'Colours, text styles, logos and fonts in every project' },
+  { title: 'Version history', text: 'Save named versions of a project and go back to any of them' },
+  { title: 'Audio and video', text: 'Trim clips on the timeline and hear the sound as you preview' },
+  { title: 'Effects', text: 'Blur, frosted glass, soft shadows, blend modes and colour keying' },
+  { title: 'Templates', text: 'Social posts, logo reveals, lower thirds, kinetic type, stories and menu boards' },
+  { title: 'Figma plugin', text: 'Copy frames in Figma and paste them in as editable layers' },
 ];
 ---
 
@@ -79,7 +79,7 @@ const also = [
         <div class="head split">
           <div>
             <p class="mark"><time>0:05</time> The editor</p>
-            <h2 id="editor-title">One window, from first shape to export</h2>
+            <h2 id="editor-title">Layers, canvas, inspector and timeline in one window</h2>
           </div>
           <p>
             Everything sits where you can see it, and nothing opens in a separate app. Press <kbd>Space</kbd> and the
@@ -118,11 +118,11 @@ const also = [
         <div class="head split">
           <div>
             <p class="mark"><time>0:12</time> Made in Emaki</p>
-            <h2 id="made-title">Real clips, exported from Emaki</h2>
+            <h2 id="made-title">Every clip here is a built-in template</h2>
           </div>
           <p>
-            Each one is a built-in template, exported as it comes. Open the same template, put in your own words and
-            colours, and the timing is already done. <a href="/showcase">See them all</a>
+            Exported as they come, with nothing touched up afterwards. Open the same template, put in your own words
+            and colours, and the timing is already done. <a href="/showcase">See them all</a>
           </p>
         </div>
       </div>
@@ -168,9 +168,9 @@ const also = [
           <li class="row">
             <div class="row-copy">
               <p class="kind">Animate</p>
-              <h3>Presets first, keyframes when you want them</h3>
+              <h3>A gallery of presets, with keyframes underneath</h3>
               <p>
-                Pick an animation from the gallery and it lands on the timeline, ready to retime. Open it into keyframes,
+                Pick an animation from the gallery and it lands on the timeline as a bar you can drag. Open it into keyframes,
                 shape any easing in the graph editor, bend a move into a curve, or make a layer follow a path.
               </p>
             </div>
@@ -212,7 +212,7 @@ const also = [
                 a layer above a video to start; if the tracker is unsure about a frame, it marks it for you to fix.
               </p>
             </div>
-<figure class="tracked">
+            <figure class="tracked">
               <Clip clip={tracked} caption={false} />
               <figcaption>
                 Made with Emaki's tracking: the price tag is pinned to two points, the cup's handle and the spoon, so it
@@ -224,9 +224,9 @@ const also = [
           <li class="row">
             <div class="row-copy">
               <p class="kind">Colour</p>
-              <h3>Looks, then fine adjustments</h3>
+              <h3>Grade with looks and curves</h3>
               <p>
-                Start from a look such as Warm, Faded or Teal and orange, each previewed on your own layer. Then adjust
+                Start from a look such as Warm, Faded or Teal and orange, each previewed on your own layer. Adjust
                 exposure, contrast, highlights, temperature and curves, and compare before and after in a split view.
               </p>
             </div>
@@ -337,10 +337,12 @@ const also = [
         <p class="mark"><time>0:48</time> Get Emaki</p>
         <h2 id="get-title">Free, private and yours to keep</h2>
         <ul class="terms">
-          <li><b>Completely free</b><span>No paid tier, no trial, and soon open source, so it stays free.</span></li>
+          <li><b>Free for good</b><span>No paid tier and no trial. The code will be open source, so it stays free.</span></li>
           <li><b>Works offline</b><span>Design, animate and export with no internet connection.</span></li>
-          <li><b>No telemetry</b><span>Nothing about you or your work is sent anywhere.</span></li>
-          <li><b>Zero tracking or reporting</b><span>No account, no analytics, no crash reports.</span></li>
+          <li>
+            <b>No account, no tracking</b><span>No telemetry and zero tracking or reporting: no sign-up, analytics or crash
+            reports. Nothing about you or your work is sent anywhere.</span>
+          </li>
         </ul>
         <p class="caveat">
           Emaki goes online only when you ask it to: for the Google Fonts tab in the font picker, or to import a frame
@@ -351,7 +353,7 @@ const also = [
         <div class="release">
           <div>
             <p class="release-line">
-              Linux first. Mac and Windows are on the way.
+              Linux now, with Mac and Windows on the way
               {RELEASES_URL && <a href={RELEASES_URL}>All releases</a>}
             </p>
             <Cta />
@@ -495,7 +497,7 @@ const also = [
     color: var(--text-dim);
   }
 
-  /* Made in Emaki: the clips side by side like panels on a scroll, under a ruler that scrolls with them. */
+  /* Made in Emaki: the clips side by side like panels on a scroll. */
   .strip {
     --h: clamp(240px, 32vw, 400px);
     overflow-x: auto;
@@ -511,10 +513,7 @@ const also = [
     width: max-content;
     list-style: none;
     margin: 0;
-    padding: 24px max(1.25rem, (100vw - var(--wrap)) / 2) 0;
-    background:
-      repeating-linear-gradient(90deg, var(--border-strong) 0 1px, transparent 1px 16px) 0 0 / 100% 8px no-repeat,
-      linear-gradient(var(--border-strong), var(--border-strong)) 0 8px / 100% 1px no-repeat;
+    padding: 0 max(1.25rem, (100vw - var(--wrap)) / 2);
   }
   .strip li {
     flex: none;

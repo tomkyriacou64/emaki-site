@@ -18,11 +18,11 @@ const words = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
 >
   <SiteHeader />
   <main id="main">
-    <div class="wrap head">
-      <h1>Made in Emaki</h1>
+    <div class="wrap page-head split">
+      <h1>Clips at their real shape</h1>
       <p>
-        {words[count]} built-in templates, exported with Emaki 0.9.2 and only made smaller for the web. They hang here at
-        their real shapes, as they would on a screen. Each opens in the app with its timing in place.
+        {words[count]} of Emaki's built-in templates, exported with version 0.9.3 and only made smaller for the web.
+        Each one opens in the app with its timing in place, waiting for your own words.
       </p>
     </div>
 
@@ -50,33 +50,14 @@ const words = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
     </section>
 
     <p class="wrap foot-note">
-      Exported as MP4 with <code>emaki --export</code>. In the app you can also export WebM, ProRes 4444 with
-      transparency, GIF, Lottie and PNG. <a href="/use-cases">What each kind of clip is for</a>
+      These were saved as MP4 video. The app can also save WebM, ProRes 4444 with a transparent background, GIF,
+      Lottie and PNG. <a href="/use-cases">What each kind of clip is for</a>
     </p>
   </main>
   <SiteFooter />
 </Base>
 
 <style>
-  .head {
-    display: grid;
-    gap: 16px 64px;
-    align-items: end;
-    padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 56px);
-  }
-  @media (min-width: 900px) {
-    .head {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    }
-  }
-  .head h1 {
-    margin: 0;
-  }
-  .head p {
-    margin: 0;
-    color: var(--text-dim);
-  }
-
   /* The wall: a band a shade darker than the page, with a picture rail along the top. */
   .wall {
     background: var(--bg-alt);
