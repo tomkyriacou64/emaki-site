@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { roadmap } from '../data/roadmap';
+import { GITHUB_URL } from '../config';
+---
+
+<Base
+  title="Roadmap: Emaki"
+  description="Where Emaki, the desktop motion design app, is going: what's being worked on now, what's next and what's later."
+>
+  <SiteHeader />
+  <main id="main" class="wrap page-body">
+    <div class="page-head">
+      <p class="eyebrow">Roadmap</p>
+      <h1>Where Emaki is going</h1>
+      <p>
+        What’s being worked on, what’s planned and the bigger ideas. There are no dates, and plans change as people
+        use the app.
+      </p>
+    </div>
+
+    {
+      roadmap.map((g) => (
+        <section class="group" id={g.id} aria-labelledby={`${g.id}-title`}>
+          <div class="group-head">
+            <h2 id={`${g.id}-title`}>{g.title}</h2>
+            <p>{g.note}</p>
+          </div>
+          <ul class:list={['items', g.id]}>
+            {g.items.map((i) => (
+              <li>
+                <h3>{i.title}</h3>
+                <p>{i.text}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <section class="idea" aria-labelledby="idea-title">
+      <h2 id="idea-title">Have an idea?</h2>
+      <p>
+        Once the code is public, ideas, issues and contributions are all welcome.
+        {GITHUB_URL && <a href={GITHUB_URL}>Join in on GitHub</a>}
+      </p>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .group {
+    display: grid;
+    gap: 1rem 3rem;
+    padding-block: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--border);
+  }
+  @media (min-width: 860px) {
+    .group {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
+  }
+  .group-head h2 {
+    margin-bottom: 0.25rem;
+  }
+  .group-head p {
+    color: var(--text-dim);
+    margin: 0;
+  }
+  .items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 0.75rem;
+  }
+  .items li {
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .items.now li {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  }
+  .items.later li {
+    background: transparent;
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--text-dim) 35%, var(--border));
+  }
+  h3 {
+    margin-bottom: 0.3rem;
+  }
+  .items p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+  .idea {
+    margin-top: 1rem;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--pink) 25%, transparent), color-mix(in srgb, var(--peri) 25%, transparent)),
+      var(--surface);
+    border: 1px solid var(--border);
+  }
+  .idea p {
+    margin: 0;
+    color: var(--text-dim);
+  }
+</style>

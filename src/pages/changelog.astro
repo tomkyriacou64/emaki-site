@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { releases } from '../data/changelog';
+
+// Text in `backticks` becomes code; everything else stays plain text.
+const parts = (text: string) => text.split('`').map((t, i) => ({ code: i % 2 === 1, t }));
+const longDate = (d: string) =>
+  new Date(`${d}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title="Changelog: Emaki"
+  description="What changed in each release of Emaki, the desktop motion design app."
+>
+  <SiteHeader />
+  <main id="main" class="wrap page-body">
+    <div class="page-head">
+      <p class="eyebrow">Changelog</p>
+      <h1>What’s new in Emaki</h1>
+      <p>Every release, newest first. These are preview releases on the way to 1.0.</p>
+    </div>
+
+    <ol class="releases">
+      {
+        releases.map((r) => (
+          <li class="release" id={`v${r.version}`}>
+            <header>
+              <h2>
+                <a href={`#v${r.version}`}>Emaki {r.version}</a>
+              </h2>
+              <time datetime={r.date}>{longDate(r.date)}</time>
+            </header>
+            <div class="body">
+              <p class="summary">{r.summary}</p>
+              {r.sections.map((s) => (
+                <section>
+                  <h3>{s.title}</h3>
+                  <ul>
+                    {s.items.map((item) => (
+                      <li>{parts(item).map((p) => (p.code ? <code>{p.t}</code> : p.t))}</li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .releases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .release {
+    display: grid;
+    gap: 0.5rem 3rem;
+    padding-block: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--border);
+  }
+  @media (min-width: 860px) {
+    .release {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
+    header {
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+    }
+  }
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.25rem;
+  }
+  h2 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  h2 a:hover {
+    color: var(--accent);
+  }
+  time {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+  .body {
+    max-width: 46rem;
+  }
+  .summary {
+    font-size: 1.1rem;
+  }
+  section + section,
+  .summary + section {
+    margin-top: 1.5rem;
+  }
+  h3 {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-family: var(--font-text);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-dim);
+  }
+  .body li + li {
+    margin-top: 0.4rem;
+  }
+</style>
