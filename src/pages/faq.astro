@@ -1,0 +1,120 @@
+---
+import Page from '../layouts/Page.astro';
+---
+
+<Page
+  title="FAQ"
+  description="Short answers about Emaki: price, platforms, offline use, accounts, Figma import, motion tracking, file format, export formats and open source."
+  eyebrow="FAQ"
+  heading="Questions and answers"
+>
+  <p slot="intro">Short, honest answers. If yours isn't here, it may be on the <a href="/roadmap">roadmap</a>.</p>
+
+  <div class="faq prose">
+    <section>
+      <h2>Is it free? For good?</h2>
+      <p>
+        Yes. Emaki is free to download and use, with no paid tier. The code will be open source under the MIT and
+        Apache 2.0 licences, so it stays free even if the project changes hands.
+      </p>
+    </section>
+
+    <section>
+      <h2>Which platforms does it run on?</h2>
+      <p>
+        Linux now, as an AppImage that runs on most 64-bit distributions. macOS and Windows builds are planned for
+        later, once they've been tested on real machines.
+      </p>
+    </section>
+
+    <section>
+      <h2>Does it work offline?</h2>
+      <p>
+        Yes. Designing, animating, previewing and exporting all work without a network. Emaki only goes online when you
+        ask it to: when you open the Google Fonts tab in the font picker (and download a font from it), or when you
+        import a frame from Figma with a link. <a href="/privacy">More on privacy</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>Do I need an account?</h2>
+      <p>No. There is nothing to sign up for or sign in to, and no tracking.</p>
+    </section>
+
+    <section>
+      <h2>Can I import from Figma?</h2>
+      <p>Yes, in two ways:</p>
+      <ul>
+        <li>
+          <strong>The Emaki plugin for Figma.</strong> Select frames or layers, click <em>Copy for Emaki</em>, then
+          press <kbd>Ctrl</kbd>+<kbd>V</kbd> in Emaki. It works through your clipboard, with no account, token or
+          network. For now it installs as a development plugin in the Figma desktop app.
+        </li>
+        <li>
+          <strong>A link to a frame.</strong> Paste a frame's link and a Figma personal access token, and Emaki fetches
+          it through Figma's API.
+        </li>
+      </ul>
+      <p>
+        Either way the layers arrive as ordinary Emaki layers: frames with auto layout, shapes, text, vectors and
+        images, still editable and ready to animate.
+      </p>
+    </section>
+
+    <section>
+      <h2>What is motion tracking?</h2>
+      <p>
+        It follows a point in a video from frame to frame, so a layer can stick to it. Right-click a layer above a
+        video and pin it to one point (it moves with it) or two points (it also scales and turns). Where the tracker is
+        unsure, the frame is marked; drag the marker to fix it and tracking picks up from there. Tracking a screen's
+        four corners puts a design onto a moving screen.
+      </p>
+    </section>
+
+    <section>
+      <h2>What file format does it use?</h2>
+      <p>
+        A project is a <code>.emaki</code> folder: a <code>project.json</code> file with an <code>assets</code> folder
+        of its media beside it. You can back it up, sync it or zip it like any folder. Projects from before 0.9.2,
+        saved as <code>.motion</code>, still open and keep their names.
+      </p>
+    </section>
+
+    <section>
+      <h2>What can it export?</h2>
+      <p>
+        MP4 (H.264), WebM, ProRes 4444 with transparency, GIF, Lottie, and PNG as a single frame or a sequence. You can
+        export one artboard or all of them at once. Sound from audio and video layers is mixed into MP4, WebM and
+        ProRes. FFmpeg comes inside the AppImage, so every format works out of the box.
+      </p>
+    </section>
+
+    <section>
+      <h2>When will the code be public?</h2>
+      <p>Soon. There's no date yet. This site will link to it as soon as it's out.</p>
+    </section>
+
+    <section>
+      <h2>How can I help?</h2>
+      <p>
+        Once the code is public, bug reports, ideas and pull requests are all welcome. See
+        <a href="/contributing">Contributing</a> for how to build it and how changes are made.
+      </p>
+    </section>
+  </div>
+</Page>
+
+<style>
+  .faq section {
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .faq h2 {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+  .faq p:last-child,
+  .faq ul:last-child {
+    margin-bottom: 0;
+  }
+</style>
