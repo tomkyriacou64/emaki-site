@@ -11,6 +11,32 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    version: '0.9.3',
+    date: '2026-11-04',
+    summary: 'A fresh look: new colour themes, new sample content and a cleaner interface.',
+    sections: [
+      {
+        title: 'New',
+        items: [
+          'Four colour themes in Settings: Graphite (neutral charcoal, the default), Osaka (ink black with amber), Mist (light grey) and Washi (warm paper with indigo). Dark becomes Graphite and Light becomes Mist.',
+          'A new demo project and reworked templates: Social post, Logo reveal, Vertical story, Mask reveal, Variable weight, Emaki logo and Limited offer.',
+          'The eyedropper shows a magnifier with the pixels under the pointer, the colour and its hex value.',
+        ],
+      },
+      {
+        title: 'Improved',
+        items: [
+          'A smaller pen cursor with a thin outline.',
+          'Timeline rows match the Layers panel and line up with it.',
+          'Switches that are just on, like loop and snapping, no longer use the highlight colour.',
+          'Graph editor values are easier to read, all Add animation tabs fit, and Export uses one kind of choice for format and size.',
+          'The FFmpeg notice on Home wraps properly and shows its install commands clearly.',
+          'Tidier spacing and shorter hints throughout.',
+        ],
+      },
+    ],
+  },
+  {
     version: '0.9.2',
     date: '2026-11-03',
     summary: 'Stability and performance release, after a full audit of the app. Everyone on 0.9.1 should update.',
