@@ -7,6 +7,8 @@ import Feature from '../components/Feature.astro';
 import Icon from '../components/Icon.astro';
 import HeroScroll from '../components/HeroScroll.astro';
 import Cta from '../components/Cta.astro';
+import Clip from '../components/Clip.astro';
+import { byFile } from '../data/showcase';
 import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL } from '../config';
 
 import editor from '../assets/shots/hero-editor.png';
@@ -95,6 +97,23 @@ const storyPoints = [
           sizes="(min-width: 1200px) 1160px, 100vw"
           alt="The Emaki editor in the light theme: layers on the left, a landscape artboard in the middle with a gradient card on a curved motion path, the Animate tab with a Move animation and its easing curve on the right, and the timeline with coloured animation bars below."
         />
+      </div>
+    </section>
+
+    <section class="made" aria-labelledby="made-title">
+      <div class="wrap">
+        <div class="made-head">
+          <div>
+            <p class="eyebrow">Made in Emaki</p>
+            <h2 id="made-title">Templates that already move</h2>
+          </div>
+          <a class="btn btn-secondary" href="/showcase">See the showcase <Icon name="arrow" size={18} /></a>
+        </div>
+        <div class="made-grid">
+          <Clip clip={byFile('morning-coffee')} />
+          <Clip clip={byFile('kinetic-type')} />
+          <Clip clip={byFile('logo-reveal')} />
+        </div>
       </div>
     </section>
 
@@ -345,6 +364,9 @@ const storyPoints = [
             licences. No account, no tracking, and your projects stay on your computer.
           </p>
           <Cta />
+          <p class="get-links">
+            <a href="/get-started">Get started</a> · <a href="/faq">FAQ</a> · <a href="/privacy">Privacy</a>
+          </p>
         </div>
 
         <div class="platforms">
@@ -479,6 +501,31 @@ const storyPoints = [
   }
   .editor-head p:not(.eyebrow) {
     color: var(--text-dim);
+  }
+
+  .made {
+    padding-block: 0 clamp(3rem, 6vw, 5rem);
+  }
+  .made-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  }
+  .made-head h2 {
+    margin: 0;
+  }
+  .made-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+  }
+  .get-links {
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
   }
 
   #features {
