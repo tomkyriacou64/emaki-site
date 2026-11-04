@@ -334,6 +334,11 @@ code {
   font-size: 0.9rem;
   line-height: 1.5;
 }
+/* Long identifiers break rather than push the page sideways on phones. */
+.prose p code,
+.prose li code {
+  overflow-wrap: anywhere;
+}
 .prose pre code {
   padding: 0;
   background: none;

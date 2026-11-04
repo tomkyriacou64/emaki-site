@@ -112,6 +112,7 @@ const more = links.filter((l) => l.hide);
     font-weight: 500;
     font-size: 0.9375rem;
     padding: 8px 0;
+    white-space: nowrap;
     transition: color 150ms var(--ease);
   }
   a:not(.brand):hover {
@@ -186,6 +187,19 @@ const more = links.filter((l) => l.hide);
     }
     .more a:hover {
       background: var(--raised);
+    }
+  }
+  /* Room for the logo, two links and the menu button on the narrowest phones. */
+  @media (max-width: 440px) {
+    .brand :global(svg) {
+      height: 28px;
+      width: auto;
+    }
+    ul {
+      gap: 12px;
+    }
+    .menu-btn {
+      margin-right: -6px;
     }
   }
   @keyframes menu-in {

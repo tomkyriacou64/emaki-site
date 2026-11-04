@@ -99,6 +99,16 @@ const also = [
             ))
           }
         </div>
+        <div class="pinned-phone">
+          <Crop
+            src={editor}
+            x={0.585}
+            y={0.36}
+            zoom={4.3}
+            ratio={0.8}
+            alt="The middle of the Emaki editor at full size: a vertical sale story artboard shown on a phone mockup."
+          />
+        </div>
         <ol class="legend">
           {
             parts.map((p) => (
@@ -450,13 +460,23 @@ const also = [
     font-weight: 500;
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 70%, transparent);
   }
+  /* On phones the whole window would shrink its text below 11 px, so show the
+     canvas at full size instead, and the legend without the pin numbers. */
+  .pinned-phone {
+    display: none;
+  }
   @media (max-width: 600px) {
-    .pin {
-      width: 20px;
-      height: 20px;
-      margin: -10px 0 0 -10px;
-      font-size: 0.6875rem;
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--bg) 70%, transparent);
+    .pinned {
+      display: none;
+    }
+    .pinned-phone {
+      display: block;
+    }
+    .legend li {
+      display: block;
+    }
+    .legend li::before {
+      display: none;
     }
   }
   .legend {
