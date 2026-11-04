@@ -50,7 +50,7 @@ export const releases: Release[] = [
           'Fixed crashes when dragging slides or gradient stops, cutting out an empty image, and with very large style or animation-group numbers.',
           'Exports can’t hang any more: if FFmpeg stops responding the export gives up after a while, and Cancel always works. A video that can’t be read now stops the export with a message instead of exporting blank frames. Reading sound has a time limit too, and a full disk gets a plain message.',
           'Lottie export of long, busy projects uses far less memory: 20 seconds of a 1000-layer project took 6.7 GB and now takes 0.9 GB, with the same result.',
-          'Some animations stopped short of where they should end: chained fills, Change on a counter, Fade in, and animations snapped to a length on the timeline. They now finish on the right values.',
+          'Some animations stopped short of where they should end: chained fills, Change on a counter and Fade in. They now finish on the right values. Text styling that starts partway through a letter now styles that whole letter.',
           'Error messages read as sentences.',
         ],
       },
