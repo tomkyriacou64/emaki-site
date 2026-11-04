@@ -1,6 +1,6 @@
-// Clips for /showcase, all made in Emaki: each is one of the app's built-in
-// templates, exported with Emaki 0.9.2's `emaki --export` and re-encoded
-// small for the web. Files are in public/showcase/<file>.mp4 with a poster
+// Clips for /showcase, all made in Emaki: built-in templates exported with
+// Emaki 0.9.3's `emaki --export` (the menu boards with 0.9.2), plus the price
+// tag made with motion tracking, re-encoded small for the web. Files are in public/showcase/<file>.mp4 with a poster
 // frame at <file>.webp. See README.md for how to make more.
 
 export interface Clip {
@@ -33,7 +33,7 @@ export const clips: Clip[] = [
   {
     file: 'social-post',
     title: 'Social post',
-    caption: 'A square announcement: the words and the button animate in on a soft gradient card.',
+    caption: 'A square post for a spring makers market: the title, the date and the button land in turn, with a vase beside them.',
     width: 960,
     height: 960,
     use: 'Social',
@@ -41,23 +41,15 @@ export const clips: Clip[] = [
   {
     file: 'vertical-story',
     title: 'Vertical story',
-    caption: 'A 9:16 sale story, with the text and soft shapes animating in.',
+    caption: 'A 9:16 weekend sale story for an outfitters: the 40% off sticker pops in over the sale card.',
     width: 720,
     height: 1280,
     use: 'Social',
   },
   {
-    file: 'kinetic-type',
-    title: 'Kinetic type',
-    caption: 'Words land line by line while the background changes colour.',
-    width: 1280,
-    height: 720,
-    use: 'Events',
-  },
-  {
     file: 'logo-reveal',
     title: 'Logo reveal',
-    caption: 'A glowing mark pops in and morphs into a new shape, then the name rises letter by letter.',
+    caption: 'A dot turns into a diamond, and the name Northwind rises in letter by letter.',
     width: 1280,
     height: 720,
     use: 'Brand',
@@ -65,10 +57,10 @@ export const clips: Clip[] = [
   {
     file: 'mask-reveal',
     title: 'Mask reveal',
-    caption: 'Masks uncover each layer in its own way: the card wipes in, then the line beneath it.',
+    caption: 'A title card for a woodblock print exhibition: a circle mask opens the card and a wipe uncovers the dates.',
     width: 1280,
     height: 720,
-    use: 'Brand',
+    use: 'Events',
   },
   {
     // Not a template: a project built with Emaki's motion tracking (see README).
@@ -83,13 +75,13 @@ export const clips: Clip[] = [
 
 /**
  * The wall on /showcase, row by row; each row is hung at one height, so every
- * clip keeps its own shape. Logo reveal and Mask reveal are left off for now:
- * they still show the old violet gradient card, and come back once they are
- * exported again in the new theme.
+ * clip keeps its own shape. Kinetic type is left off: its template still reads
+ * as placeholder copy.
  */
 export const showcaseRows = [
   ['noodle-bar', 'morning-coffee'],
-  ['social-post', 'kinetic-type', 'vertical-story'],
+  ['social-post', 'logo-reveal', 'vertical-story'],
+  ['mask-reveal', 'price-tag-tracking'],
 ];
 
 export const byFile = (file: string) => clips.find((c) => c.file === file)!;

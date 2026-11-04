@@ -78,10 +78,13 @@ Each release gets an anchor, such as `/changelog#v1.0.0`.
 Clips live in `public/showcase/` as `<name>.mp4` (H.264, no sound) with a
 poster frame `<name>.webp`, and are listed in `src/data/showcase.ts`. Only
 use clips really made in Emaki. The current ones are built-in templates,
-exported with the released AppImage (0.9.2) in a throwaway profile:
+exported with the released AppImage in a throwaway profile (Social post,
+Vertical story, Logo reveal and Mask reveal with 0.9.3; the two menu boards
+with 0.9.2). Kinetic type is left off while its template still reads "MAKE IT
+MOVE TODAY.". For the poster, pick a moment after everything has landed:
 
 ```sh
-export XDG_DATA_HOME=/tmp/emk/data XDG_CONFIG_HOME=/tmp/emk/config XDG_CACHE_HOME=/tmp/emk/cache
+export XDG_DATA_HOME=/tmp/emk-w/data XDG_CONFIG_HOME=/tmp/emk-w/config XDG_CACHE_HOME=/tmp/emk-w/cache
 Emaki.AppImage --template "Morning coffee" morning-coffee.emaki
 Emaki.AppImage --export morning-coffee.emaki raw.mp4 --width 1280 --height 720 --fps 30
 ffmpeg -i raw.mp4 -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p -movflags +faststart -an public/showcase/morning-coffee.mp4
