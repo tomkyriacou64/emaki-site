@@ -22,7 +22,7 @@ const svg = raw
   .replaceAll('id="ef"', `id="${id}-f"`)
   .replaceAll('url(#eb)', `url(#${id}-b)`)
   .replaceAll('url(#ef)', `url(#${id}-f)`)
-  // Ribbons (back, front, highlight) get pathLength so CSS can draw them on.
+  // Ribbons (back, front) get pathLength so CSS can draw them on; the droplet pops in.
   .replace(/<path d="M (?=[^"]*" fill="none")/g, () => `<path class="ribbon r${ribbon++}" pathLength="1" d="M `)
   .replace(/<circle /, '<circle class="drop" ')
   .replace('fill="#1E1B2E"', 'fill="currentColor" class="word"');
@@ -52,7 +52,6 @@ const svg = raw
       animation: draw 1.1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
     }
     .animate :global(.r1) { animation-delay: 0.15s; }
-    .animate :global(.r2) { animation-delay: 0.9s; animation-duration: 0.5s; }
     .animate :global(.drop) {
       transform-box: fill-box;
       transform-origin: center;

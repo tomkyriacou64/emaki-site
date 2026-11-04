@@ -27,7 +27,7 @@
 :root {
   color-scheme: light dark;
 
-  /* Brand (assets/emaki-logo/README.txt): the logo's ribbons and the scenes drawn in the page only. */
+  /* Pastels for the scenes drawn in the page only (the logo has its own indigo and vermilion). */
   --pink: #ffb3c7;
   --butter: #ffe3a8;
   --mint: #a8e6cf;

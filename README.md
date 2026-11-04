@@ -173,8 +173,12 @@ Remember to update the `alt` text where a picture is used when it changes.
 - `src/assets/brand/logo-horizontal.svg`: inlined by `Logo.astro`, which
   colours the wordmark with the text colour and draws the ribbons on
   (skipped when the visitor prefers reduced motion).
+- The logo is indigo and vermilion: a back ribbon #9DB4D6 → #264D7E, a front
+  ribbon #F6B39A → #EE7A52 → #D9442F and a vermilion droplet, with no gloss.
+  The brand files, `scripts/logo-stacked.svg` and the favicons come from the
+  app repo's logo (task 070), so keep the two in step.
 - `public/favicon.svg`, `favicon.ico`, `apple-touch-icon.png`: from the
-  app's `assets/`.
+  app's logo files.
 - `public/og.png` (1200×630): made by `scripts/og-image.mjs` from
   `scripts/logo-stacked.svg`; `npm run og` rebuilds it on its own.
 
