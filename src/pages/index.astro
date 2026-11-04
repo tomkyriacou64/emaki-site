@@ -6,7 +6,8 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Shot from '../components/Shot.astro';
 import Crop from '../components/Crop.astro';
-import HeroScroll from '../components/HeroScroll.astro';
+import HeroEditor from '../components/HeroEditor.astro';
+import Emakimono from '../components/Emakimono.astro';
 import Cta from '../components/Cta.astro';
 import Clip from '../components/Clip.astro';
 import { byFile } from '../data/showcase';
@@ -61,8 +62,8 @@ const also = [
           <Cta tour />
         </div>
       </div>
-      <div class="wrap hero-scroll">
-        <HeroScroll />
+      <div class="hero-view">
+        <HeroEditor />
       </div>
     </section>
 
@@ -272,30 +273,29 @@ const also = [
       </div>
     </section>
 
-    <section class="scene origin" id="story" aria-labelledby="name-title">
-      <div class="wrap origin-grid">
-        <div class="origin-copy">
-          <p class="mark" id="name"><time>0:34</time> The name</p>
+    <section class="scene meaning" id="name" aria-labelledby="name-title">
+      <Emakimono>
+        <div slot="head" class="wrap meaning-head">
+          <p class="mark"><time>0:34</time> The name</p>
           <h2 id="name-title">Emaki means picture scroll</h2>
-          <p>
-            <span lang="ja">絵巻</span>, short for <span lang="ja-Latn">emakimono</span> (<span lang="ja">絵巻物</span>),
-            are Japanese illustrated handscrolls. The form flourished from the 12th century, late in the Heian period.
-            Among the best known are the Tale of Genji scrolls and the playful animals of the
-            <span lang="ja-Latn">Chōjū-jinbutsu-giga</span>.
-          </p>
-          <p>
-            You read an emaki a little at a time, unrolling it from right to left and rolling up what you have seen.
-            Scenes run into one another, so the story unfolds in time as the paper moves. A timeline in a motion editor
-            does much the same, which is where the app takes its name.
-          </p>
+        </div>
+        <p slot="hint" class="wrap hint">Read it from right to left. Scroll on, or drag the paper, to unroll it.</p>
+      </Emakimono>
+    </section>
 
-          <h2 class="story-title">Started on honeymoon in Japan</h2>
+    <section class="scene story" id="story" aria-labelledby="story-title">
+      <div class="wrap story-grid">
+        <div>
+          <p class="mark"><time>0:41</time> The story</p>
+          <h2 id="story-title">Started on honeymoon in Japan</h2>
+        </div>
+        <div class="story-copy">
           <p>
             I run a digital signage company. For years I made our content by designing in Figma, then animating it in
             Jitter. Jitter is good, but it was missing things I needed. I'm also a fan of open source, and none of the
             open-source tools ticked every box. So I built my own, starting it while on honeymoon in Japan.
           </p>
-          <p>
+          <p class="pull">
             Emaki is essentially Figma with animation, plus motion tracking. It's completely free, and its code will be
             open source soon.
           </p>
@@ -310,20 +310,12 @@ const also = [
             }
           </p>
         </div>
-        <div class="slip" aria-hidden="true">
-          <p class="kanji" lang="ja">絵巻</p>
-          <dl class="gloss">
-            <div><dt lang="ja">絵</dt><dd><span>e</span> picture</dd></div>
-            <div><dt lang="ja">巻</dt><dd><span>maki</span> scroll</dd></div>
-            <div><dt lang="ja">物</dt><dd><span>mono</span> thing</dd></div>
-          </dl>
-        </div>
       </div>
     </section>
 
     <section class="scene get" id="get" aria-labelledby="get-title">
       <div class="wrap">
-        <p class="mark"><time>0:41</time> Get Emaki</p>
+        <p class="mark"><time>0:48</time> Get Emaki</p>
         <h2 id="get-title">Free, offline, and kept on your computer</h2>
         <div class="terms">
           <div>
@@ -400,8 +392,9 @@ const also = [
     color: var(--text-dim);
     margin: 0 0 24px;
   }
-  .hero-scroll {
-    margin-top: clamp(40px, 6vw, 64px);
+  .hero-view {
+    width: min(100% - 2.5rem, 1320px);
+    margin: clamp(40px, 6vw, 64px) auto 0;
   }
 
   /* Scenes */
@@ -635,27 +628,43 @@ const also = [
     margin: 0;
   }
 
-  /* The name and the story, with the title slip on the right, where a scroll starts. */
-  .origin {
-    background: var(--bg-alt);
+  /* The name, told on the scroll, then the story. */
+  .meaning {
+    padding-bottom: clamp(32px, 5vw, 64px);
   }
-  .origin-grid {
+  .meaning-head h2 {
+    margin: 0;
+  }
+  .hint {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+  .story-grid {
     display: grid;
-    gap: 48px 96px;
+    gap: 24px 64px;
   }
   @media (min-width: 900px) {
-    .origin-grid {
-      grid-template-columns: minmax(0, 1fr) auto;
+    .story-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     }
   }
-  .origin-copy {
+  .story-grid h2 {
+    max-width: 14ch;
+  }
+  .story-copy {
     max-width: 40rem;
   }
-  .origin-copy p:not(.mark) {
+  .story-copy p {
     color: var(--text-dim);
   }
-  .story-title {
-    margin-top: 64px;
+  .story-copy .pull {
+    font-family: var(--font-serif);
+    font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+    line-height: 1.3;
+    color: var(--text);
+    margin: 32px 0;
   }
   .contribute {
     margin: 0;
@@ -664,66 +673,6 @@ const also = [
   }
   .contribute a {
     margin-left: 4px;
-  }
-  .slip {
-    display: flex;
-    gap: 32px;
-    align-items: flex-start;
-  }
-  @media (min-width: 900px) {
-    .slip {
-      position: sticky;
-      top: 48px;
-      align-self: start;
-      flex-direction: row-reverse;
-    }
-  }
-  .kanji {
-    margin: 0;
-    writing-mode: vertical-rl;
-    font-family: 'Noto Serif CJK JP', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-    font-size: clamp(4rem, 9vw, 8rem);
-    line-height: 1;
-    color: var(--text);
-    padding-inline: 16px;
-    border-inline: 1px solid var(--border-strong);
-  }
-  .gloss {
-    margin: 0;
-    display: grid;
-    gap: 16px;
-    align-content: start;
-  }
-  .gloss div {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-  .gloss dt {
-    font-family: 'Noto Serif CJK JP', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-    font-size: 1.5rem;
-    line-height: 1;
-  }
-  .gloss dd {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--text-muted);
-  }
-  .gloss dd span {
-    color: var(--text);
-    font-weight: 500;
-  }
-  @media (max-width: 899px) {
-    .slip {
-      order: -1;
-    }
-    .kanji {
-      writing-mode: horizontal-tb;
-      font-size: 4rem;
-      padding: 0 0 0 16px;
-      border-inline: 0;
-      border-left: 1px solid var(--border-strong);
-    }
   }
 
   /* Get Emaki */
