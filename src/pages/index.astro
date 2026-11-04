@@ -21,6 +21,7 @@ import colour from '../assets/shots/colour.png';
 // The clips on the home page: the ones whose look is their own, not the
 // demo's gradient card. The showcase has them all.
 const clips = ['morning-coffee', 'noodle-bar', 'kinetic-type', 'social-post'].map(byFile);
+const tracked = byFile('price-tag-tracking');
 
 // The four parts of the editor window, pinned on the screenshot (x, y as % of it).
 const parts = [
@@ -30,7 +31,13 @@ const parts = [
   { x: 30, y: 88, title: 'Timeline', text: 'Drag a bar to retime it, or its edges to change its length' },
 ];
 
-const formats = ['MP4', 'WebM', 'ProRes 4444', 'GIF', 'Lottie', 'PNG'];
+// Export formats, grouped by what they're for.
+const formats = [
+  { use: 'Screens and social', names: 'MP4 · WebM', text: 'Plays almost anywhere: signage players, phones, posts' },
+  { use: 'Editing', names: 'ProRes 4444', text: 'Keeps the transparency, to lay over other footage' },
+  { use: 'Web and apps', names: 'Lottie · GIF', text: 'Lottie stays sharp inside apps and sites; GIF for chats and docs' },
+  { use: 'Stills', names: 'PNG', text: 'One frame, or every frame as a sequence' },
+];
 
 const also = [
   { title: 'Masks', text: 'Clip layers to a shape, then animate the shape to reveal them.' },
@@ -111,11 +118,11 @@ const also = [
         <div class="head split">
           <div>
             <p class="mark"><time>0:12</time> Made in Emaki</p>
-            <h2 id="made-title">Real clips, straight from the export dialogue</h2>
+            <h2 id="made-title">Real clips, exported from Emaki</h2>
           </div>
           <p>
             Each one is a built-in template, exported as it comes. Open the same template, put in your own words and
-            colours, and the timing is already done. <a href="/showcase">See all seven</a>
+            colours, and the timing is already done. <a href="/showcase">See them all</a>
           </p>
         </div>
       </div>
@@ -182,8 +189,8 @@ const also = [
               <p class="kind">Type</p>
               <h3>Text by the letter, word or line</h3>
               <p>
-                Set text along a path that stays editable, and keyframe the weight and width of variable fonts. Use the
-                fonts on your computer, plus Google Fonts when you ask for them.
+                Set text along a path that stays editable, and animate how bold or wide a font is, for fonts that can
+                change. Use the fonts on your computer, plus Google Fonts when you ask for them.
               </p>
             </div>
             <Crop
@@ -201,15 +208,17 @@ const also = [
               <h3>Pin a layer to something in a video</h3>
               <p>
                 Motion tracking follows a point from frame to frame. Pin a layer to one point and it moves with it, or to
-                two and it also scales and turns. Track a screen's four corners and your design sits on it.
+                two and it also scales and turns. Track a screen's four corners and your design sits on it. Right-click
+                a layer above a video to start; if the tracker is unsure about a frame, it marks it for you to fix.
               </p>
             </div>
-            <ol class="list numbered" aria-label="How tracking works">
-              <li>Right-click a layer above a video</li>
-              <li>Pin it to one point, two points or four corners</li>
-              <li>Where the tracker is unsure, the frame is marked</li>
-              <li>Drag the marker to fix it, and tracking picks up from there</li>
-            </ol>
+<figure class="tracked">
+              <Clip clip={tracked} caption={false} />
+              <figcaption>
+                Made with Emaki's tracking: the price tag is pinned to two points, the cup's handle and the spoon, so it
+                moves, grows and turns with them. The footage is a drawn café table under a simulated handheld camera.
+              </figcaption>
+            </figure>
           </li>
 
           <li class="row">
@@ -233,15 +242,25 @@ const also = [
           <li class="row">
             <div class="row-copy">
               <p class="kind">Export</p>
-              <h3>One dialogue, six formats</h3>
+              <h3>Six formats, each for a job</h3>
               <p>
-                Export one artboard or all of them at once, at 1×, 2× or a size made for the platform you post to. Sound
-                from audio and video layers is mixed into MP4, WebM and ProRes.
+                Export one artboard or all of them at once, at the size the place you post to expects. Sound comes along
+                in the video formats.
               </p>
             </div>
-            <ul class="formats" aria-label="Export formats">
-              {formats.map((f) => <li>{f}</li>)}
-            </ul>
+            <dl class="formats">
+              {
+                formats.map((f) => (
+                  <div>
+                    <dt>{f.use}</dt>
+                    <dd>
+                      <b>{f.names}</b>
+                      <span>{f.text}</span>
+                    </dd>
+                  </div>
+                ))
+              }
+            </dl>
           </li>
         </ol>
 
@@ -287,7 +306,7 @@ const also = [
       <div class="wrap story-grid">
         <div>
           <p class="mark"><time>0:41</time> The story</p>
-          <h2 id="story-title">Started on honeymoon in Japan</h2>
+          <h2 id="story-title">I wanted Figma that moves, open to everyone</h2>
         </div>
         <div class="story-copy">
           <p>
@@ -316,35 +335,23 @@ const also = [
     <section class="scene get" id="get" aria-labelledby="get-title">
       <div class="wrap">
         <p class="mark"><time>0:48</time> Get Emaki</p>
-        <h2 id="get-title">Free, offline, and kept on your computer</h2>
-        <div class="terms">
-          <div>
-            <h3>Free for good</h3>
-            <p>
-              No paid tier and no trial. The code will be public soon under the MIT and Apache 2.0 licences, so it stays
-              free even if the project changes hands.
-            </p>
-          </div>
-          <div>
-            <h3>Works offline</h3>
-            <p>
-              Designing, animating and exporting need no network. Emaki goes online only when you ask: for the Google
-              Fonts tab in the font picker, or to import from Figma. <a href="/privacy">Privacy</a>
-            </p>
-          </div>
-          <div>
-            <h3>Plain folders</h3>
-            <p>
-              A project is a folder with its media beside it, saved wherever you like. Autosave, crash recovery and
-              version history keep it safe.
-            </p>
-          </div>
-        </div>
+        <h2 id="get-title">Free, private and yours to keep</h2>
+        <ul class="terms">
+          <li><b>Completely free</b><span>No paid tier, no trial, and soon open source, so it stays free.</span></li>
+          <li><b>Works offline</b><span>Design, animate and export with no internet connection.</span></li>
+          <li><b>No telemetry</b><span>Nothing about you or your work is sent anywhere.</span></li>
+          <li><b>Zero tracking or reporting</b><span>No account, no analytics, no crash reports.</span></li>
+        </ul>
+        <p class="caveat">
+          Emaki goes online only when you ask it to: for the Google Fonts tab in the font picker, or to import a frame
+          from Figma. Projects are plain folders on your computer, with autosave and version history.
+          <a href="/privacy">Privacy</a>
+        </p>
 
         <div class="release">
           <div>
             <p class="release-line">
-              One AppImage for 64-bit distributions, with FFmpeg included. Builds for macOS and Windows come later.
+              Linux first. Mac and Windows are on the way.
               {RELEASES_URL && <a href={RELEASES_URL}>All releases</a>}
             </p>
             <Cta />
@@ -356,7 +363,7 @@ const also = [
           </p>
         </div>
         <p class="next">
-          Next on the roadmap: one design in every format, data-driven templates, auto captions and audio-driven motion.
+          Next on the roadmap: one design in every shape at once, templates filled in from a spreadsheet, automatic captions and motion that follows the music.
         </p>
       </div>
     </section>
@@ -439,7 +446,7 @@ const also = [
     background: var(--ink);
     color: var(--bg);
     font-size: 0.8125rem;
-    font-weight: 600;
+    font-weight: 500;
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 70%, transparent);
   }
   @media (max-width: 600px) {
@@ -476,7 +483,7 @@ const also = [
     border-radius: 50%;
     border: 1px solid var(--border-strong);
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text);
   }
   .legend h3 {
@@ -587,17 +594,51 @@ const also = [
     color: var(--text-muted);
   }
   .formats {
-    list-style: none;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+    border-top: 1px solid var(--border-strong);
+  }
+  .formats > div {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
     gap: 4px 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .formats dt {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    padding-top: 6px;
+  }
+  .formats dd {
+    margin: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .formats b {
     font-family: var(--font-head);
-    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
     font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .formats span {
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+  }
+  @media (max-width: 480px) {
+    .formats > div {
+      grid-template-columns: 1fr;
+    }
+    .formats dt {
+      padding-top: 0;
+    }
+  }
+  .tracked {
+    margin: 0;
+  }
+  .tracked figcaption {
+    margin-top: 12px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
   }
   .also {
     margin-top: 64px;
@@ -680,17 +721,43 @@ const also = [
     max-width: 20ch;
   }
   .terms {
+    list-style: none;
+    margin: 48px 0 0;
+    padding: 0;
     display: grid;
-    gap: 32px 48px;
-    margin-top: 48px;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 0 48px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    grid-auto-rows: auto;
   }
-  .terms h3 {
-    margin-bottom: 8px;
+  .terms li {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: 8px;
+    padding-top: 16px;
+    border-top: 2px solid var(--text);
   }
-  .terms p {
-    margin: 0;
+  .terms li + li {
+    margin-top: 0;
+  }
+  .terms span {
+    padding-bottom: 32px;
+  }
+  .terms b {
+    font-family: var(--font-head);
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .terms span {
     color: var(--text-dim);
+  }
+  .caveat {
+    margin: 32px 0 0;
+    max-width: 46rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
   }
   .release {
     display: flex;

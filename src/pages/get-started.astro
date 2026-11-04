@@ -90,6 +90,7 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
           )
         }
         <Cta />
+        <p class="fine">One AppImage for 64-bit Linux distributions, with FFmpeg included.</p>
       </div>
       <figure class="term">
         <figcaption class="visually-hidden">Terminal commands to run the AppImage</figcaption>
@@ -200,6 +201,11 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
   .install-copy p {
     color: var(--text-dim);
     margin-bottom: 24px;
+  }
+  .fine {
+    margin: 16px 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
   }
   .term {
     margin: 0;

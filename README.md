@@ -94,13 +94,42 @@ it shows the poster until the visitor presses play.
 
 ## The hero
 
-`src/components/HeroScroll.astro` draws a handscroll that unrolls right to
-left on load, with a small animated scene on an artboard and a timeline
-under it. One `requestAnimationFrame` clock drives the scene, the playhead
-and the timecode; it pauses off screen and in hidden tabs, and the play
+`src/components/HeroEditor.astro` draws the editor in code: layers, an
+artboard with a small café-screen scene, the inspector and the timeline. One
+`requestAnimationFrame` clock drives the scene, the playhead, the timecode and
+the inspector's X and Y; it pauses off screen and in hidden tabs, and the play
 button pauses it for good. The markup is the composed still frame, which is
-what visitors see without JavaScript or when they prefer reduced motion
-(they can still press play).
+what visitors see without JavaScript or when they prefer reduced motion.
+
+## The scroll
+
+`src/components/Emakimono.astro` tells "Emaki means picture scroll" on a
+handscroll: brocade cover with a title slip, cord, washi sheets, ink pictures
+and the roller with its knobs. While the page scrolls past, it stays pinned and
+unrolls right to left a section at a time (dragging the paper, or the roller
+with the arrow keys, does the same). Everything moves by transforms; the
+brushed text is real text under one SVG filter (`#emaki-ink`, and a gentler
+`#emaki-ink-fine` for small text). Without JavaScript, or with reduced motion,
+it is laid open as a row that scrolls sideways where it doesn't fit.
+
+Fonts for it live in `public/fonts/`: Newsreader (latin and latin-ext) and
+Yuji Syuku cut down to the characters on the scroll. If you add Japanese text
+there, fetch a new cut with every character it needs, from
+`https://fonts.googleapis.com/css2?family=Yuji+Syuku&text=<characters>`
+(both SIL OFL).
+
+## The tracking clip
+
+`public/showcase/price-tag-tracking.mp4` was made with Emaki's own tracking
+(`motion_ui::tracking::Session`, the same code as Right-click › Track motion),
+not animated by hand. The footage is a drawn café table rendered frame by
+frame in Chromium under a simulated handheld camera; a small harness built the
+project (the video, a price-tag group, a two-point track from the cup handle
+and the spoon), and the released AppImage exported it:
+
+```sh
+Emaki.AppImage --export price-tag.emaki raw.mp4 --width 1280 --height 720 --fps 30
+```
 
 ## Screenshots
 
@@ -146,4 +175,5 @@ Remember to update the `alt` text where a picture is used when it changes.
 - `public/og.png` (1200×630): made by `scripts/og-image.mjs` from
   `scripts/logo-stacked.svg`; `npm run og` rebuilds it on its own.
 
-Fonts are self-hosted from `@fontsource` (Inter and Outfit, both SIL OFL).
+Fonts are self-hosted: Inter and Outfit from `@fontsource`, Newsreader and a
+Yuji Syuku cut in `public/fonts/` (all SIL OFL).

@@ -39,7 +39,7 @@
   --ink: #1f1b16;
   --text: #1f1b16;
   --text-dim: #5a5146;
-  --text-muted: #73695d;
+  --text-muted: #6c6256;
   --border: rgb(31 27 22 / 0.09);
   --border-strong: rgb(31 27 22 / 0.18);
   --accent: #264d7e;
@@ -134,7 +134,7 @@ h2 {
 h3 {
   font-family: var(--font-text);
   font-size: 1.0625rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0;
 }
@@ -338,7 +338,7 @@ code {
   vertical-align: top;
 }
 .table th {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text);
 }
 .table td {
