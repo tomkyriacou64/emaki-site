@@ -10,7 +10,7 @@ export interface Clip {
   width: number;
   height: number;
   /** What it's good for, for the use-case tags. */
-  use: 'Signage' | 'Social' | 'Brand' | 'Events';
+  use: 'Signage' | 'Social' | 'Brand' | 'Events' | 'Tracking';
 }
 
 export const clips: Clip[] = [
@@ -69,6 +69,15 @@ export const clips: Clip[] = [
     width: 1280,
     height: 720,
     use: 'Brand',
+  },
+  {
+    // Not a template: a project built with Emaki's motion tracking (see README).
+    file: 'price-tag-tracking',
+    title: 'Price tag',
+    caption: 'A price tag pinned to a cup and spoon with motion tracking, over a drawn café table and a handheld camera.',
+    width: 1280,
+    height: 720,
+    use: 'Tracking',
   },
 ];
 

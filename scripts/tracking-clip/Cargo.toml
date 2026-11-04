@@ -1,0 +1,17 @@
+[package]
+name = "trackclip"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+motion-core = { path = "/home/tom/Projects/Jitter/motion-studio/crates/motion-core" }
+motion-animation = { path = "/home/tom/Projects/Jitter/motion-studio/crates/motion-animation" }
+motion-project = { path = "/home/tom/Projects/Jitter/motion-studio/crates/motion-project" }
+motion-ui = { path = "/home/tom/Projects/Jitter/motion-studio/crates/motion-ui" }
+egui = "0.37"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3

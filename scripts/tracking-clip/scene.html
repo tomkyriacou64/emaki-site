@@ -1,0 +1,93 @@
+<!doctype html><html><head><style>
+html,body{margin:0;width:1280px;height:720px;overflow:hidden;background:#3a2617}
+#cam{position:absolute;left:0;top:0;width:2600px;height:1700px;transform-origin:0 0}
+</style></head><body>
+<div id="cam"><svg width="2600" height="1700" viewBox="0 0 2600 1700" xmlns="http://www.w3.org/2000/svg">
+<defs>
+ <filter id="wood" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.0025 0.09" numOctaves="4" seed="8"/>
+  <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.35  0 0 0 0 0.2  0 0 0 -1.1 1.05"/>
+ </filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="2"/><feColorMatrix values="0 0 0 0 0.2 0 0 0 0 0.12 0 0 0 0 0.05 0 0 0 0.25 0"/></filter>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+ <radialGradient id="coffee" cx="0.45" cy="0.4"><stop offset="0" stop-color="#8a5532"/><stop offset="1" stop-color="#4e2c17"/></radialGradient>
+ <radialGradient id="cer" cx="0.4" cy="0.35"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6e0d6"/></radialGradient>
+ <linearGradient id="steel" x1="0" x2="1"><stop offset="0" stop-color="#8d9196"/><stop offset="0.5" stop-color="#e3e6ea"/><stop offset="1" stop-color="#7c8086"/></linearGradient>
+ <radialGradient id="crois" cx="0.5" cy="0.4"><stop offset="0" stop-color="#e7a85a"/><stop offset="1" stop-color="#a8622a"/></radialGradient>
+</defs>
+<rect width="2600" height="1700" fill="#7a4e2e"/>
+<rect width="2600" height="1700" filter="url(#wood)"/>
+<g stroke="#3d2414" stroke-width="5" opacity="0.7"><path d="M0 420H2600M0 860H2600M0 1300H2600"/></g>
+<rect width="2600" height="1700" filter="url(#grain)"/>
+<!-- menu card -->
+<g transform="translate(1720 180) rotate(8)">
+ <rect x="10" y="20" width="520" height="700" fill="#000" opacity="0.35" filter="url(#shadow)"/>
+ <rect width="520" height="700" fill="#f3ead9"/>
+ <text x="44" y="96" font-family="Georgia,serif" font-size="56" fill="#2a1f16">Daybreak</text>
+ <g fill="#5b4a3a" font-family="Georgia,serif" font-size="30">
+  <text x="44" y="190">Flat white</text><text x="380" y="190">4.80</text>
+  <text x="44" y="250">Latte</text><text x="380" y="250">4.80</text>
+  <text x="44" y="310">Cappuccino</text><text x="380" y="310">4.80</text>
+  <text x="44" y="370">Mocha</text><text x="380" y="370">5.40</text>
+  <text x="44" y="430">Chai latte</text><text x="380" y="430">5.20</text>
+  <text x="44" y="490">Pot of tea</text><text x="380" y="490">4.50</text>
+ </g>
+ <path d="M44 560H476" stroke="#b9a88f" stroke-width="2"/>
+</g>
+<!-- plate with croissant -->
+<g transform="translate(560 1180)">
+ <circle r="300" cx="16" cy="30" fill="#000" opacity="0.4" filter="url(#shadow)"/>
+ <circle r="300" fill="url(#cer)"/><circle r="230" fill="none" stroke="#d8d0c2" stroke-width="4"/>
+ <g transform="rotate(-20)">
+  <path d="M-200 40 C-160 -120 160 -120 200 40 C150 -20 -150 -20 -200 40Z" fill="url(#crois)"/>
+  <g fill="none" stroke="#8a4c1f" stroke-width="7" stroke-linecap="round"><path d="M-110 -40 C-100 -10 -90 10 -95 30"/><path d="M-40 -70 C-35 -30 -30 0 -32 20"/><path d="M40 -70 C35 -30 30 0 32 20"/><path d="M110 -40 C100 -10 90 10 95 30"/></g>
+ </g>
+ <g fill="#c4843f"><circle cx="-120" cy="150" r="7"/><circle cx="-60" cy="190" r="5"/><circle cx="90" cy="170" r="6"/></g>
+</g>
+<!-- sugar packets -->
+<g transform="translate(860 520) rotate(-14)"><rect x="6" y="10" width="190" height="80" fill="#000" opacity="0.3" filter="url(#soft)"/><rect width="190" height="80" rx="6" fill="#f6f1e8"/><rect x="0" y="0" width="34" height="80" rx="6" fill="#264d7e"/><text x="54" y="52" font-family="Georgia,serif" font-size="30" fill="#264d7e">sugar</text></g>
+<!-- saucer, cup, spoon -->
+<g transform="translate(1300 900)">
+ <circle r="270" cx="20" cy="34" fill="#000" opacity="0.45" filter="url(#shadow)"/>
+ <circle r="270" fill="url(#cer)"/><circle r="200" fill="none" stroke="#d9d1c4" stroke-width="5"/>
+ <!-- spoon -->
+ <g transform="rotate(38)">
+  <rect x="-14" y="-6" width="320" height="22" rx="11" fill="url(#steel)" transform="translate(150 -2)"/>
+  <ellipse cx="150" cy="5" rx="56" ry="34" fill="url(#steel)"/>
+  <circle cx="462" cy="5" r="20" fill="#2c2f33"/>
+  <circle cx="462" cy="5" r="8" fill="#e3e6ea"/>
+ </g>
+ <!-- handle -->
+ <rect x="150" y="-44" width="150" height="88" rx="44" fill="#000" opacity="0.3" filter="url(#soft)" transform="translate(8 10)"/>
+ <rect x="150" y="-40" width="140" height="80" rx="40" fill="url(#cer)" stroke="#cfc6b8" stroke-width="3"/>
+ <rect x="212" y="-16" width="56" height="32" rx="16" fill="#7a4e2e"/>
+ <circle r="180" fill="#000" opacity="0.35" filter="url(#soft)" cx="6" cy="10"/>
+ <circle r="180" fill="url(#cer)"/>
+ <circle r="150" fill="url(#coffee)"/>
+ <!-- latte art heart -->
+ <path d="M0 95 C-60 40 -110 -10 -80 -55 C-55 -90 -15 -70 0 -40 C15 -70 55 -90 80 -55 C110 -10 60 40 0 95Z" fill="#f2e2c8"/>
+ <path d="M0 -40 C 0 0 0 40 0 95" stroke="#9a6a43" stroke-width="5" fill="none"/>
+ <path d="M-50 -30 C-30 -10 30 -10 50 -30" stroke="#b78557" stroke-width="5" fill="none"/>
+</g>
+</svg></div>
+<script>
+const cam=document.getElementById('cam');
+// Handheld: a slow push in and pan, with a little sway and turn.
+function at(t){
+  const k=t/6;
+  const s=0.62+0.16*(0.5-0.5*Math.cos(Math.PI*k));
+  const cx=1300+120*Math.sin(Math.PI*k)+14*Math.sin(t*2.3)-90*k;
+  const cy=850-60*k+10*Math.sin(t*1.7+1);
+  const r=(-3+6*k+0.8*Math.sin(t*1.3))*Math.PI/180;
+  return {s,cx,cy,r};
+}
+function setT(t){
+  const {s,cx,cy,r}=at(t);
+  const c=Math.cos(r)*s, si=Math.sin(r)*s;
+  // screen = R*S*(p - centre) + (640,360)
+  cam.style.transform=`matrix(${c},${si},${-si},${c},${640-(c*cx-si*cy)},${360-(si*cx+c*cy)})`;
+}
+function toScreen(px,py,t){const {s,cx,cy,r}=at(t);const c=Math.cos(r)*s, si=Math.sin(r)*s;return [c*(px-cx)-si*(py-cy)+640, si*(px-cx)+c*(py-cy)+360];}
+setT(0);
+</script></body></html>
