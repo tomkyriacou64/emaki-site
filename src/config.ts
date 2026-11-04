@@ -5,7 +5,7 @@
 /**
  * Where "Get notified when it's out" goes: a sign-up page on a mailing list
  * service, opened in the same tab. While it is empty the call to action reads
- * "Coming soon: free and open source", with no button.
+ * "Coming soon to Linux", with no button.
  */
 export const NOTIFY_URL = '';
 

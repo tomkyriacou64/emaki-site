@@ -24,7 +24,7 @@ isn't there yet.
 - **Notify link (`NOTIFY_URL`):** the sign-up page of a mailing list
   service, for "Get notified when it's out". There is no backend and no
   form on the site; the button is a plain link. While it is empty, the call
-  to action reads "Coming soon: free and open source", with no button.
+  to action reads "Coming soon to Linux", with no button.
 - **Download link (`APPIMAGE_URL`):** the real AppImage URL (for example a
   GitHub release asset). Set it and a "Download for Linux" button appears
   in the hero and in Get Emaki.
