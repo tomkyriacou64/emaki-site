@@ -1,154 +1,393 @@
 ---
-import Page from '../layouts/Page.astro';
+// What Emaki is for, each case led by its clip in the place it would play:
+// menu boards on a café wall, a story and a post on phones, a product demo in
+// the editor, and title cards on a stage screen.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import Clip from '../components/Clip.astro';
 import Shot from '../components/Shot.astro';
 import { byFile } from '../data/showcase';
 import mockups from '../assets/shots/mockups.png';
 ---
 
-<Page
-  title="Use cases"
-  description="What Emaki is for: digital signage, social media, product and UI demos, and presentations and events."
-  heading="Screens first, then posts, demos and stages"
+<Base
+  title="Use cases: Emaki"
+  description="What Emaki is for: menu boards and screens for digital signage, social posts and stories, product and UI demos, and title cards for events."
 >
-  <p slot="intro">
-    Emaki began in a digital signage company, so menu boards and window screens come first. It's just as much at home
-    with social posts, product demos and title cards for an event.
-  </p>
-
-  <section class="case" aria-labelledby="signage">
-    <div class="case-head">
-      <h2 id="signage">Digital signage</h2>
+  <SiteHeader />
+  <main id="main">
+    <div class="wrap head">
+      <h1>Screens first, then posts, demos and stages</h1>
       <p>
-        Menu boards, window screens and waiting-room loops. Design in landscape or portrait at the screen's own size,
-        set the length, and export a video that loops cleanly on a media player.
+        Emaki began in a digital signage company, so menu boards and window screens come first. It's just as much at
+        home with social posts, product demos and title cards for an event.
       </p>
     </div>
-    <div class="media wide-tall">
-      <Clip clip={byFile('morning-coffee')} />
-      <Clip clip={byFile('noodle-bar')} />
-    </div>
-    <ul class="specs">
-      <li>Menu board templates in landscape and portrait, plus multi-screen sets such as a drive-thru pair and a four-screen counter wall</li>
-      <li>Preview the design on a TV mockup, turned either way, as you edit</li>
-      <li>Export MP4 for players and screens, or a PNG for a still board</li>
-    </ul>
-  </section>
 
-  <section class="case" aria-labelledby="social">
-    <div class="case-head">
-      <h2 id="social">Social media</h2>
-      <p>
-        Posts, stories and short clips. Start from a square post or a vertical story, or put story, square and
-        landscape artboards side by side in one project.
-      </p>
-    </div>
-    <div class="media square-tall">
-      <Clip clip={byFile('social-post')} />
-      <Clip clip={byFile('vertical-story')} />
-    </div>
-    <ul class="specs">
-      <li>Text that animates by letter, word or line</li>
-      <li>Export sizes made for the platform you post to, with a note when the shape doesn't match</li>
-      <li>GIF for chats and docs, MP4 or WebM for everything else</li>
-    </ul>
-  </section>
+    <section class="case" aria-labelledby="signage">
+      <div class="place cafe">
+        <div class="cafe-wall">
+          <div class="screen landscape"><Clip clip={byFile('morning-coffee')} caption={false} /></div>
+          <div class="screen portrait"><Clip clip={byFile('noodle-bar')} caption={false} /></div>
+        </div>
+        <div class="counter" aria-hidden="true"></div>
+      </div>
+      <div class="wrap case-text">
+        <div>
+          <p class="kind">Digital signage</p>
+          <h2 id="signage">Menu boards that loop all day</h2>
+        </div>
+        <div>
+          <p>
+            Menu boards, window screens and waiting-room loops. Design in landscape or portrait at the screen's own
+            size, set the length, and export a video that loops cleanly on a media player.
+          </p>
+          <ul class="specs">
+            <li>Menu board templates in landscape and portrait, plus multi-screen sets such as a drive-thru pair and a four-screen counter wall</li>
+            <li>Preview the design on a TV mockup, turned either way, as you edit</li>
+            <li>Export MP4 for players and screens, or a PNG for a still board</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <section class="case" aria-labelledby="product">
-    <div class="case-head">
-      <h2 id="product">Product and UI demos</h2>
-      <p>
-        Show an app or a site at work. Paste screens in from Figma with the plugin, animate them, and show the result on
-        a live phone or laptop mockup.
-      </p>
-    </div>
-    <div class="media">
-      <Shot
-        src={mockups}
-        sizes="(min-width: 1200px) 1160px, 100vw"
-        alt="A vertical sale story artboard beside the same design on a phone mockup, both at the same frame."
-      />
-    </div>
-    <ul class="specs">
-      <li>Device mockups that play in step with the artboard</li>
-      <li>Motion tracking and corner pin to put a design onto a screen in a video</li>
-      <li>Lottie export for animations that live inside apps and sites</li>
-    </ul>
-  </section>
+    <section class="case" aria-labelledby="social">
+      <div class="place table">
+        <div class="phones">
+          <div class="phone">
+            <div class="feed">
+              <p class="feed-head" aria-hidden="true"><span class="avatar"></span>daybreak.coffee</p>
+              <Clip clip={byFile('social-post')} caption={false} />
+              <p class="feed-foot" aria-hidden="true">New this week. Swap the text, keep the motion.</p>
+            </div>
+          </div>
+          <div class="phone story"><Clip clip={byFile('vertical-story')} caption={false} /></div>
+        </div>
+      </div>
+      <div class="wrap case-text">
+        <div>
+          <p class="kind">Social media</p>
+          <h2 id="social">Posts and stories at the right size</h2>
+        </div>
+        <div>
+          <p>
+            Start from a square post or a vertical story, or put story, square and landscape artboards side by side in
+            one project.
+          </p>
+          <ul class="specs">
+            <li>Text that animates by letter, word or line</li>
+            <li>Export sizes made for the platform you post to, with a note when the shape doesn't match</li>
+            <li>GIF for chats and docs, MP4 or WebM for everything else</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <section class="case" aria-labelledby="events">
-    <div class="case-head">
-      <h2 id="events">Presentations and events</h2>
-      <p>
-        Title cards, logo reveals and stage loops. Play an artboard full screen from the editor with
-        <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, or export it for the venue's playback.
-      </p>
-    </div>
-    <div class="media single">
-      <Clip clip={byFile('kinetic-type')} />
-    </div>
-    <ul class="specs">
-      <li>Kinetic type and logo reveal templates to start from</li>
-      <li>ProRes 4444 with transparency, for layering over other footage</li>
-      <li>Sound from audio and video layers mixed into the export</li>
-    </ul>
-  </section>
-</Page>
+    <section class="case" aria-labelledby="product">
+      <div class="place desk">
+        <div class="desk-inner">
+          <Shot
+            src={mockups}
+            sizes="(min-width: 1200px) 1100px, 100vw"
+            alt="Emaki with a vertical sale story artboard beside the same design on a phone mockup, both at the same frame."
+          />
+        </div>
+      </div>
+      <div class="wrap case-text">
+        <div>
+          <p class="kind">Product and UI demos</p>
+          <h2 id="product">An app at work, on the device it runs on</h2>
+        </div>
+        <div>
+          <p>
+            Paste screens in from Figma with the plugin, animate them, and show the result on a live phone or laptop
+            mockup.
+          </p>
+          <ul class="specs">
+            <li>Device mockups that play in step with the artboard</li>
+            <li>Motion tracking and corner pin to put a design onto a screen in a video</li>
+            <li>Lottie export for animations that live inside apps and sites</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="case" aria-labelledby="events">
+      <div class="place stage">
+        <div class="projection"><Clip clip={byFile('kinetic-type')} caption={false} /></div>
+        <div class="audience" aria-hidden="true">
+          {Array.from({ length: 14 }, (_, i) => <span style={`--i: ${i}`}></span>)}
+        </div>
+      </div>
+      <div class="wrap case-text">
+        <div>
+          <p class="kind">Presentations and events</p>
+          <h2 id="events">Title cards for the big screen</h2>
+        </div>
+        <div>
+          <p>
+            Title cards, logo reveals and stage loops. Play an artboard full screen from the editor with
+            <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, or export it for the venue's playback.
+          </p>
+          <ul class="specs">
+            <li>Kinetic type and logo reveal templates to start from</li>
+            <li>ProRes 4444 with transparency, for layering over other footage</li>
+            <li>Sound from audio and video layers mixed into the export</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
 
 <style>
-  .case {
-    padding-block: clamp(48px, 7vw, 96px);
-    border-top: 1px solid var(--border);
-  }
-  .case-head {
+  .head {
     display: grid;
-    gap: 12px 64px;
-    align-items: baseline;
-    margin-bottom: 32px;
+    gap: 16px 64px;
+    align-items: end;
+    padding-block: clamp(48px, 8vw, 96px) clamp(40px, 6vw, 64px);
   }
   @media (min-width: 900px) {
-    .case-head {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    }
-  }
-  .case-head h2 {
-    margin: 0;
-  }
-  .case-head p {
-    margin: 0;
-    color: var(--text-dim);
-    max-width: 40rem;
-  }
-  .media {
-    display: grid;
-    gap: 16px;
-    align-items: start;
-  }
-  @media (min-width: 560px) {
-    /* Sized so the clips in a row share one height. */
-    .media.wide-tall {
-      grid-template-columns: 3.16fr 1fr;
-    }
-    .media.square-tall {
-      grid-template-columns: 1.78fr 1fr;
-      max-width: 860px;
-    }
-    .media.single {
+    .head {
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     }
   }
+  .head h1 {
+    margin: 0;
+    max-width: 16ch;
+  }
+  .head p {
+    margin: 0;
+    color: var(--text-dim);
+  }
+
+  .case {
+    padding-bottom: clamp(64px, 9vw, 112px);
+  }
+  .case-text {
+    display: grid;
+    gap: 16px 64px;
+    padding-top: clamp(32px, 4vw, 48px);
+  }
+  @media (min-width: 900px) {
+    .case-text {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+  .kind {
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+  .case-text h2 {
+    margin: 0;
+    max-width: 16ch;
+  }
+  .case-text p {
+    color: var(--text-dim);
+    max-width: 40rem;
+  }
   .specs {
     list-style: none;
-    margin: 32px 0 0;
+    margin: 24px 0 0;
     padding: 0;
-    display: grid;
-    gap: 16px 32px;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    border-top: 1px solid var(--border-strong);
   }
   .specs li {
-    padding-top: 12px;
-    border-top: 1px solid var(--border-strong);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
     font-size: 0.9375rem;
     color: var(--text-dim);
+  }
+
+  /* Every place is a full-width band with its own light; the page around it stays quiet. */
+  .place {
+    position: relative;
+    overflow: hidden;
+  }
+  .place :global(.frame) {
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* A café wall: dark plaster, two screens, the edge of a wooden counter. */
+  .cafe {
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02 0.04' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.9 0 0 0 0 0.8 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+      #2e2823;
+  }
+  .cafe-wall {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(24px, 4vw, 64px);
+    width: min(100% - 2.5rem, 1160px);
+    margin-inline: auto;
+    padding: clamp(48px, 7vw, 96px) 0 clamp(40px, 5vw, 64px);
+  }
+  .screen {
+    padding: 8px;
+    border-radius: 6px;
+    background: #0e0d0c;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 24px 40px -16px rgb(0 0 0 / 0.6);
+  }
+  .screen.landscape {
+    flex: 1.78 1 0;
+  }
+  .screen.portrait {
+    flex: 0.5625 1 0;
+    max-width: 24%;
+  }
+  .counter {
+    height: clamp(24px, 3vw, 40px);
+    background: linear-gradient(180deg, #8a6440, #6d4c2f 30%, #5a3e26);
+    box-shadow: inset 0 2px 0 rgb(255 220 180 / 0.18);
+  }
+
+  /* A table top with two phones. */
+  .table {
+    background: var(--bg-alt);
+    border-block: 1px solid var(--border);
+    padding-block: clamp(48px, 6vw, 80px);
+  }
+  .phones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(24px, 5vw, 80px);
+  }
+  .phone {
+    width: clamp(180px, 22vw, 280px);
+    aspect-ratio: 9 / 19;
+    padding: 10px;
+    border-radius: 36px;
+    background: #141210;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.12),
+      0 2px 4px rgb(31 27 22 / 0.2),
+      0 30px 50px -24px rgb(31 27 22 / 0.55);
+    overflow: hidden;
+  }
+  .phone > :global(*) {
+    border-radius: 27px;
+    overflow: hidden;
+    height: 100%;
+  }
+  .phone.story {
+    transform: translateY(24px);
+  }
+  .phone.story :global(.clip),
+  .phone.story :global(.frame) {
+    height: 100%;
+  }
+  .phone.story :global(video) {
+    height: 100%;
+    object-fit: cover;
+  }
+  .feed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    background: #fbf8f2;
+    color: #1f1b16;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .feed-head,
+  .feed-foot {
+    margin: 0;
+    padding: 0 12px;
+  }
+  .feed-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #6d4c2f;
+  }
+  .feed-foot {
+    color: #5a5146;
+  }
+  .feed :global(.frame) {
+    border-radius: 0;
+  }
+
+  /* The editor, on a desk-coloured band. */
+  .desk {
+    background: var(--bg-alt);
+    border-block: 1px solid var(--border);
+    padding-block: clamp(40px, 6vw, 72px);
+  }
+  .desk-inner {
+    width: min(100% - 2.5rem, 1100px);
+    margin-inline: auto;
+  }
+
+  /* A dark hall: the projection, and the backs of a few heads. */
+  .stage {
+    background: radial-gradient(ellipse 70% 60% at 50% 35%, #2a2622, #12100e 70%);
+    padding-top: clamp(48px, 7vw, 96px);
+  }
+  .projection {
+    width: min(100% - 5rem, 880px);
+    margin-inline: auto;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.06);
+  }
+  .audience {
+    display: flex;
+    justify-content: center;
+    gap: clamp(4px, 1vw, 16px);
+    margin-top: clamp(32px, 5vw, 64px);
+    height: clamp(56px, 8vw, 96px);
+    align-items: flex-end;
+  }
+  .audience span {
+    flex: none;
+    width: clamp(36px, 5vw, 64px);
+    height: 100%;
+    border-radius: 50% 50% 12px 12px / 40% 40% 12px 12px;
+    background: #0a0908;
+    transform: translateY(calc(sin(var(--i) * 1.7) * 8px + 12px));
+  }
+
+  @media (max-width: 700px) {
+    .cafe-wall {
+      flex-direction: column;
+      align-items: center;
+    }
+    .screen.landscape {
+      flex: none;
+      width: 100%;
+    }
+    .screen.portrait {
+      flex: none;
+      width: 52%;
+      max-width: none;
+    }
+    .phone {
+      width: 46%;
+      border-radius: 28px;
+      padding: 8px;
+    }
+    .phone > :global(*) {
+      border-radius: 21px;
+    }
+    .feed {
+      gap: 8px;
+      font-size: 11px;
+    }
+    .audience span:nth-child(n + 7) {
+      display: none;
+    }
   }
 </style>

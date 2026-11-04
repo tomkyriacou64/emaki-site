@@ -1,5 +1,9 @@
 ---
-import Page from '../layouts/Page.astro';
+// Licence and credits, set as a colophon: what Emaki is licensed under, what
+// it bundles, and the work it is built on.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { LICENCE_URL } from '../config';
 
 // Main libraries, from the app's workspace Cargo.toml; licences from their crates.
@@ -19,79 +23,170 @@ const libraries = [
 ];
 ---
 
-<Page
-  title="Licence and credits"
+<Base
+  title="Licence and credits: Emaki"
   description="Emaki's licence (MIT or Apache-2.0), the FFmpeg it bundles, and the libraries, fonts and icons it is built on."
-  heading="Licence and credits"
 >
-  <p slot="intro">Emaki is free and open source, and it stands on the work of many other open-source projects.</p>
+  <SiteHeader />
+  <main id="main" class="wrap colophon">
+    <header class="title">
+      <h1>Licence and credits</h1>
+      <p>Emaki is free and open source, and it stands on the work of many other open-source projects.</p>
+    </header>
 
-  <div class="prose">
-    <h2>Emaki</h2>
-    <p>
-      Emaki's code is licensed under either the <strong>MIT licence</strong> or the <strong>Apache License 2.0</strong>,
-      at your option. {LICENCE_URL ? <a href={LICENCE_URL}>Read the licence</a> : 'The full text comes with the code.'}
-    </p>
+    <dl class="entries">
+      <div>
+        <dt>Emaki</dt>
+        <dd>
+          <p>
+            Licensed under either the MIT licence or the Apache License 2.0, at your option.
+            {LICENCE_URL ? <a href={LICENCE_URL}>Read the licence</a> : 'The full text comes with the code.'}
+          </p>
+        </dd>
+      </div>
 
-    <h2>FFmpeg</h2>
-    <p>
-      The Linux AppImage bundles <a href="https://ffmpeg.org">FFmpeg</a> (the <code>ffmpeg</code> and
-      <code>ffprobe</code> programs) for reading video and audio and for export. FFmpeg is licensed under the
-      <strong>GNU GPL version 3</strong>. Emaki itself is MIT/Apache-2.0 and only runs these programs; it isn't built
-      from FFmpeg's code.
-    </p>
-    <p>
-      FFmpeg's licence and a note on its source are inside the AppImage, in <code>usr/share/doc/emaki/</code>. The
-      source is at <a href="https://ffmpeg.org/download.html">ffmpeg.org/download.html</a>, and the build recipe and
-      exact sources of the bundled build are at
-      <a href="https://github.com/BtbN/FFmpeg-Builds">github.com/BtbN/FFmpeg-Builds</a>.
-    </p>
+      <div>
+        <dt>Bundled</dt>
+        <dd>
+          <p>
+            The Linux AppImage includes <a href="https://ffmpeg.org">FFmpeg</a> (the <code>ffmpeg</code> and
+            <code>ffprobe</code> programs) for reading video and audio and for export, under the GNU GPL version 3.
+            Emaki only runs these programs; it isn't built from FFmpeg's code.
+          </p>
+          <p>
+            FFmpeg's licence and a note on its source are inside the AppImage, in <code>usr/share/doc/emaki/</code>.
+            The source is at <a href="https://ffmpeg.org/download.html">ffmpeg.org/download.html</a>, and the build
+            recipe and exact sources of the bundled build are at
+            <a href="https://github.com/BtbN/FFmpeg-Builds">github.com/BtbN/FFmpeg-Builds</a>.
+          </p>
+        </dd>
+      </div>
 
-    <h2>Libraries</h2>
-    <p>The main libraries Emaki is built with, each under its own licence:</p>
-  </div>
+      <div>
+        <dt>Built with</dt>
+        <dd>
+          <ul class="libs">
+            {
+              libraries.map((l) => (
+                <li>
+                  <a href={l.url}>{l.name}</a>
+                  <span class="what">{l.what}</span>
+                  <span class="lic">{l.licence}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="small">Plus many smaller Rust crates, each with its licence listed in the code.</p>
+        </dd>
+      </div>
 
-  <div class="table-wrap">
-    <table class="table stack">
-      <thead>
-        <tr><th scope="col">Library</th><th scope="col">Used for</th><th scope="col">Licence</th></tr>
-      </thead>
-      <tbody>
-        {
-          libraries.map((l) => (
-            <tr>
-              <td>
-                <a href={l.url}>{l.name}</a>
-              </td>
-              <td data-label="Used for">{l.what}</td>
-              <td data-label="Licence">{l.licence}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
+      <div>
+        <dt>Type and icons</dt>
+        <dd>
+          <p>
+            <a href="https://github.com/rsms/inter">Inter</a>, the app's interface font, by the Inter Project Authors,
+            under the SIL Open Font License 1.1. <a href="https://lucide.dev">Lucide</a> icons, in the interface and the
+            Elements library, under the ISC licence.
+          </p>
+        </dd>
+      </div>
 
-  <div class="prose">
-    <p>Plus many smaller Rust crates, each with its licence listed in the code.</p>
+      <div>
+        <dt>This website</dt>
+        <dd>
+          <p>
+            Built with <a href="https://astro.build">Astro</a> (MIT). Set in Inter,
+            <a href="https://github.com/Outfitio/Outfit-Fonts">Outfit</a> and
+            <a href="https://github.com/productiontype/Newsreader">Newsreader</a>, with the Japanese on the scroll in
+            <a href="https://fonts.google.com/specimen/Yuji+Syuku">Yuji Syuku</a>, all under the SIL Open Font License and
+            served from the site itself.
+          </p>
+        </dd>
+      </div>
+    </dl>
+  </main>
+  <SiteFooter />
+</Base>
 
-    <h2>Fonts and icons</h2>
-    <ul>
-      <li>
-        <a href="https://github.com/rsms/inter">Inter</a>, the app's interface font, by the Inter Project Authors, under
-        the SIL Open Font License 1.1.
-      </li>
-      <li>
-        <a href="https://lucide.dev">Lucide</a> icons, in the interface and the Elements library, under the ISC
-        licence.
-      </li>
-    </ul>
-
-    <h2>This website</h2>
-    <p>
-      Built with <a href="https://astro.build">Astro</a> (MIT). It uses Inter and
-      <a href="https://github.com/Outfitio/Outfit-Fonts">Outfit</a>, both under the SIL Open Font License, served from
-      the site itself.
-    </p>
-  </div>
-</Page>
+<style>
+  .colophon {
+    max-width: 52rem;
+    padding-block: clamp(56px, 9vw, 112px);
+  }
+  .title {
+    text-align: center;
+    padding-bottom: clamp(40px, 6vw, 64px);
+    margin-bottom: clamp(32px, 5vw, 48px);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .title h1 {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    margin-bottom: 16px;
+  }
+  .title p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    color: var(--text-dim);
+    max-width: 30rem;
+    margin: 0 auto;
+  }
+  .entries {
+    margin: 0;
+    display: grid;
+    gap: 32px;
+  }
+  .entries > div {
+    display: grid;
+    gap: 8px 40px;
+  }
+  @media (min-width: 720px) {
+    .entries > div {
+      grid-template-columns: 9rem minmax(0, 1fr);
+    }
+    dt {
+      text-align: right;
+    }
+  }
+  dt {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    padding-top: 4px;
+  }
+  dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  dd p {
+    color: var(--text-dim);
+  }
+  dd p:last-child {
+    margin-bottom: 0;
+  }
+  .libs {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    display: grid;
+    gap: 0 32px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  }
+  .libs li {
+    display: grid;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .libs .what {
+    color: var(--text-dim);
+    font-size: 0.9375rem;
+  }
+  .libs .lic {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .small {
+    font-size: 0.9375rem;
+  }
+</style>

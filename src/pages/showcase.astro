@@ -1,57 +1,153 @@
 ---
-import Page from '../layouts/Page.astro';
+// A wall of clips made in Emaki, each hung at its true shape: portrait menu
+// boards next to landscape screens, a square post beside a story.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import Clip from '../components/Clip.astro';
-import { showcaseOrder, byFile } from '../data/showcase';
+import { showcaseRows, byFile } from '../data/showcase';
 
-const clips = showcaseOrder.map(byFile);
+const rows = showcaseRows.map((r) => r.map(byFile));
+const count = rows.flat().length;
+const words = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
 ---
 
-<Page
-  title="Showcase"
-  description="Short looping clips made in Emaki, the desktop motion design app: menu boards, social posts, kinetic type and a logo reveal."
-  heading="Made in Emaki"
+<Base
+  title="Showcase: Emaki"
+  description="Short looping clips made in Emaki, the desktop motion design app: menu boards for café screens, a social post, a story and kinetic type."
 >
-  <p slot="intro">
-    Seven built-in templates, exported with Emaki 0.9.2 and only made smaller for the web. Each one opens in the app
-    with its timing in place, ready for your own words and colours.
-  </p>
+  <SiteHeader />
+  <main id="main">
+    <div class="wrap head">
+      <h1>Made in Emaki</h1>
+      <p>
+        {words[count]} built-in templates, exported with Emaki 0.9.2 and only made smaller for the web. They hang here at
+        their real shapes, as they would on a screen. Each opens in the app with its timing in place.
+      </p>
+    </div>
 
-  <div class="grid">
-    {clips.map((c) => <Clip clip={c} />)}
-  </div>
+    <section class="wall" aria-label="Clips">
+      <div class="wall-inner">
+        {
+          rows.map((row) => (
+            <div class="row">
+              {row.map((c) => (
+                <div class:list={['item', c.height > c.width ? 'tall' : c.height === c.width ? 'square' : 'wide']} style={`--ar: ${c.width / c.height}`}>
+                  <Clip clip={c} caption={false} class="hung" />
+                  <p class="plaque">
+                    <b>{c.title}</b>
+                    <span>{c.caption}</span>
+                    <span class="meta">
+                      {c.width} × {c.height} · {c.use}
+                    </span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </section>
 
-  <p class="foot-note">
-    Exported as MP4 with <code>emaki --export</code>. In the app you can also export WebM,
-    ProRes 4444 with transparency, GIF, Lottie and PNG. <a href="/use-cases">What each kind of clip is for</a>
-  </p>
-</Page>
+    <p class="wrap foot-note">
+      Exported as MP4 with <code>emaki --export</code>. In the app you can also export WebM, ProRes 4444 with
+      transparency, GIF, Lottie and PNG. <a href="/use-cases">What each kind of clip is for</a>
+    </p>
+  </main>
+  <SiteFooter />
+</Base>
 
 <style>
-  .grid {
+  .head {
     display: grid;
-    gap: clamp(32px, 4vw, 48px) 24px;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
-    align-items: start;
+    gap: 16px 64px;
+    align-items: end;
+    padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 56px);
   }
   @media (min-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-    .grid > :global(.wide) {
-      grid-column: span 3;
-    }
-    .grid > :global(.tall) {
-      grid-column: span 2;
-    }
-    .grid > :global(.square) {
-      grid-column: span 2;
+    .head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     }
   }
-  .foot-note {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
+  .head h1 {
+    margin: 0;
+  }
+  .head p {
+    margin: 0;
     color: var(--text-dim);
-    max-width: 46rem;
+  }
+
+  /* The wall: a band a shade darker than the page, with a picture rail along the top. */
+  .wall {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding-block: 0 clamp(48px, 7vw, 96px);
+  }
+  .wall-inner {
+    width: min(100% - 2.5rem, 1320px);
+    margin-inline: auto;
+    border-top: 3px solid var(--border-strong);
+    padding-top: clamp(40px, 6vw, 72px);
+    display: grid;
+    gap: clamp(48px, 6vw, 80px);
+  }
+  .row {
+    display: flex;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: flex-start;
+  }
+  /* Grow in proportion to shape, so every clip in a row hangs at one height. */
+  .item {
+    flex: var(--ar) 1 0;
+    min-width: 0;
+  }
+  .item :global(.hung .frame) {
+    border-radius: 4px;
+    border: 0;
+    box-shadow:
+      0 0 0 1px rgb(31 27 22 / 0.12),
+      0 2px 4px rgb(31 27 22 / 0.08),
+      0 18px 36px -18px rgb(31 27 22 / 0.4);
+  }
+  .plaque {
+    display: grid;
+    gap: 4px;
+    margin: 16px 0 0;
+    max-width: 34ch;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--text-dim);
+  }
+  .plaque b {
+    font-weight: 500;
+    color: var(--text);
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 700px) {
+    .row {
+      flex-direction: column;
+      gap: 48px;
+    }
+    .item {
+      flex: none;
+      width: 100%;
+    }
+    .item.tall {
+      width: 64%;
+    }
+    .item.square {
+      width: 86%;
+    }
+  }
+
+  .foot-note {
+    padding-block: 32px clamp(48px, 8vw, 96px);
+    margin-block: 0;
+    color: var(--text-dim);
   }
 </style>

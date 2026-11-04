@@ -12,37 +12,51 @@ import Page from '../layouts/Page.astro';
   <div class="faq">
     <section>
       <h2>Is it free? For good?</h2>
+      <p class="short">Yes, for good</p>
+      <div class="long">
       <p>
-        Yes. Emaki is free to download and use, with no paid tier. The code will be open source under the MIT and
+        Emaki is free to download and use, with no paid tier. The code will be open source under the MIT and
         Apache 2.0 licences, so it stays free even if the project changes hands.
       </p>
+      </div>
     </section>
 
     <section>
       <h2>Which platforms does it run on?</h2>
+      <p class="short">Linux now; macOS and Windows later</p>
+      <div class="long">
       <p>
         Linux now, as an AppImage that runs on most 64-bit distributions. macOS and Windows builds are planned for
         later, once they've been tested on real machines.
       </p>
+      </div>
     </section>
 
     <section>
       <h2>Does it work offline?</h2>
+      <p class="short">Yes, apart from Google Fonts and Figma links</p>
+      <div class="long">
       <p>
-        Yes. Designing, animating, previewing and exporting all work without a network. Emaki only goes online when you
+        Designing, animating, previewing and exporting all work without a network. Emaki only goes online when you
         ask it to: when you open the Google Fonts tab in the font picker (and download a font from it), or when you
         import a frame from Figma with a link. <a href="/privacy">More on privacy</a>
       </p>
+      </div>
     </section>
 
     <section>
       <h2>Do I need an account?</h2>
-      <p>No. There is nothing to sign up for or sign in to, and no tracking.</p>
+      <p class="short">No</p>
+      <div class="long">
+      <p>There is nothing to sign up for or sign in to, and no tracking.</p>
+      </div>
     </section>
 
     <section>
       <h2>Can I import from Figma?</h2>
-      <p>Yes, in two ways:</p>
+      <p class="short">Yes, in two ways</p>
+      <div class="long">
+      <p>The plugin, or a link:</p>
       <ul>
         <li>
           <strong>The Emaki plugin for Figma.</strong> Select frames or layers, click <em>Copy for Emaki</em>, then
@@ -58,93 +72,126 @@ import Page from '../layouts/Page.astro';
         Either way the layers arrive as ordinary Emaki layers: frames with auto layout, shapes, text, vectors and
         images, still editable and ready to animate.
       </p>
+      </div>
     </section>
 
     <section>
       <h2>What is motion tracking?</h2>
+      <p class="short">Layers that stick to things in a video</p>
+      <div class="long">
       <p>
         It follows a point in a video from frame to frame, so a layer can stick to it. Right-click a layer above a
         video and pin it to one point (it moves with it) or two points (it also scales and turns). Where the tracker is
         unsure, the frame is marked; drag the marker to fix it and tracking picks up from there. Tracking a screen's
         four corners puts a design onto a moving screen.
       </p>
+      </div>
     </section>
 
     <section>
       <h2>What file format does it use?</h2>
+      <p class="short">A plain .emaki folder</p>
+      <div class="long">
       <p>
         A project is a <code>.emaki</code> folder: a <code>project.json</code> file with an <code>assets</code> folder
         of its media beside it. You can back it up, sync it or zip it like any folder. Projects from before 0.9.2,
         saved as <code>.motion</code>, still open and keep their names.
       </p>
+      </div>
     </section>
 
     <section>
       <h2>What can it export?</h2>
+      <p class="short">Six formats, sound included</p>
+      <div class="long">
       <p>
         MP4 (H.264), WebM, ProRes 4444 with transparency, GIF, Lottie, and PNG as a single frame or a sequence. You can
         export one artboard or all of them at once. Sound from audio and video layers is mixed into MP4, WebM and
         ProRes. FFmpeg comes inside the AppImage, so every format works out of the box.
       </p>
+      </div>
     </section>
 
     <section>
       <h2>When will the code be public?</h2>
-      <p>Soon. There's no date yet. This site will link to it as soon as it's out.</p>
+      <p class="short">Soon</p>
+      <div class="long">
+      <p>There's no date yet. This site will link to it as soon as it's out.</p>
+      </div>
     </section>
 
     <section>
       <h2>How can I help?</h2>
+      <p class="short">Once the code is public</p>
+      <div class="long">
       <p>
         Once the code is public, bug reports, ideas and pull requests are all welcome. See
         <a href="/contributing">Contributing</a> for how to build it and how changes are made.
       </p>
+      </div>
     </section>
   </div>
 </Page>
 
 <style>
+  /* Each answer in a few words first, big enough to scan; the detail beside it. */
+  .faq {
+    border-top: 1px solid var(--border-strong);
+  }
   .faq section {
     display: grid;
-    gap: 8px 64px;
-    padding-block: 32px;
-    border-top: 1px solid var(--border);
+    gap: 4px 64px;
+    padding-block: 28px;
+    border-bottom: 1px solid var(--border);
   }
   @media (min-width: 900px) {
     .faq section {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-rows: auto 1fr;
     }
-    .faq section > :not(h2) {
+    .long {
       grid-column: 2;
+      grid-row: 1 / span 2;
     }
   }
   .faq h2 {
     margin: 0;
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    line-height: 1.25;
+    font-family: var(--font-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--text-muted);
   }
-  .faq p,
-  .faq li {
+  .short {
+    margin: 0 0 8px;
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    line-height: 1.2;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .long p,
+  .long li {
     color: var(--text-dim);
   }
-  .faq ul {
+  .long ul {
     padding-left: 20px;
     margin: 0 0 16px;
   }
-  .faq li + li {
+  .long li + li {
     margin-top: 8px;
   }
-  .faq strong {
+  .long strong {
     color: var(--text);
-    font-weight: 600;
+    font-weight: 500;
   }
-  .faq em {
+  .long em {
     font-style: normal;
     font-weight: 500;
     color: var(--text);
   }
-  .faq p:last-child,
-  .faq ul:last-child {
+  .long > :last-child {
     margin-bottom: 0;
   }
 </style>

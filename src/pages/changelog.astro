@@ -1,4 +1,6 @@
 ---
+// The changelog as a timeline: every release is a marker on a ruler, oldest
+// on the left, with the next one still dashed. Below, the notes, newest first.
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -8,23 +10,45 @@ import { releases } from '../data/changelog';
 const parts = (text: string) => text.split('`').map((t, i) => ({ code: i % 2 === 1, t }));
 const longDate = (d: string) =>
   new Date(`${d}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const shortDate = (d: string) =>
+  new Date(`${d}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+
+// Oldest first along the ruler, then the release still to come.
+const marks = [...releases].reverse();
+const slots = marks.length + 1;
+const at = (i: number) => `${((i + 0.5) / slots) * 100}%`;
 ---
 
-<Base
-  title="Changelog: Emaki"
-  description="What changed in each release of Emaki, the desktop motion design app."
->
+<Base title="Changelog: Emaki" description="What changed in each release of Emaki, the desktop motion design app.">
   <SiteHeader />
-  <main id="main" class="wrap page-body">
-    <div class="page-head">
+  <main id="main">
+    <div class="wrap head">
       <h1>Changelog</h1>
       <p>Every release, newest first. These are preview releases on the way to 1.0.</p>
     </div>
 
-    <ol class="releases">
+    <nav class="wrap track" aria-label="Releases">
+      <ol class="marks">
+        {
+          marks.map((r, i) => (
+            <li style={`left: ${at(i)}`} class:list={{ latest: i === marks.length - 1 }}>
+              <a href={`#v${r.version}`}>
+                <b>{r.version}</b>
+                <time datetime={r.date}>{shortDate(r.date)}</time>
+              </a>
+            </li>
+          ))
+        }
+        <li class="ahead" style={`left: ${at(marks.length)}`} aria-hidden="true">
+          <span><b>1.0</b> Next</span>
+        </li>
+      </ol>
+    </nav>
+
+    <ol class="wrap releases">
       {
-        releases.map((r) => (
-          <li class="release" id={`v${r.version}`}>
+        releases.map((r, i) => (
+          <li class:list={['release', { latest: i === 0 }]} id={`v${r.version}`}>
             <header>
               <h2>
                 <a href={`#v${r.version}`}>Emaki {r.version}</a>
@@ -53,30 +77,125 @@ const longDate = (d: string) =>
 </Base>
 
 <style>
-  .releases {
+  .head {
+    padding-block: clamp(48px, 8vw, 96px) clamp(24px, 4vw, 40px);
+  }
+  .head h1 {
+    margin-bottom: 16px;
+  }
+  .head p {
+    margin: 0;
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    color: var(--text-dim);
+  }
+
+  /* The ruler: ticks every few pixels, a marker per release, the latest in vermilion. */
+  .track {
+    padding-block: 24px clamp(48px, 6vw, 72px);
+  }
+  .marks {
+    position: relative;
     list-style: none;
     margin: 0;
     padding: 0;
+    height: 96px;
+    background:
+      repeating-linear-gradient(90deg, var(--border-strong) 0 1px, transparent 1px 12px) 0 24px / 100% 8px no-repeat,
+      linear-gradient(var(--text-muted), var(--text-muted)) 0 32px / 100% 1px no-repeat;
+    mask-image: linear-gradient(90deg, #000 85%, transparent);
+  }
+  .marks li {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  .marks a,
+  .marks span {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    padding-top: 44px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    position: relative;
+    border-radius: 6px;
+    padding-inline: 8px;
+  }
+  .marks a::before,
+  .marks span::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 2px;
+    height: 32px;
+    margin-left: -1px;
+    background: var(--text);
+  }
+  .marks b {
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+  .marks time {
+    color: var(--text-muted);
+  }
+  .marks a:hover b {
+    color: var(--accent);
+  }
+  .marks .latest a::before {
+    background: var(--shu);
+  }
+  .marks .latest a::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    width: 12px;
+    height: 10px;
+    margin-left: -6px;
+    border-radius: 3px 3px 6px 6px;
+    background: var(--shu);
+  }
+  .marks .ahead span {
+    color: var(--text-muted);
+  }
+  .marks .ahead span::before {
+    background: none;
+    border-left: 2px dashed var(--border-strong);
+  }
+
+  /* The notes, each pinned to the same left rail. */
+  .releases {
+    list-style: none;
+    margin-top: 0;
+    padding: 0 0 clamp(48px, 8vw, 96px);
   }
   .release {
     display: grid;
-    gap: 0.5rem 3rem;
-    padding-block: clamp(2rem, 5vw, 3rem);
+    gap: 8px 48px;
+    padding-block: clamp(32px, 5vw, 48px);
     border-top: 1px solid var(--border);
   }
   @media (min-width: 860px) {
     .release {
-      grid-template-columns: 14rem minmax(0, 1fr);
+      grid-template-columns: 13rem minmax(0, 1fr);
     }
     header {
       position: sticky;
-      top: 1.5rem;
+      top: 24px;
       align-self: start;
+      padding-left: 16px;
+      border-left: 2px solid var(--border-strong);
+    }
+    .release.latest header {
+      border-left-color: var(--shu);
     }
   }
   h2 {
     font-size: clamp(1.5rem, 2.6vw, 2rem);
-    margin-bottom: 0.25rem;
+    margin-bottom: 4px;
   }
   h2 a {
     color: var(--text);
@@ -85,34 +204,47 @@ const longDate = (d: string) =>
   h2 a:hover {
     color: var(--accent);
   }
-  time {
+  header time {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
   }
   .body {
     max-width: 46rem;
   }
   .summary {
-    font-size: 1.1rem;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.45;
+    color: var(--text);
   }
   section + section,
   .summary + section {
-    margin-top: 1.5rem;
+    margin-top: 24px;
   }
   h3 {
     font-size: 0.9375rem;
     font-family: var(--font-text);
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0;
     color: var(--text);
     margin-bottom: 8px;
   }
   ul {
     margin: 0;
-    padding-left: 1.2rem;
+    padding-left: 20px;
     color: var(--text-dim);
   }
   .body li + li {
-    margin-top: 0.4rem;
+    margin-top: 8px;
+  }
+  @media (max-width: 600px) {
+    .marks a,
+    .marks span {
+      font-size: 0.75rem;
+      padding-inline: 4px;
+    }
+    .marks b {
+      font-size: 0.875rem;
+    }
   }
 </style>

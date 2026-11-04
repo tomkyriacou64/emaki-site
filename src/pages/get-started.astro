@@ -1,228 +1,424 @@
 ---
-import Page from '../layouts/Page.astro';
+// Get started: the install as it looks in a terminal, what Emaki needs, a
+// first animation laid out on a timeline, and the shortcuts as real keycaps.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import Cta from '../components/Cta.astro';
 import Icon from '../components/Icon.astro';
 import { APPIMAGE_URL } from '../config';
 
 // From the app's own shortcut sheet (hold ? in Emaki to see them all).
-const shortcuts = [
-  { keys: ['Space'], does: 'Play or pause' },
-  { keys: [',', '.'], does: 'Step back or forward one frame (with Shift: 10 frames)' },
-  { keys: ['V'], does: 'Select tool' },
-  { keys: ['R', 'O', 'T', 'P'], does: 'Rectangle, ellipse, text and pen tools' },
-  { keys: ['F'], does: 'Artboard tool' },
-  { keys: ['A'], does: 'Add an animation to the selected layer' },
-  { keys: ['G'], does: 'Open the graph editor' },
-  { keys: ['Ctrl+D'], does: 'Duplicate' },
-  { keys: ['Ctrl+G'], does: 'Group' },
-  { keys: ['Ctrl+Alt+M'], does: 'Make a mask from the selection' },
-  { keys: ['Shift+1'], does: 'Zoom to fit all artboards' },
-  { keys: ['Ctrl+K'], does: 'Command palette' },
-  { keys: ['Ctrl+Enter'], does: 'Full-screen preview' },
-  { keys: ['Ctrl+S'], does: 'Save' },
-  { keys: ['Ctrl+E'], does: 'Export' },
-  { keys: ['?'], does: 'Hold to see every shortcut' },
+const groups = [
+  {
+    title: 'Play',
+    keys: [
+      { keys: ['Space'], does: 'Play or pause' },
+      { keys: [','], or: ['.'], does: 'Back or forward one frame (with Shift: 10 frames)' },
+      { keys: ['Ctrl', 'Enter'], does: 'Full-screen preview' },
+    ],
+  },
+  {
+    title: 'Draw',
+    keys: [
+      { keys: ['V'], does: 'Select' },
+      { keys: ['R'], or: ['O'], does: 'Rectangle or ellipse' },
+      { keys: ['T'], or: ['P'], does: 'Text or pen' },
+      { keys: ['F'], does: 'Artboard' },
+    ],
+  },
+  {
+    title: 'Animate',
+    keys: [
+      { keys: ['A'], does: 'Add an animation to the selected layer' },
+      { keys: ['G'], does: 'Open the graph editor' },
+      { keys: ['Ctrl', 'Alt', 'M'], does: 'Make a mask from the selection' },
+    ],
+  },
+  {
+    title: 'Arrange',
+    keys: [
+      { keys: ['Ctrl', 'D'], does: 'Duplicate' },
+      { keys: ['Ctrl', 'G'], does: 'Group' },
+      { keys: ['Shift', '1'], does: 'Zoom to fit all artboards' },
+    ],
+  },
+  {
+    title: 'Files and help',
+    keys: [
+      { keys: ['Ctrl', 'S'], does: 'Save' },
+      { keys: ['Ctrl', 'E'], does: 'Export' },
+      { keys: ['Ctrl', 'K'], does: 'Command palette' },
+      { keys: ['?'], does: 'Hold to see every shortcut' },
+    ],
+  },
 ];
+
+// Text in [brackets] shows as a keycap.
+const steps = [
+  { title: 'Start a project', text: 'On Home, click New project, or pick a template to start from a finished animation.' },
+  { title: 'Draw something', text: 'Press [R] for a rectangle or [T] for text, then drag on the artboard.' },
+  { title: 'Animate it', text: 'With the layer selected, press [A] and pick an animation from the gallery. It lands on the timeline.' },
+  { title: 'Retime it', text: 'Drag the bar to move it, or its edges to change its length. Press [Space] to play.' },
+  { title: 'Export', text: 'Press [Ctrl]+[E] and choose MP4, GIF or another format. [Ctrl]+[S] saves the project as a .emaki folder.' },
+];
+const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i % 2 === 1, t }));
 ---
 
-<Page
-  title="Get started"
+<Base
+  title="Get started: Emaki"
   description="Download Emaki for Linux, check what it needs, make a first animation in five steps and learn the most useful keyboard shortcuts."
-  heading="From download to first export"
 >
-  <p slot="intro">Emaki runs on Linux. Here's what it needs, how to start it, and five steps to a first animation.</p>
+  <SiteHeader />
+  <main id="main">
+    <div class="wrap head">
+      <h1>From download to first export</h1>
+      <p>Emaki runs on Linux. Here's how to start it, what it needs, and five steps to a first animation.</p>
+    </div>
 
-  <div class="steps-grid">
-    <section class="block" aria-labelledby="download">
-      <h2 id="download"><span class="num">1</span> Download and run</h2>
-      {
-        APPIMAGE_URL ? (
-          <p>Download the AppImage, make it executable, and run it. There's nothing to install.</p>
-        ) : (
-          <div class="note-box">
+    <section class="wrap install" aria-labelledby="download">
+      <div class="install-copy">
+        <h2 id="download">Download and run</h2>
+        {
+          APPIMAGE_URL ? (
+            <p>Download the AppImage, make it executable, and run it. There's nothing to install.</p>
+          ) : (
             <p>
-              The download isn't public yet. It will be here when Emaki is out. Until then, the steps below show what
-              to expect.
+              The download isn't public yet. It will be here when Emaki is out; until then, this is what to expect.
+              There's nothing to install: one file, made executable, and run.
             </p>
-          </div>
-        )
-      }
-      <Cta />
-      <pre><code>chmod +x Emaki-*-x86_64.AppImage
-./Emaki-*-x86_64.AppImage</code></pre>
-      <p class="small">
-        Or double-click it in your file manager once it's executable. It opens on Home, where you can try the demo
-        project or a template.
-      </p>
+          )
+        }
+        <Cta />
+      </div>
+      <figure class="term">
+        <figcaption class="visually-hidden">Terminal commands to run the AppImage</figcaption>
+        <pre><code><span class="prompt" aria-hidden="true">~/Downloads $ </span>chmod +x Emaki-*-x86_64.AppImage
+<span class="prompt" aria-hidden="true">~/Downloads $ </span>./Emaki-*-x86_64.AppImage
+<span class="comment"># Opens on Home: try the demo project or a template</span></code></pre>
+      </figure>
     </section>
 
-    <section class="block" aria-labelledby="needs">
-      <h2 id="needs"><span class="num">2</span> What it needs</h2>
-      <ul class="checks">
-        <li>
-          <Icon name="check" size={18} />
-          <span>A 64-bit Linux with glibc 2.30 or newer (Ubuntu 20.04 and later, or similar).</span>
-        </li>
-        <li>
-          <Icon name="check" size={18} />
-          <span>A graphics card and driver with Vulkan. Emaki draws and exports on the GPU.</span>
-        </li>
-        <li>
-          <Icon name="check" size={18} />
-          <span>Wayland or X11. File dialogs use your desktop's portal (<code>xdg-desktop-portal</code>).</span>
-        </li>
-        <li>
-          <Icon name="check" size={18} />
-          <span>ALSA for sound, which desktop distributions already have.</span>
-        </li>
-        <li>
-          <Icon name="check" size={18} />
-          <span>Nothing else: FFmpeg is inside the AppImage, so every export format works.</span>
-        </li>
+    <section class="wrap needs" aria-labelledby="needs">
+      <h2 id="needs">What it needs</h2>
+      <ul>
+        <li><Icon name="check" size={18} /><span><b>64-bit Linux</b> with glibc 2.30 or newer (Ubuntu 20.04 and later, or similar)</span></li>
+        <li><Icon name="check" size={18} /><span><b>Vulkan</b> graphics card and driver: Emaki draws and exports on the GPU</span></li>
+        <li><Icon name="check" size={18} /><span><b>Wayland or X11</b>, with file dialogs through your desktop's portal (<code>xdg-desktop-portal</code>)</span></li>
+        <li><Icon name="check" size={18} /><span><b>ALSA</b> for sound, which desktop distributions already have</span></li>
+        <li><Icon name="check" size={18} /><span><b>Nothing else</b>: FFmpeg is inside the AppImage, so every export format works</span></li>
       </ul>
     </section>
-  </div>
 
-  <section class="block wide" aria-labelledby="first">
-    <h2 id="first"><span class="num">3</span> Your first animation</h2>
-    <ol class="first">
-      <li>
-        <strong>Start a project.</strong> On Home, click <em>New project</em>, or pick a template to start from
-        a finished animation.
-      </li>
-      <li>
-        <strong>Draw something.</strong> Press <kbd>R</kbd> for a rectangle or <kbd>T</kbd> for text, then drag on the
-        artboard.
-      </li>
-      <li>
-        <strong>Animate it.</strong> With the layer selected, press <kbd>A</kbd> and pick an animation from the
-        gallery. It lands on the timeline.
-      </li>
-      <li>
-        <strong>Retime it.</strong> Drag the bar on the timeline to move it, or its edges to change its length. Press
-        <kbd>Space</kbd> to play.
-      </li>
-      <li>
-        <strong>Export.</strong> Press <kbd>Ctrl</kbd>+<kbd>E</kbd>, choose MP4, GIF or another format, and export.
-        <kbd>Ctrl</kbd>+<kbd>S</kbd> saves the project as a <code>.emaki</code> folder.
-      </li>
-    </ol>
-  </section>
-
-  <section class="block wide" aria-labelledby="keys">
-    <h2 id="keys"><span class="num">4</span> Useful shortcuts</h2>
-    <p>The defaults; you can change any of them in <em>Menu › Keyboard shortcuts</em>.</p>
-    <div class="table-wrap">
-      <table class="table">
-        <thead>
-          <tr><th scope="col">Keys</th><th scope="col">What it does</th></tr>
-        </thead>
-        <tbody>
+    <section class="first" aria-labelledby="first">
+      <div class="wrap">
+        <h2 id="first">Your first animation, in five steps</h2>
+        <div class="ruler" aria-hidden="true"></div>
+        <ol class="steps">
           {
-            shortcuts.map((s) => (
-              <tr>
-                <td class="keys">
-                  {s.keys.map((k, i) => (
-                    <>
-                      {i > 0 && ' '}
-                      <kbd>{k}</kbd>
-                    </>
-                  ))}
-                </td>
-                <td>{s.does}</td>
-              </tr>
+            steps.map((s, i) => (
+              <li>
+                <span class="time">0:0{i + 1}</span>
+                <h3>{s.title}</h3>
+                <p>{parts(s.text).map((p) => (p.key ? <kbd>{p.t}</kbd> : p.t))}</p>
+              </li>
             ))
           }
-        </tbody>
-      </table>
-    </div>
-  </section>
-</Page>
+        </ol>
+      </div>
+    </section>
+
+    <section class="wrap keys" aria-labelledby="keys">
+      <div class="keys-head">
+        <h2 id="keys">Useful shortcuts</h2>
+        <p>The defaults; you can change any of them in Menu › Keyboard shortcuts.</p>
+      </div>
+      <div class="key-groups">
+        {
+          groups.map((g) => (
+            <div class="key-group">
+              <h3>{g.title}</h3>
+              <dl>
+                {g.keys.map((k) => (
+                  <div>
+                    <dt>
+                      {k.keys.map((key, i) => (
+                        <>
+                          {i > 0 && <span class="plus" aria-hidden="true">+</span>}
+                          <kbd class="cap">{key}</kbd>
+                        </>
+                      ))}
+                      {'or' in k && k.or && (
+                        <>
+                          <span class="plus">or</span>
+                          {k.or.map((key) => <kbd class="cap">{key}</kbd>)}
+                        </>
+                      )}
+                    </dt>
+                    <dd>{k.does}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
 
 <style>
-  .steps-grid {
-    display: grid;
-    gap: 0 64px;
+  .head {
+    padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 56px);
+    max-width: 52rem;
   }
-  @media (min-width: 900px) {
-    .steps-grid {
-      grid-template-columns: 1fr 1fr;
-    }
+  .head h1 {
+    margin-bottom: 16px;
   }
-  .block {
-    padding-block: 40px;
-    border-top: 1px solid var(--border-strong);
-    min-width: 0;
-  }
-  .block h2 {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
-    margin-bottom: 24px;
-  }
-  .num {
-    flex: none;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-muted);
-  }
-  .block p,
-  .block li {
+  .head p {
+    margin: 0;
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
     color: var(--text-dim);
   }
-  .block em {
-    font-style: normal;
+  h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+  }
+
+  /* Install: the words on the left, the terminal on the right. */
+  .install {
+    display: grid;
+    gap: 32px 64px;
+    align-items: center;
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+  @media (min-width: 900px) {
+    .install {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+  .install-copy p {
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+  .term {
+    margin: 0;
+    border-radius: 12px;
+    background: #1a1612;
+    color: #efe9de;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 20px 40px -24px rgb(31 27 22 / 0.5);
+    overflow: hidden;
+  }
+  .term pre {
+    margin: 0;
+    padding: 24px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.9;
+  }
+  .term code {
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+  }
+  .prompt {
+    color: #8f887d;
+    user-select: none;
+  }
+  .comment {
+    color: #9fbbe6;
+  }
+
+  /* Needs: one line each, ticked. */
+  .needs {
+    padding-block: clamp(40px, 6vw, 64px);
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 16px 64px;
+  }
+  @media (min-width: 900px) {
+    .needs {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+  .needs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .needs li {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .needs li:first-child {
+    padding-top: 0;
+  }
+  .needs li b {
     font-weight: 500;
     color: var(--text);
   }
-  .block :global(.cta) {
-    margin-bottom: 16px;
+  .needs :global(svg) {
+    flex: none;
+    margin-top: 4px;
+    color: var(--accent);
   }
-  pre {
-    margin: 0 0 16px;
-    padding: 16px 20px;
-    overflow-x: auto;
-    border-radius: var(--radius);
-    background: var(--raised);
-    font-size: 0.875rem;
+
+  /* First animation: five steps laid along a timeline, a second each. */
+  .first {
+    background: var(--bg-alt);
+    border-block: 1px solid var(--border);
+    padding-block: clamp(48px, 7vw, 88px);
   }
-  pre code {
-    padding: 0;
-    background: none;
+  .ruler {
+    height: 12px;
+    margin-top: 32px;
+    background:
+      linear-gradient(var(--shu), var(--shu)) 0 0 / 2px 100% no-repeat,
+      repeating-linear-gradient(90deg, var(--text-muted) 0 1px, transparent 1px 20%) 0 100% / 100% 12px no-repeat,
+      repeating-linear-gradient(90deg, var(--border-strong) 0 1px, transparent 1px 4%) 0 100% / 100% 6px no-repeat,
+      linear-gradient(var(--text-muted), var(--text-muted)) 0 100% / 100% 1px no-repeat;
   }
-  .small {
-    font-size: 0.9375rem;
-    margin: 0;
-  }
-  .checks {
+  .steps {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 12px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
-  .checks li {
-    display: flex;
-    gap: 12px;
+  .steps li {
+    padding: 16px 20px 0 0;
   }
-  .checks :global(svg) {
+  .steps .time {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
     color: var(--text-muted);
-    flex: none;
-    margin-top: 4px;
   }
-  .first {
+  .steps h3 {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+  .steps li:first-child h3 {
+    border-color: var(--accent);
+  }
+  .steps p {
     margin: 0;
-    padding-left: 20px;
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+  }
+  @media (max-width: 860px) {
+    .ruler {
+      display: none;
+    }
+    .steps {
+      grid-template-columns: 1fr;
+      margin-top: 24px;
+      border-left: 1px solid var(--text-muted);
+    }
+    .steps li {
+      padding: 0 0 24px 20px;
+      position: relative;
+    }
+    .steps li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      border-top: 1px solid var(--text-muted);
+    }
+    .steps .time {
+      margin-bottom: 8px;
+    }
+  }
+
+  /* Shortcuts as keycaps, in groups. */
+  .keys {
+    padding-block: clamp(48px, 7vw, 88px);
+  }
+  .keys-head {
+    display: grid;
+    gap: 8px 64px;
+    align-items: baseline;
+    margin-bottom: 40px;
+  }
+  @media (min-width: 900px) {
+    .keys-head {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+  .keys-head h2,
+  .keys-head p {
+    margin: 0;
+  }
+  .keys-head p {
+    color: var(--text-dim);
+  }
+  .key-groups {
+    display: grid;
+    gap: 40px 48px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  }
+  .key-group h3 {
+    margin-bottom: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .key-group dl {
+    margin: 0;
     display: grid;
     gap: 12px;
-    max-width: 48rem;
   }
-  .first strong {
+  .key-group dl > div {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .key-group dt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+  .key-group dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+  }
+  .plus {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding-inline: 2px;
+  }
+  :root .cap {
+    display: inline-grid;
+    place-items: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 3px;
+    background: var(--surface);
+    font-family: var(--font-text);
+    font-size: 0.8125rem;
+    font-weight: 500;
     color: var(--text);
-    font-weight: 600;
-  }
-  .keys {
-    white-space: nowrap;
-    width: 12rem;
+    box-shadow: 0 1px 0 rgb(31 27 22 / 0.06);
   }
 </style>

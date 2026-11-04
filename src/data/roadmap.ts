@@ -14,7 +14,7 @@ export const roadmap: RoadmapGroup[] = [
   {
     id: 'now',
     title: 'Now',
-    note: 'Being worked on.',
+    note: 'Being worked on',
     items: [
       { title: 'Open source', text: 'Making the code public under MIT and Apache 2.0, and welcoming contributors.' },
       { title: 'Emaki 1.0', text: 'The first stable release, after the current preview builds.' },
@@ -31,7 +31,7 @@ export const roadmap: RoadmapGroup[] = [
   {
     id: 'next',
     title: 'Next',
-    note: 'Planned for the releases after that.',
+    note: 'Planned for the releases after that',
     items: [
       { title: 'macOS and Windows', text: 'Builds for Mac (Apple silicon and Intel) and 64-bit Windows.' },
       { title: 'One design, every format', text: 'Story, square and landscape versions of an artboard in one step.' },
@@ -56,7 +56,7 @@ export const roadmap: RoadmapGroup[] = [
   {
     id: 'later',
     title: 'Later',
-    note: 'Bigger ideas, still being thought through.',
+    note: 'Bigger ideas, still being thought through',
     items: [
       {
         title: 'AI help, on your terms',

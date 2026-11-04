@@ -72,7 +72,15 @@ export const clips: Clip[] = [
   },
 ];
 
-/** The order on /showcase, chosen so the grid packs in rows. */
-export const showcaseOrder = ['morning-coffee', 'kinetic-type', 'noodle-bar', 'social-post', 'vertical-story', 'logo-reveal', 'mask-reveal'];
+/**
+ * The wall on /showcase, row by row; each row is hung at one height, so every
+ * clip keeps its own shape. Logo reveal and Mask reveal are left off for now:
+ * they still show the old violet gradient card, and come back once they are
+ * exported again in the new theme.
+ */
+export const showcaseRows = [
+  ['noodle-bar', 'morning-coffee'],
+  ['social-post', 'kinetic-type', 'vertical-story'],
+];
 
 export const byFile = (file: string) => clips.find((c) => c.file === file)!;

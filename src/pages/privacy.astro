@@ -1,76 +1,222 @@
 ---
-import Page from '../layouts/Page.astro';
+// Privacy as a short statement: what Emaki never does, in big type, then the
+// two features that use the network and exactly what they send.
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const never = [
+  { line: 'No account', detail: 'It never asks you to sign up or sign in.' },
+  { line: 'No telemetry', detail: 'It never sends usage data, crash reports or analytics anywhere.' },
+  { line: 'No uploads', detail: 'Your projects and media stay in folders on your disk.' },
+  { line: 'No update checks', detail: 'Nothing runs in the background.' },
+];
 ---
 
-<Page
-  title="Privacy"
+<Base
+  title="Privacy: Emaki"
   description="Emaki has no account, no telemetry, no analytics and no tracking. Here is exactly when it uses the network."
-  heading="Your work stays yours"
 >
-  <p slot="intro">
-    Emaki has no account, no telemetry, no analytics and no tracking. It works fully offline, and your projects stay on
-    your computer.
-  </p>
+  <SiteHeader />
+  <main id="main">
+    <section class="wrap statement" aria-labelledby="privacy-title">
+      <h1 id="privacy-title">Your work stays yours</h1>
+      <p class="lede">Emaki works fully offline, and your projects stay on your computer.</p>
+      <ul class="never">
+        {
+          never.map((n) => (
+            <li>
+              <b>{n.line}</b>
+              <span>{n.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
 
-  <div class="prose">
-    <h2>What Emaki never does</h2>
-    <ul>
-      <li>It never asks you to sign up or sign in.</li>
-      <li>It never sends usage data, crash reports or analytics anywhere.</li>
-      <li>It never uploads your projects or media. Projects are folders on your disk.</li>
-      <li>It never checks for updates in the background.</li>
-    </ul>
+    <section class="online" aria-labelledby="online-title">
+      <div class="wrap">
+        <h2 id="online-title">It goes online only when you ask</h2>
+        <p class="sub">Two features use the network, and only for themselves:</p>
+        <div class="cases">
+          <div class="case">
+            <h3>The Google Fonts tab</h3>
+            <dl>
+              <div>
+                <dt>When you open it</dt>
+                <dd>
+                  Emaki asks <code>fonts.google.com</code> for the list of fonts. The list is kept for a week, so it
+                  isn't fetched every time.
+                </dd>
+              </div>
+              <div>
+                <dt>When you preview or download a font</dt>
+                <dd>
+                  Emaki sends the name of the font you're looking at to <code>fonts.googleapis.com</code>,
+                  <code>fonts.gstatic.com</code> and <code>raw.githubusercontent.com</code> (Google's font repository),
+                  then downloads its files.
+                </dd>
+              </div>
+            </dl>
+          </div>
+          <div class="case">
+            <h3>Importing a frame from Figma by its link</h3>
+            <dl>
+              <div>
+                <dt>When you paste a link</dt>
+                <dd>
+                  Emaki sends <code>api.figma.com</code> and Figma's image servers the file and frame from the link,
+                  with the personal access token you entered.
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <ul class="notes">
+          <li>As with any web request, the servers you contact see your IP address. Google and Figma run these under their own privacy policies.</li>
+          <li>The Emaki plugin for Figma uses no network at all: it copies layers to your clipboard, and you paste them into Emaki.</li>
+          <li>Links in the app, such as How to get FFmpeg in About, open in your browser only when you click them.</li>
+        </ul>
+      </div>
+    </section>
 
-    <h2>When it uses the network</h2>
-    <p>Only when you use one of these two features, and only for that feature:</p>
-    <div class="table-wrap">
-      <table class="table stack">
-        <thead>
-          <tr><th scope="col">When you…</th><th scope="col">Emaki contacts</th><th scope="col">What is sent</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Open the <strong>Google Fonts</strong> tab in the font picker</td>
-            <td data-label="Emaki contacts"><code>fonts.google.com</code></td>
-            <td data-label="What is sent">A request for the list of fonts. The list is kept for a week, so it isn't fetched every time.</td>
-          </tr>
-          <tr>
-            <td>Preview or download a Google font</td>
-            <td data-label="Emaki contacts"><code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code> and <code>raw.githubusercontent.com</code> (Google's font repository)</td>
-            <td data-label="What is sent">The name of the font you're looking at, then its files.</td>
-          </tr>
-          <tr>
-            <td>Import a frame from <strong>Figma</strong> by its link</td>
-            <td data-label="Emaki contacts"><code>api.figma.com</code> and Figma's image servers</td>
-            <td data-label="What is sent">The file and frame from the link, with the personal access token you entered.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>
-      As with any web request, the servers you contact see your IP address. The fonts tab and Figma import are run by
-      Google and Figma under their own privacy policies.
-    </p>
-    <p>
-      The <strong>Emaki plugin for Figma</strong> uses no network at all: it copies layers to your clipboard, and you
-      paste them into Emaki.
-    </p>
-    <p>
-      Links in the app, such as <em>How to get FFmpeg</em> in About, open in your browser only when you click them.
-    </p>
+    <section class="wrap stays" aria-labelledby="stays-title">
+      <h2 id="stays-title">What stays on your computer</h2>
+      <ul>
+        <li>Projects, as <code>.emaki</code> folders wherever you save them</li>
+        <li>Autosave and crash-recovery copies, and version history</li>
+        <li>Your settings, brand kits, saved elements and the fonts you've downloaded</li>
+        <li>Your Figma token, only if you choose to remember it, kept in your settings and only ever sent to Figma</li>
+      </ul>
+    </section>
 
-    <h2>What stays on your computer</h2>
-    <ul>
-      <li>Projects, as <code>.emaki</code> folders wherever you save them.</li>
-      <li>Autosave and crash-recovery copies, and version history.</li>
-      <li>Your settings, brand kits, saved elements and the fonts you've downloaded.</li>
-      <li>Your Figma token, only if you choose to remember it, kept in your settings and only ever sent to Figma.</li>
-    </ul>
+    <section class="wrap site" aria-labelledby="site-title">
+      <h2 id="site-title">This website</h2>
+      <p>
+        No cookies, no analytics and no tracking scripts. Its fonts are served from the site itself, not from a font
+        service. The only scripts play the editor at the top of the home page, unroll the scroll and play the clips.
+      </p>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
 
-    <h2>This website</h2>
-    <p>
-      This site uses no cookies, no analytics and no tracking scripts. Its fonts are served from the site itself, not
-      from a font service. The only scripts play the animation at the top of the home page and the showcase clips.
-    </p>
-  </div>
-</Page>
+<style>
+  .statement {
+    padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px);
+  }
+  .statement h1 {
+    font-size: clamp(2.75rem, 7.5vw, 5.5rem);
+    max-width: 12ch;
+    margin-bottom: 24px;
+  }
+  .lede {
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    color: var(--text-dim);
+    max-width: 34rem;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  .never {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border-strong);
+  }
+  .never li {
+    display: grid;
+    gap: 4px 48px;
+    align-items: baseline;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  @media (min-width: 800px) {
+    .never li {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+  .never b {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .never span {
+    color: var(--text-dim);
+  }
+
+  .online {
+    background: var(--bg-alt);
+    border-block: 1px solid var(--border);
+    padding-block: clamp(48px, 7vw, 88px);
+  }
+  .online h2,
+  .stays h2,
+  .site h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+  }
+  .sub {
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+  .cases {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+  .case {
+    padding: 24px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .case h3 {
+    margin-bottom: 16px;
+  }
+  .case dl {
+    margin: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .case dt {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .case dd {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.9375rem;
+  }
+  .notes {
+    margin: 32px 0 0;
+    padding-left: 20px;
+    max-width: 46rem;
+    color: var(--text-dim);
+    font-size: 0.9375rem;
+  }
+  .notes li + li {
+    margin-top: 8px;
+  }
+
+  .stays {
+    padding-block: clamp(48px, 7vw, 80px) 0;
+  }
+  .stays ul {
+    margin: 0;
+    padding-left: 20px;
+    max-width: 46rem;
+    color: var(--text-dim);
+  }
+  .stays li + li {
+    margin-top: 8px;
+  }
+  .site {
+    padding-block: 48px clamp(48px, 8vw, 96px);
+  }
+  .site p {
+    max-width: 46rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+</style>
