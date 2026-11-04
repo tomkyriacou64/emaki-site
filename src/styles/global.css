@@ -188,3 +188,25 @@ a:hover {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* Inner pages (roadmap, changelog) */
+.page-head {
+  padding-block: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 4vw, 2.5rem);
+  max-width: 44rem;
+}
+.page-head p:not(.eyebrow) {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--text-dim);
+}
+.page-body {
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+}
+
+code {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: var(--text);
+}

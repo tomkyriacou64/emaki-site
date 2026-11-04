@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import Logo from '../components/Logo.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import Shot from '../components/Shot.astro';
 import Feature from '../components/Feature.astro';
 import Icon from '../components/Icon.astro';
 import HeroScroll from '../components/HeroScroll.astro';
 import Cta from '../components/Cta.astro';
-import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL, LICENCE_URL } from '../config';
+import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL } from '../config';
 
 import editor from '../assets/shots/hero-editor.png';
 import artboards from '../assets/shots/artboards.png';
@@ -49,28 +50,13 @@ const storyPoints = [
   'Completely free and open source',
 ];
 
-const year = new Date().getFullYear();
 ---
 
 <Base
   title="Emaki: motion design on your desktop"
   description="Emaki is a desktop app for motion design. Design on artboards, animate on a timeline and export to MP4, WebM, ProRes, GIF, Lottie or PNG. Local, no account. Free, and open source soon."
 >
-  <header class="top">
-    <div class="wrap top-row">
-      <a href="/" class="brand" aria-label="Emaki home">
-        <Logo id="logo-top" animate height={36} />
-      </a>
-      <nav aria-label="Main">
-        <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#name">The name</a></li>
-          <li><a href="#story">Story</a></li>
-          <li><a href="#get">Get Emaki</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <SiteHeader />
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
@@ -327,7 +313,7 @@ const year = new Date().getFullYear();
       <div class="wrap">
         <p class="eyebrow">Roadmap</p>
         <h2 id="next-title">Coming next</h2>
-        <p class="next-note">Planned, not yet in the app.</p>
+        <p class="next-note">Planned, not yet in the app. <a href="/roadmap">See the full roadmap</a></p>
         <ul>
           <li>
             <h3>One design, every format</h3>
@@ -404,62 +390,10 @@ const year = new Date().getFullYear();
     </section>
   </main>
 
-  <footer class="foot">
-    <div class="wrap foot-row">
-      <Logo id="logo-foot" height={28} />
-      <ul>
-        {GITHUB_URL && <li><a href={GITHUB_URL}>GitHub</a></li>}
-        <li>{LICENCE_URL ? <a href={LICENCE_URL}>Licence: MIT or Apache-2.0</a> : 'Code: MIT or Apache-2.0'}</li>
-      </ul>
-      <p>© {year} Emaki</p>
-    </div>
-  </footer>
+  <SiteFooter />
 </Base>
 
 <style>
-  /* Top bar */
-  .top {
-    padding-block: 1.25rem;
-  }
-  .top-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .brand {
-    display: inline-flex;
-    border-radius: 6px;
-  }
-  .top nav ul {
-    display: flex;
-    gap: clamp(0.75rem, 3vw, 1.75rem);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .top nav a {
-    color: var(--text);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.5rem 0.1rem;
-  }
-  .top nav a:hover {
-    color: var(--accent);
-  }
-  @media (max-width: 640px) {
-    .top nav li:nth-child(2),
-    .top nav li:nth-child(3) {
-      display: none;
-    }
-  }
-  @media (max-width: 380px) {
-    .top nav li:first-child {
-      display: none;
-    }
-  }
-
   /* Hero */
   .hero {
     padding-top: clamp(2rem, 6vw, 4.5rem);
@@ -869,37 +803,5 @@ const year = new Date().getFullYear();
     color: var(--accent);
     margin-top: 0.3rem;
     flex: none;
-  }
-
-  /* Footer */
-  .foot {
-    border-top: 1px solid var(--border);
-    padding-block: 2rem;
-    font-size: 0.92rem;
-    color: var(--text-dim);
-  }
-  .foot-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem 2rem;
-  }
-  .foot ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .foot a {
-    color: var(--text-dim);
-  }
-  .foot a:hover {
-    color: var(--accent);
-  }
-  .foot p {
-    margin: 0;
   }
 </style>

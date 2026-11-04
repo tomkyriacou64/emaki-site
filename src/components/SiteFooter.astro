@@ -1,0 +1,59 @@
+---
+// The footer on every page.
+import Logo from './Logo.astro';
+import { GITHUB_URL, LICENCE_URL } from '../config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <Logo id="logo-foot" height={28} />
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#name">The name</a></li>
+        <li><a href="/#story">Story</a></li>
+        <li><a href="/roadmap">Roadmap</a></li>
+        <li><a href="/changelog">Changelog</a></li>
+        {GITHUB_URL && <li><a href={GITHUB_URL}>GitHub</a></li>}
+      </ul>
+    </nav>
+    <p>
+      {LICENCE_URL ? <a href={LICENCE_URL}>Code: MIT or Apache-2.0</a> : 'Code: MIT or Apache-2.0'} · © {year} Emaki
+    </p>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-top: 1px solid var(--border);
+    padding-block: 2rem;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+  }
+  .foot-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    color: var(--text-dim);
+  }
+  a:hover {
+    color: var(--accent);
+  }
+  p {
+    margin: 0;
+  }
+</style>

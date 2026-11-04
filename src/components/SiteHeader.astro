@@ -1,0 +1,76 @@
+---
+// The top bar on every page.
+import Logo from './Logo.astro';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/#features', label: 'Features', hide: 'narrow' },
+  { href: '/roadmap', label: 'Roadmap' },
+  { href: '/changelog', label: 'Changelog', hide: 'narrow' },
+  { href: '/#get', label: 'Get Emaki' },
+];
+---
+
+<header class="top">
+  <div class="wrap top-row">
+    <a href="/" class="brand" aria-label="Emaki home">
+      <Logo id="logo-top" animate={path === '/'} height={36} />
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          links.map((l) => (
+            <li class:list={[l.hide]}>
+              <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .top {
+    padding-block: 1.25rem;
+  }
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand {
+    display: inline-flex;
+    border-radius: 6px;
+  }
+  ul {
+    display: flex;
+    gap: clamp(0.75rem, 3vw, 1.75rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a:not(.brand) {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.1rem;
+  }
+  a:not(.brand):hover,
+  a[aria-current='page'] {
+    color: var(--accent);
+  }
+  a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+  @media (max-width: 640px) {
+    .narrow {
+      display: none;
+    }
+  }
+</style>
