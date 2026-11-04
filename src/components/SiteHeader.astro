@@ -1,6 +1,9 @@
 ---
-// The top bar on every page.
+// The top bar on every page. On narrow screens the links that don't fit move
+// into a menu behind one button. The button only appears once the script runs;
+// without JavaScript those pages are still in the footer.
 import Logo from './Logo.astro';
+import Icon from './Icon.astro';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
@@ -11,6 +14,7 @@ const links = [
   { href: '/changelog', label: 'Changelog', hide: 'narrow' },
   { href: '/get-started', label: 'Get started' },
 ];
+const more = links.filter((l) => l.hide);
 ---
 
 <header class="top">
@@ -18,7 +22,7 @@ const links = [
     <a href="/" class="brand" aria-label="Emaki home">
       <Logo id="logo-top" animate={path === '/'} height={36} />
     </a>
-    <nav aria-label="Main">
+    <nav aria-label="Main" class="main-nav">
       <ul>
         {
           links.map((l) => (
@@ -29,10 +33,52 @@ const links = [
             </li>
           ))
         }
+        <li class="menu-item">
+          <button type="button" class="menu-btn" aria-expanded="false" aria-controls="nav-more" hidden>
+            <span class="icon-open"><Icon name="menu" size={20} /></span>
+            <span class="icon-close"><Icon name="close" size={20} /></span>
+            <span class="visually-hidden">More pages</span>
+          </button>
+        </li>
+      </ul>
+      <ul id="nav-more" class="more" hidden>
+        {
+          more.map((l) => (
+            <li>
+              <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
   </div>
 </header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const panel = document.getElementById('nav-more');
+  if (btn && panel) {
+    btn.hidden = false;
+    const set = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) {
+        set(false);
+        btn.focus();
+      }
+    });
+    // Close when focus or a click goes anywhere outside the button and the menu.
+    const outside = (t: EventTarget | null) => !(t instanceof Node && (btn.contains(t) || panel.contains(t)));
+    document.addEventListener('focusin', (e) => outside(e.target) && set(false));
+    document.addEventListener('click', (e) => outside(e.target) && set(false));
+    matchMedia('(min-width: 861px)').addEventListener('change', (e) => e.matches && set(false));
+  }
+</script>
 
 <style>
   .top {
@@ -49,8 +95,12 @@ const links = [
     flex: none;
     border-radius: 6px;
   }
+  .main-nav {
+    position: relative;
+  }
   ul {
     display: flex;
+    align-items: center;
     gap: clamp(12px, 2.4vw, 28px);
     list-style: none;
     margin: 0;
@@ -72,9 +122,81 @@ const links = [
     text-decoration-thickness: 1px;
     text-underline-offset: 6px;
   }
+  .menu-item,
+  .more {
+    display: none;
+  }
+  .menu-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 150ms var(--ease);
+  }
+  .menu-btn[hidden] {
+    display: none;
+  }
+  .menu-btn:hover,
+  .menu-btn[aria-expanded='true'] {
+    background: var(--raised);
+  }
+  .menu-btn :global(svg) {
+    display: block;
+  }
+  .icon-close,
+  .menu-btn[aria-expanded='true'] .icon-open {
+    display: none;
+  }
+  .menu-btn[aria-expanded='true'] .icon-close {
+    display: block;
+  }
   @media (max-width: 860px) {
     .narrow {
       display: none;
+    }
+    .menu-item {
+      display: block;
+    }
+    .more:not([hidden]) {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 20;
+      display: grid;
+      gap: 0;
+      min-width: 12rem;
+      padding: 8px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      animation: menu-in 150ms var(--ease);
+    }
+    .more a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+    }
+    .more a:hover {
+      background: var(--raised);
+    }
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .more:not([hidden]) {
+      animation: none;
     }
   }
 </style>
