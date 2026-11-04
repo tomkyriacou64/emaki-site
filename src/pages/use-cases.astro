@@ -1,0 +1,148 @@
+---
+import Page from '../layouts/Page.astro';
+import Clip from '../components/Clip.astro';
+import Shot from '../components/Shot.astro';
+import { byFile } from '../data/showcase';
+import signageTv from '../assets/shots/signage-tv.png';
+import mockups from '../assets/shots/mockups.png';
+---
+
+<Page
+  title="Use cases"
+  description="What Emaki is for: digital signage, social media, product and UI demos, and presentations and events."
+  eyebrow="Use cases"
+  heading="What you can make"
+>
+  <p slot="intro">
+    Emaki began in a digital signage company, so screens come first. It's just as much at home with social posts,
+    product demos and slides for an event.
+  </p>
+
+  <section class="case" aria-labelledby="signage">
+    <div class="copy">
+      <h2 id="signage">Digital signage</h2>
+      <p>
+        Menu boards, window screens and waiting-room loops. Design in landscape or portrait at the screen's own size,
+        set the length, and export a video that loops cleanly on a media player.
+      </p>
+      <ul>
+        <li>Menu board templates in landscape and portrait, plus multi-screen sets such as a drive-thru pair and a four-screen counter wall.</li>
+        <li>Preview the design on a TV mockup, turned either way, as you edit.</li>
+        <li>Export MP4 for players and screens, or a PNG for a still board.</li>
+      </ul>
+    </div>
+    <div class="media two wide-tall">
+      <Clip clip={byFile('morning-coffee')} />
+      <Clip clip={byFile('noodle-bar')} />
+    </div>
+  </section>
+
+  <section class="case" aria-labelledby="social">
+    <div class="copy">
+      <h2 id="social">Social media</h2>
+      <p>
+        Posts, stories and short clips. Start from a square post or a vertical story, or put story, square and
+        landscape artboards side by side in one project.
+      </p>
+      <ul>
+        <li>Text that animates by letter, word or line.</li>
+        <li>Export sizes made for the platform you post to, with a note when the shape doesn't match.</li>
+        <li>GIF for chats and docs, MP4 or WebM for everything else.</li>
+      </ul>
+    </div>
+    <div class="media two square-tall">
+      <Clip clip={byFile('social-post')} />
+      <Clip clip={byFile('vertical-story')} />
+    </div>
+  </section>
+
+  <section class="case" aria-labelledby="product">
+    <div class="copy">
+      <h2 id="product">Product and UI demos</h2>
+      <p>
+        Show an app or a site in motion. Paste screens in from Figma with the plugin, animate them, and show the
+        result on a live phone or laptop mockup.
+      </p>
+      <ul>
+        <li>Device mockups that play in step with the artboard.</li>
+        <li>Motion tracking and corner pin to put a design onto a screen in a video.</li>
+        <li>Lottie export for animations that live inside apps and sites.</li>
+      </ul>
+    </div>
+    <div class="media">
+      <Shot
+        src={mockups}
+        alt="A vertical sale story artboard beside the same design on a phone mockup, both at the same frame."
+      />
+    </div>
+  </section>
+
+  <section class="case" aria-labelledby="events">
+    <div class="copy">
+      <h2 id="events">Presentations and events</h2>
+      <p>
+        Title cards, logo reveals and stage loops. Play an artboard full screen from the editor with
+        <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, or export it for the venue's playback.
+      </p>
+      <ul>
+        <li>Kinetic type and logo reveal templates to start from.</li>
+        <li>ProRes 4444 with transparency, for layering over other footage.</li>
+        <li>Sound from audio and video layers mixed into the export.</li>
+      </ul>
+    </div>
+    <div class="media two">
+      <Clip clip={byFile('kinetic-type')} />
+      <Shot
+        src={signageTv}
+        alt="The Kinetic type template shown on a TV mockup, with the words Make it move today."
+        sizes="(min-width: 900px) 420px, 100vw"
+      />
+    </div>
+  </section>
+</Page>
+
+<style>
+  .case {
+    display: grid;
+    gap: 1.5rem clamp(2rem, 4vw, 3.5rem);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .case {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+    .case:nth-of-type(even) {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    .case:nth-of-type(even) .copy {
+      order: 2;
+    }
+  }
+  .copy p,
+  .copy li {
+    color: var(--text-dim);
+  }
+  .copy ul {
+    padding-left: 1.2rem;
+    margin: 0;
+  }
+  .copy li + li {
+    margin-top: 0.35rem;
+  }
+  .media.two {
+    display: grid;
+    gap: 1rem;
+    align-items: start;
+  }
+  @media (min-width: 560px) {
+    /* A wide clip beside a tall one, or a square beside a tall one. */
+    .media.wide-tall {
+      grid-template-columns: 1.75fr 1fr;
+    }
+    .media.square-tall {
+      grid-template-columns: 1.25fr 1fr;
+    }
+  }
+</style>
