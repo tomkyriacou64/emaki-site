@@ -1,0 +1,28 @@
+---
+// An inner page: header, a title block, the content and the footer.
+import Base from './Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+}
+
+const { title, description, eyebrow, heading } = Astro.props;
+---
+
+<Base title={`${title}: Emaki`} description={description}>
+  <SiteHeader />
+  <main id="main" class="wrap page-body">
+    <div class="page-head">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{heading}</h1>
+      <slot name="intro" />
+    </div>
+    <slot />
+  </main>
+  <SiteFooter />
+</Base>

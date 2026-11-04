@@ -1,26 +1,66 @@
 ---
-// The footer on every page.
+// The footer on every page: the logo, then the site in three short lists.
 import Logo from './Logo.astro';
 import { GITHUB_URL, LICENCE_URL } from '../config';
 
 const year = new Date().getFullYear();
+const groups = [
+  {
+    title: 'Emaki',
+    links: [
+      { href: '/#features', label: 'Features' },
+      { href: '/showcase', label: 'Showcase' },
+      { href: '/use-cases', label: 'Use cases' },
+      { href: '/get-started', label: 'Get started' },
+      { href: '/faq', label: 'FAQ' },
+    ],
+  },
+  {
+    title: 'Project',
+    links: [
+      { href: '/#story', label: 'Story' },
+      { href: '/#name', label: 'The name' },
+      { href: '/roadmap', label: 'Roadmap' },
+      { href: '/changelog', label: 'Changelog' },
+      { href: '/contributing', label: 'Contributing' },
+    ],
+  },
+  {
+    title: 'Trust',
+    links: [
+      { href: '/privacy', label: 'Privacy' },
+      { href: '/licence', label: 'Licence and credits' },
+      ...(GITHUB_URL ? [{ href: GITHUB_URL, label: 'GitHub' }] : []),
+    ],
+  },
+];
 ---
 
 <footer class="foot">
-  <div class="wrap foot-row">
-    <Logo id="logo-foot" height={28} />
-    <nav aria-label="Footer">
-      <ul>
-        <li><a href="/#features">Features</a></li>
-        <li><a href="/#name">The name</a></li>
-        <li><a href="/#story">Story</a></li>
-        <li><a href="/roadmap">Roadmap</a></li>
-        <li><a href="/changelog">Changelog</a></li>
-        {GITHUB_URL && <li><a href={GITHUB_URL}>GitHub</a></li>}
-      </ul>
-    </nav>
+  <div class="wrap foot-grid">
+    <div class="about">
+      <Logo id="logo-foot" height={28} />
+      <p>A desktop app for motion design. Free and open source, with no account and no tracking.</p>
+    </div>
+    {
+      groups.map((g) => (
+        <nav aria-label={g.title}>
+          <h2>{g.title}</h2>
+          <ul>
+            {g.links.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+  <div class="wrap legal">
     <p>
-      {LICENCE_URL ? <a href={LICENCE_URL}>Code: MIT or Apache-2.0</a> : 'Code: MIT or Apache-2.0'} · © {year} Emaki
+      {LICENCE_URL ? <a href={LICENCE_URL}>Code: MIT or Apache-2.0</a> : 'Code: MIT or Apache-2.0'} · © {year} Emaki ·
+      This site uses no cookies and no analytics.
     </p>
   </div>
 </footer>
@@ -28,32 +68,55 @@ const year = new Date().getFullYear();
 <style>
   .foot {
     border-top: 1px solid var(--border);
-    padding-block: 2rem;
+    padding-block: clamp(2rem, 5vw, 3rem) 2rem;
     font-size: 0.92rem;
     color: var(--text-dim);
   }
-  .foot-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem 2rem;
+  .foot-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+  @media (min-width: 860px) {
+    .foot-grid {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+  }
+  .about p {
+    margin: 0.85rem 0 0;
+    max-width: 22rem;
+  }
+  h2 {
+    font-family: var(--font-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0 0 0.6rem;
   }
   ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
+    display: grid;
+    gap: 0.35rem;
     list-style: none;
     margin: 0;
     padding: 0;
   }
   a {
     color: var(--text-dim);
+    text-decoration: none;
   }
   a:hover {
     color: var(--accent);
+    text-decoration: underline;
   }
-  p {
+  .legal {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .legal p {
     margin: 0;
   }
 </style>

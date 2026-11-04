@@ -5,9 +5,10 @@ import Logo from './Logo.astro';
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
   { href: '/#features', label: 'Features', hide: 'narrow' },
-  { href: '/roadmap', label: 'Roadmap' },
+  { href: '/showcase', label: 'Showcase' },
+  { href: '/roadmap', label: 'Roadmap', hide: 'narrow' },
   { href: '/changelog', label: 'Changelog', hide: 'narrow' },
-  { href: '/#get', label: 'Get Emaki' },
+  { href: '/get-started', label: 'Get started' },
 ];
 ---
 
@@ -44,6 +45,7 @@ const links = [
   }
   .brand {
     display: inline-flex;
+    flex: none;
     border-radius: 6px;
   }
   ul {
@@ -68,7 +70,7 @@ const links = [
     text-decoration: underline;
     text-decoration-thickness: 2px;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     .narrow {
       display: none;
     }
