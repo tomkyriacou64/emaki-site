@@ -40,13 +40,15 @@ isn't there yet.
 ## Pages
 
 - `/` (`src/pages/index.astro`): the landing page.
-- `/changelog` (`src/pages/changelog.astro`): release notes from
-  `src/data/changelog.ts`.
-- `/roadmap` (`src/pages/roadmap.astro`): Now / Next / Later from
-  `src/data/roadmap.ts`. No dates and no promises; write items from the
-  user's side.
+- `/showcase`, `/use-cases`, `/get-started`, `/faq`: clips made in Emaki,
+  what it's for, how to start, short answers.
+- `/roadmap` and `/changelog`: from `src/data/roadmap.ts` and
+  `src/data/changelog.ts`. The roadmap has no dates and no promises; write
+  items from the user's side.
+- `/privacy`, `/licence`, `/contributing`. Keep the privacy page's list of
+  network use in step with the app (grep the app for `ureq`).
 
-The header and footer are `SiteHeader.astro` and `SiteFooter.astro`.
+Inner pages use `src/layouts/Page.astro`. The header and footer are `SiteHeader.astro` and `SiteFooter.astro`.
 
 ### Adding a release to the changelog
 
@@ -70,6 +72,25 @@ Copy the notes from the GitHub release (`gh release view v1.0.0 -R
 tomkyriacou64/emaki --json body,publishedAt`), leaving out the download
 line and the "Generated with" footer. Text in `backticks` shows as code.
 Each release gets an anchor, such as `/changelog#v1.0.0`.
+
+## Showcase clips
+
+Clips live in `public/showcase/` as `<name>.mp4` (H.264, no sound) with a
+poster frame `<name>.webp`, and are listed in `src/data/showcase.ts`. Only
+use clips really made in Emaki. The current ones are built-in templates,
+exported with the released AppImage (0.9.2) in a throwaway profile:
+
+```sh
+export XDG_DATA_HOME=/tmp/emk/data XDG_CONFIG_HOME=/tmp/emk/config XDG_CACHE_HOME=/tmp/emk/cache
+Emaki.AppImage --template "Morning coffee" morning-coffee.emaki
+Emaki.AppImage --export morning-coffee.emaki raw.mp4 --width 1280 --height 720 --fps 30
+ffmpeg -i raw.mp4 -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p -movflags +faststart -an public/showcase/morning-coffee.mp4
+ffmpeg -ss 10 -i raw.mp4 -frames:v 1 -c:v libwebp -quality 80 public/showcase/morning-coffee.webp
+```
+
+Portrait clips are 720 × 1280, square ones 960 × 960. Each clip plays
+muted and looped while on screen, with a pause button; with reduced motion
+it shows the poster until the visitor presses play.
 
 ## The hero
 
