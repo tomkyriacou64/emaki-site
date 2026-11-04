@@ -6,7 +6,7 @@ import Icon from './Icon.astro';
 import { NOTIFY_URL, APPIMAGE_URL } from '../config';
 
 interface Props {
-  /** Show a secondary link to the features. */
+  /** Show a secondary link to the showcase. */
   tour?: boolean;
   class?: string;
 }
@@ -31,17 +31,14 @@ const { tour = false, class: className } = Astro.props;
       </a>
     ) : (
       !APPIMAGE_URL && (
-        <p class="status">
-          <span class="dot" aria-hidden="true" />
-          Coming soon: free and open source
-        </p>
+        <p class="status">Coming soon to Linux</p>
       )
     )
   }
   {
     tour && (
-      <a class="btn btn-secondary" href="#features">
-        See what it does
+      <a class="btn btn-secondary" href="/showcase">
+        See what it makes
         <Icon name="arrow" size={18} />
       </a>
     )
@@ -53,37 +50,16 @@ const { tour = false, class: className } = Astro.props;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.75rem;
+    gap: 12px 20px;
   }
   .btn-note {
     font-weight: 400;
     opacity: 0.85;
   }
+  /* While nothing can be downloaded, a plain status line, not a button. */
   .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    min-height: 48px;
     margin: 0;
-    padding: 0.7rem 1.3rem;
-    border-radius: 999px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text);
-    background: var(--accent-soft);
-    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  }
-  @media (max-width: 420px) {
-    .status {
-      padding-inline: 1rem;
-      font-size: 0.95rem;
-    }
-  }
-  .dot {
-    flex: none;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
   }
 </style>

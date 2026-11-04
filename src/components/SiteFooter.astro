@@ -8,7 +8,7 @@ const groups = [
   {
     title: 'Emaki',
     links: [
-      { href: '/#features', label: 'Features' },
+      { href: '/#inside', label: 'Features' },
       { href: '/showcase', label: 'Showcase' },
       { href: '/use-cases', label: 'Use cases' },
       { href: '/get-started', label: 'Get started' },
@@ -40,7 +40,7 @@ const groups = [
   <div class="wrap foot-grid">
     <div class="about">
       <Logo id="logo-foot" height={28} />
-      <p>A desktop app for motion design. Free and open source, with no account and no tracking.</p>
+      <p>A desktop app for designing and animating motion graphics, named after the Japanese picture scroll.</p>
     </div>
     {
       groups.map((g) => (
@@ -88,16 +88,15 @@ const groups = [
   }
   h2 {
     font-family: var(--font-text);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0;
     color: var(--text);
-    margin: 0 0 0.6rem;
+    margin: 0 0 12px;
   }
   ul {
     display: grid;
-    gap: 0.35rem;
+    gap: 8px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -107,7 +106,7 @@ const groups = [
     text-decoration: none;
   }
   a:hover {
-    color: var(--accent);
+    color: var(--text);
     text-decoration: underline;
   }
   .legal {

@@ -1,413 +1,372 @@
 ---
+// The landing page, read like a scroll: each section is a scene, marked on a
+// small timeline ruler (`.mark`) with its timecode.
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Shot from '../components/Shot.astro';
-import Feature from '../components/Feature.astro';
-import Icon from '../components/Icon.astro';
+import Crop from '../components/Crop.astro';
 import HeroScroll from '../components/HeroScroll.astro';
 import Cta from '../components/Cta.astro';
 import Clip from '../components/Clip.astro';
 import { byFile } from '../data/showcase';
 import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL } from '../config';
 
-import editor from '../assets/shots/hero-editor.png';
-import artboards from '../assets/shots/artboards.png';
+import editor from '../assets/shots/mockups.png';
 import graph from '../assets/shots/graph-editor.png';
 import textPath from '../assets/shots/text-path.png';
-import mockups from '../assets/shots/mockups.png';
 import colour from '../assets/shots/colour.png';
-import templates from '../assets/shots/templates.png';
-import exportShot from '../assets/shots/export.png';
 
-const formats = [
-  { name: 'MP4', note: 'H.264, for sharing anywhere' },
-  { name: 'WebM', note: 'small files for the web' },
-  { name: 'ProRes 4444', note: 'with transparency, for editing' },
-  { name: 'GIF', note: 'for chats and docs' },
-  { name: 'Lottie', note: 'vector animation for apps and sites' },
-  { name: 'PNG', note: 'a single frame or a sequence' },
+// The clips on the home page: the ones whose look is their own, not the
+// demo's gradient card. The showcase has them all.
+const clips = ['morning-coffee', 'noodle-bar', 'kinetic-type', 'social-post'].map(byFile);
+
+// The four parts of the editor window, pinned on the screenshot (x, y as % of it).
+const parts = [
+  { x: 12, y: 46, title: 'Layers', text: 'Shapes, text, images, video and sound, in groups and masks' },
+  { x: 42, y: 13, title: 'Canvas', text: 'Artboards side by side, and live device mockups that play in step with them' },
+  { x: 88, y: 60, title: 'Inspector', text: 'Size, timing and styles, with a Design tab and an Animate tab' },
+  { x: 30, y: 88, title: 'Timeline', text: 'Drag a bar to retime it, or its edges to change its length' },
 ];
 
-const more = [
-  { icon: 'mask', title: 'Masks', text: 'Clip layers to a shape, then animate the shape to reveal them.' },
-  { icon: 'history', title: 'Version history', text: 'Save named versions of a project and go back to any of them.' },
-  { icon: 'palette', title: 'Brand kits', text: 'Colours, text styles, logos and fonts, ready in every project.' },
-  { icon: 'component', title: 'Components', text: 'Make a layer a component and place live copies, each with its own timing.' },
-  { icon: 'music', title: 'Audio and video', text: 'Trim clips on the timeline and hear the sound as you preview.' },
-  { icon: 'target', title: 'Motion tracking', text: 'Pin a layer to a point in a video, or put a design on a moving screen.' },
-  { icon: 'sparkle', title: 'Effects', text: 'Blur, frosted glass, soft shadows, blend modes and colour keying.' },
-  { icon: 'figma', title: 'Figma plugin', text: 'Copy frames in Figma and paste them in as layers, ready to animate.' },
-] as const;
+const formats = ['MP4', 'WebM', 'ProRes 4444', 'GIF', 'Lottie', 'PNG'];
 
-const storyPoints = [
-  'Design and animate in one place',
-  'Import from Figma with a plugin',
-  'Motion tracking: pin layers to points in a video',
-  'Timeline, keyframes and a graph editor',
-  'Masks and text on a path',
-  'Templates and live device mockups',
-  'Export to video, GIF and Lottie',
-  'Private and offline: no account, no tracking',
-  'Completely free and open source',
+const also = [
+  { title: 'Masks', text: 'Clip layers to a shape, then animate the shape to reveal them.' },
+  { title: 'Components', text: 'Make a layer a component and place live copies, each with its own timing.' },
+  { title: 'Brand kits', text: 'Colours, text styles, logos and fonts, ready in every project.' },
+  { title: 'Version history', text: 'Save named versions of a project and go back to any of them.' },
+  { title: 'Audio and video', text: 'Trim clips on the timeline and hear the sound as you preview.' },
+  { title: 'Effects', text: 'Blur, frosted glass, soft shadows, blend modes and colour keying.' },
+  { title: 'Templates', text: 'Social posts, logo reveals, lower thirds, kinetic type, stories and menu boards.' },
+  { title: 'Figma plugin', text: 'Copy frames in Figma and paste them in as layers, ready to animate.' },
 ];
-
 ---
 
 <Base
-  title="Emaki: motion design on your desktop"
-  description="Emaki is a desktop app for motion design. Design on artboards, animate on a timeline and export to MP4, WebM, ProRes, GIF, Lottie or PNG. Local, no account. Free, and open source soon."
+  title="Emaki: design a scene, then give it a timeline"
+  description="Emaki is a free desktop app for motion graphics. Design on artboards, animate on a timeline with sound, and export MP4, WebM, ProRes, GIF, Lottie or PNG. Runs offline, with no account. Open source soon."
 >
   <SiteHeader />
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-copy">
-        <p class="pill">Free · Open source soon · Linux first</p>
-        <h1 id="hero-title">Motion design, on your desktop.</h1>
-        <p class="lede">
-          Emaki is a native app for designing and animating. Lay out a scene on artboards, bring it to life on a
-          timeline, and export video, GIF or Lottie. It runs on your computer, with no account.
-        </p>
-        <Cta tour class="hero-cta" />
-        <ul class="promises" aria-label="In short">
-          <li><Icon name="check" size={18} /> Completely free and open source</li>
-          <li><Icon name="user-off" size={18} /> No account, no tracking</li>
-          <li><Icon name="wifi-off" size={18} /> Works fully offline</li>
-        </ul>
+        <h1 id="hero-title">Design a scene, then give it a timeline</h1>
+        <div class="hero-side">
+          <p class="lede">
+            Emaki is a free desktop app for motion graphics. Lay out artboards, animate them with sound, and export MP4,
+            GIF or Lottie. It runs on your own computer, offline, with no account.
+          </p>
+          <Cta tour />
+        </div>
       </div>
       <div class="wrap hero-scroll">
-        <div class="glow" aria-hidden="true"></div>
         <HeroScroll />
       </div>
     </section>
 
-    <section class="editor" aria-labelledby="editor-title">
+    <section class="scene editor" aria-labelledby="editor-title">
       <div class="wrap">
-        <div class="editor-head">
-          <p class="eyebrow">The editor</p>
-          <h2 id="editor-title">Everything in one window</h2>
+        <div class="head split">
+          <div>
+            <p class="mark"><time>0:05</time> The editor</p>
+            <h2 id="editor-title">One window, from first shape to export</h2>
+          </div>
           <p>
-            Layers and assets on the left, the canvas in the middle, design and animation settings on the right, and
-            the timeline along the bottom. Press <kbd>Space</kbd> and it plays, with sound.
+            Everything sits where you can see it, and nothing opens in a separate app. Press <kbd>Space</kbd> and the
+            artboard plays, with sound.
           </p>
         </div>
-        <Shot
-          src={editor}
-          sizes="(min-width: 1200px) 1160px, 100vw"
-          alt="The Emaki editor in the light theme: layers on the left, a landscape artboard in the middle with a gradient card on a curved motion path, the Animate tab with a Move animation and its easing curve on the right, and the timeline with coloured animation bars below."
-        />
+        <div class="pinned">
+          <Shot
+            src={editor}
+            sizes="(min-width: 1200px) 1160px, 100vw"
+            alt="The Emaki editor in the light theme: layers on the left, a vertical sale story artboard beside the same design on a phone mockup in the middle, the artboard's size and timing on the right, and the timeline with animation bars below."
+          />
+          {
+            parts.map((p, i) => (
+              <span class="pin" style={`left: ${p.x}%; top: ${p.y}%`} aria-hidden="true">
+                {i + 1}
+              </span>
+            ))
+          }
+        </div>
+        <ol class="legend">
+          {
+            parts.map((p) => (
+              <li>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+              </li>
+            ))
+          }
+        </ol>
       </div>
     </section>
 
-    <section class="made" aria-labelledby="made-title">
+    <section class="scene made" aria-labelledby="made-title">
       <div class="wrap">
-        <div class="made-head">
+        <div class="head split">
           <div>
-            <p class="eyebrow">Made in Emaki</p>
-            <h2 id="made-title">Templates that already move</h2>
+            <p class="mark"><time>0:12</time> Made in Emaki</p>
+            <h2 id="made-title">Real clips, straight from the export dialogue</h2>
           </div>
-          <a class="btn btn-secondary" href="/showcase">See the showcase <Icon name="arrow" size={18} /></a>
+          <p>
+            Each one is a built-in template, exported as it comes. Open the same template, put in your own words and
+            colours, and the timing is already done. <a href="/showcase">See all seven</a>
+          </p>
         </div>
-        <div class="made-grid">
-          <Clip clip={byFile('morning-coffee')} />
-          <Clip clip={byFile('kinetic-type')} />
-          <Clip clip={byFile('logo-reveal')} />
+      </div>
+      <div class="strip" role="region" aria-label="Clips made in Emaki" tabindex="0">
+        <ul>
+          {
+            clips.map((c) => (
+              <li style={`--ar: ${c.width / c.height}`}>
+                <Clip clip={c} caption={false} />
+                <p class="clip-meta">
+                  <span>{c.title}</span> {c.width} × {c.height}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="scene inside" id="inside" aria-labelledby="inside-title">
+      <div class="wrap">
+        <div class="head">
+          <p class="mark"><time>0:20</time> What's inside</p>
+          <h2 id="inside-title">Draw it, time it, track it, export it</h2>
+        </div>
+
+        <ol class="rows">
+          <li class="row">
+            <div class="row-copy">
+              <p class="kind">Design</p>
+              <h3>Artboards on an endless canvas</h3>
+              <p>
+                Each artboard has its own size, background, frame rate and length, and you can add as many as you need.
+              </p>
+            </div>
+            <ul class="list" aria-label="Design tools">
+              <li>Shapes, a pen for paths, and rich text you edit right on the canvas</li>
+              <li>Images, SVG as editable paths, video and audio</li>
+              <li>Smart guides, auto layout and measuring as you drag</li>
+            </ul>
+          </li>
+
+          <li class="row">
+            <div class="row-copy">
+              <p class="kind">Animate</p>
+              <h3>Presets first, keyframes when you want them</h3>
+              <p>
+                Pick an animation from the gallery and it lands on the timeline, ready to retime. Open it into keyframes,
+                shape any easing in the graph editor, bend a move into a curve, or make a layer follow a path.
+              </p>
+            </div>
+            <Crop
+              src={graph}
+              x={0.7}
+              y={0.84}
+              zoom={1.8}
+              ratio={2.6}
+              alt="The timeline with the graph editor open, showing the position curves between a card's keyframes."
+            />
+          </li>
+
+          <li class="row">
+            <div class="row-copy">
+              <p class="kind">Type</p>
+              <h3>Text by the letter, word or line</h3>
+              <p>
+                Set text along a path that stays editable, and keyframe the weight and width of variable fonts. Use the
+                fonts on your computer, plus Google Fonts when you ask for them.
+              </p>
+            </div>
+            <Crop
+              src={textPath}
+              x={0.42}
+              y={0.4}
+              zoom={1.7}
+              alt="Text set around a circle on a path, with a variable font at weight 537 in the middle."
+            />
+          </li>
+
+          <li class="row">
+            <div class="row-copy">
+              <p class="kind">Track</p>
+              <h3>Pin a layer to something in a video</h3>
+              <p>
+                Motion tracking follows a point from frame to frame. Pin a layer to one point and it moves with it, or to
+                two and it also scales and turns. Track a screen's four corners and your design sits on it.
+              </p>
+            </div>
+            <ol class="list numbered" aria-label="How tracking works">
+              <li>Right-click a layer above a video</li>
+              <li>Pin it to one point, two points or four corners</li>
+              <li>Where the tracker is unsure, the frame is marked</li>
+              <li>Drag the marker to fix it, and tracking picks up from there</li>
+            </ol>
+          </li>
+
+          <li class="row">
+            <div class="row-copy">
+              <p class="kind">Colour</p>
+              <h3>Looks, then fine adjustments</h3>
+              <p>
+                Start from a look such as Warm, Faded or Teal and orange, each previewed on your own layer. Then adjust
+                exposure, contrast, highlights, temperature and curves, and compare before and after in a split view.
+              </p>
+            </div>
+            <Crop
+              src={colour}
+              x={0.66}
+              y={0.5}
+              zoom={1.45}
+              alt="Four copies of a sunset photo graded differently, with the Looks menu open showing thumbnails such as Warm, Cool, Black and white and Faded."
+            />
+          </li>
+
+          <li class="row">
+            <div class="row-copy">
+              <p class="kind">Export</p>
+              <h3>One dialogue, six formats</h3>
+              <p>
+                Export one artboard or all of them at once, at 1×, 2× or a size made for the platform you post to. Sound
+                from audio and video layers is mixed into MP4, WebM and ProRes.
+              </p>
+            </div>
+            <ul class="formats" aria-label="Export formats">
+              {formats.map((f) => <li>{f}</li>)}
+            </ul>
+          </li>
+        </ol>
+
+        <div class="also">
+          <h3>Also in the app</h3>
+          <dl>
+            {
+              also.map((a) => (
+                <div>
+                  <dt>{a.title}</dt>
+                  <dd>{a.text}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="small">
+            The Figma plugin copies through your clipboard, so nothing leaves your computer.
+            {
+              FIGMA_PLUGIN_URL ? (
+                <>
+                  For now you install it from <a href={FIGMA_PLUGIN_URL}>the repository</a> as a development plugin.
+                </>
+              ) : (
+                <> It comes with the source code, to install as a development plugin.</>
+              )
+            }
+          </p>
         </div>
       </div>
     </section>
 
-    <div class="wrap" id="features">
-      <h2 class="visually-hidden">Features</h2>
-
-      <Feature id="artboards" eyebrow="Design" title="Design on artboards" shot={artboards} alt="Two artboards side by side on the canvas, a dark landscape one with a gradient card and a row of dots, and a square one with a red rounded shape, with the artboard's size, frame rate and length on the right.">
-        <p>
-          The canvas is endless. Add as many artboards as you need, each with its own size, background, frame rate and
-          length.
-        </p>
-        <ul>
-          <li>Shapes, a pen for paths, and rich text you edit right on the canvas.</li>
-          <li>Import images, SVG as editable paths, video and audio.</li>
-          <li>Smart guides, auto layout and measuring as you drag.</li>
-        </ul>
-      </Feature>
-
-      <Feature id="animate" eyebrow="Animate" title="Presets, keyframes and easing" shot={graph} alt="The timeline with the graph editor open, showing the position curves between a card's keyframes." flip>
-        <p>
-          Pick an animation from the gallery and it lands on the timeline, ready to retime. When you want more control,
-          open it into keyframes.
-        </p>
-        <ul>
-          <li>Drag segments to retime them and edges to change their length.</li>
-          <li>Shape the easing of any keyframe in the graph editor.</li>
-          <li>Bend a move into a curved path, or make a layer follow one.</li>
-        </ul>
-      </Feature>
-
-      <Feature id="type" eyebrow="Type" title="Type that moves" shot={textPath} alt="Text set around a circle on a path, with a variable font at weight 537 in the middle, and the typography settings on the right.">
-        <p>Animate text by letter, word or line, set it along a path, and animate the axes of variable fonts.</p>
-        <ul>
-          <li>Text on a path, with the path still editable.</li>
-          <li>Variable fonts, with weight and width you can keyframe.</li>
-          <li>Your installed fonts, plus Google Fonts when you ask for them.</li>
-        </ul>
-      </Feature>
-
-      <Feature id="mockups" eyebrow="Present" title="Device mockups, live" shot={mockups} alt="A vertical sale story artboard beside the same design on a phone mockup, both at the same frame, with the timeline below." flip>
-        <p>
-          Show an artboard on a phone, laptop or TV. The mockup stays live, so every edit and every frame of the
-          animation shows on the device as you work.
-        </p>
-      </Feature>
-
-      <Feature id="colour" eyebrow="Colour" title="Colour adjustments and looks" shot={colour} alt="Four copies of a sunset photo graded differently, with the Looks menu open showing thumbnails such as Warm, Cool, Black and white and Faded.">
-        <p>
-          Start from a look such as Warm, Faded or Teal and orange, then fine-tune it. Every thumbnail shows your own
-          layer.
-        </p>
-        <ul>
-          <li>Exposure, contrast, highlights and shadows.</li>
-          <li>Saturation, vibrance, temperature and tint, plus curves.</li>
-          <li>Compare before and after with a split view.</li>
-        </ul>
-      </Feature>
-
-      <Feature id="templates" eyebrow="Start fast" title="Templates" shot={templates} alt="The Templates page on Home: motion graphics such as a social post, logo reveal, lower third and kinetic type, and a row of menu boards for screens." flip>
-        <p>
-          Animated starting points for social posts, logo reveals, lower thirds, kinetic type, vertical stories and
-          menu boards. Swap the words and colours, and keep the motion.
-        </p>
-      </Feature>
-
-      <Feature id="export" eyebrow="Export" title="Export anywhere" shot={exportShot} alt="The Export dialogue over a logo reveal project, with MP4, GIF, WebM, ProRes, Lottie and PNG, the artboard, size, file name and folder.">
-        <p>Export one artboard or all of them at once, at 1×, 2× or a size made for the platform you post to.</p>
-        <ul class="formats" aria-label="Export formats">
-          {
-            formats.map((f) => (
-              <li>
-                <strong>{f.name}</strong>
-                <span>{f.note}</span>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="note">Sound from audio and video layers is mixed into MP4, WebM and ProRes.</p>
-      </Feature>
-
-      <section class="more" aria-labelledby="more-title">
-        <p class="eyebrow">And more</p>
-        <h2 id="more-title">The rest of the toolbox</h2>
-        <ul>
-          {
-            more.map((m) => (
-              <li>
-                <span class="more-icon">
-                  <Icon name={m.icon} size={22} />
-                </span>
-                <h3>{m.title}</h3>
-                <p>{m.text}</p>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="more-note">
-          The Figma plugin copies through your clipboard, so nothing leaves your computer.
-          {
-            FIGMA_PLUGIN_URL ? (
-              <>
-                For now you install it from <a href={FIGMA_PLUGIN_URL}>the repository</a> as a development plugin.
-              </>
-            ) : (
-              <>It comes with the source code, to install as a development plugin.</>
-            )
-          }
-        </p>
-      </section>
-
-      <Feature id="private" eyebrow="Yours" title="Private by design" flip>
-        <p>
-          Emaki runs on your computer. There is no account to make, nothing to sign in to and no tracking. Your
-          projects stay on your disk, as plain folders you can back up, sync or share however you like.
-        </p>
-        <p>
-          It works fully offline. It only goes online when you ask it to: for the Google Fonts tab in the font picker,
-          or to import from Figma.
-        </p>
-        <ul class="cards" slot="aside">
-          <li>
-            <Icon name="user-off" size={22} />
-            <strong>No account, no tracking</strong>
-            <span>Open it and start. Nothing is collected.</span>
-          </li>
-          <li>
-            <Icon name="wifi-off" size={22} />
-            <strong>Works offline</strong>
-            <span>Designing, animating and export need no network.</span>
-          </li>
-          <li>
-            <Icon name="folder" size={22} />
-            <strong>Plain files</strong>
-            <span>A project is a folder with its media beside it.</span>
-          </li>
-          <li>
-            <Icon name="history" size={22} />
-            <strong>Safe by default</strong>
-            <span>Autosave, crash recovery and version history.</span>
-          </li>
-        </ul>
-      </Feature>
-    </div>
-
-    <section class="name" id="name" aria-labelledby="name-title">
-      <div class="wrap name-grid">
-        <div class="name-copy">
-          <p class="eyebrow">The name</p>
+    <section class="scene origin" id="story" aria-labelledby="name-title">
+      <div class="wrap origin-grid">
+        <div class="origin-copy">
+          <p class="mark" id="name"><time>0:34</time> The name</p>
           <h2 id="name-title">Emaki means picture scroll</h2>
           <p>
-            <span lang="ja">絵巻</span>, short for <i>emakimono</i> (<span lang="ja">絵巻物</span>), are Japanese
-            illustrated handscrolls. The form flourished from the 12th century, late in the Heian period. Among the
-            best known are the Tale of Genji scrolls and the playful animals of the <i>Chōjū-jinbutsu-giga</i>.
+            <span lang="ja">絵巻</span>, short for <span lang="ja-Latn">emakimono</span> (<span lang="ja">絵巻物</span>),
+            are Japanese illustrated handscrolls. The form flourished from the 12th century, late in the Heian period.
+            Among the best known are the Tale of Genji scrolls and the playful animals of the <span lang="ja-Latn"
+              >Chōjū-jinbutsu-giga</span
+            >.
           </p>
           <p>
             You read an emaki a little at a time, unrolling it from right to left and rolling up what you have seen.
             Scenes run into one another, so the story unfolds in time as the paper moves. A timeline in a motion editor
             does much the same, which is where the app takes its name.
           </p>
-        </div>
-        <dl class="gloss" lang="ja">
-          <div>
-            <dt>絵</dt>
-            <dd lang="en-GB"><i>e</i> picture</dd>
-          </div>
-          <div>
-            <dt>巻</dt>
-            <dd lang="en-GB"><i>maki</i> scroll</dd>
-          </div>
-          <div>
-            <dt>物</dt>
-            <dd lang="en-GB"><i>mono</i> thing</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
 
-    <section class="story" id="story" aria-labelledby="story-title">
-      <div class="wrap story-grid">
-        <div class="story-copy">
-          <p class="eyebrow">The story</p>
-          <h2 id="story-title">Why I built it</h2>
+          <h2 class="story-title">Started on honeymoon in Japan</h2>
           <p>
             I run a digital signage company. For years I made our content by designing in Figma, then animating it in
             Jitter. Jitter is good, but it was missing things I needed. I'm also a fan of open source, and none of the
-            open-source tools ticked every box. So I built my own, starting while on honeymoon in Japan.
+            open-source tools ticked every box. So I built my own, starting it while on honeymoon in Japan.
           </p>
           <p>
-            Emaki is essentially Figma with animation, plus motion tracking. It's completely free and open source, so
-            anyone can use it.
+            Emaki is essentially Figma with animation, plus motion tracking. It's completely free, and its code will be
+            open source soon.
           </p>
           <p class="contribute">
-            Contributors are very welcome to help make it great, once the code is public.
+            Once the code is public, contributors are very welcome to help make it great.
             {
-              GITHUB_URL && (
-                <>
-                  {' '}
-                  <a href={GITHUB_URL}>Contribute on GitHub</a>
-                </>
+              GITHUB_URL ? (
+                <a href={GITHUB_URL}>Contribute on GitHub</a>
+              ) : (
+                <a href="/contributing">How contributing will work</a>
               )
             }
           </p>
         </div>
-        <ul class="story-list" aria-label="What Emaki does">
-          {storyPoints.map((s) => (
-            <li>
-              <Icon name="check" size={18} />
-              <span>{s}</span>
-            </li>
-          ))}
-        </ul>
+        <div class="slip" aria-hidden="true">
+          <p class="kanji" lang="ja">絵巻</p>
+          <dl class="gloss">
+            <div><dt lang="ja">絵</dt><dd><span>e</span> picture</dd></div>
+            <div><dt lang="ja">巻</dt><dd><span>maki</span> scroll</dd></div>
+            <div><dt lang="ja">物</dt><dd><span>mono</span> thing</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 
-    <section class="next" aria-labelledby="next-title">
+    <section class="scene get" id="get" aria-labelledby="get-title">
       <div class="wrap">
-        <p class="eyebrow">Roadmap</p>
-        <h2 id="next-title">Coming next</h2>
-        <p class="next-note">Planned, not yet in the app. <a href="/roadmap">See the full roadmap</a></p>
-        <ul>
-          <li>
-            <h3>One design, every format</h3>
-            <p>Make story, square and landscape versions of an artboard in one step.</p>
-          </li>
-          <li>
-            <h3>Data-driven templates</h3>
-            <p>Load a spreadsheet and export one video per row.</p>
-          </li>
-          <li>
-            <h3>Auto captions</h3>
-            <p>Turn speech in a video into animated subtitles.</p>
-          </li>
-          <li>
-            <h3>Audio-driven motion</h3>
-            <p>Snap keyframes to the beat, or let loudness drive any property.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
+        <p class="mark"><time>0:41</time> Get Emaki</p>
+        <h2 id="get-title">Free, offline, and your files stay yours</h2>
+        <div class="terms">
+          <div>
+            <h3>Free for good</h3>
+            <p>
+              No paid tier and no trial. The code will be public soon under the MIT and Apache 2.0 licences, so it stays
+              free even if the project changes hands.
+            </p>
+          </div>
+          <div>
+            <h3>Works offline</h3>
+            <p>
+              Designing, animating and exporting need no network. Emaki goes online only when you ask: for the Google
+              Fonts tab in the font picker, or to import from Figma. <a href="/privacy">Privacy</a>
+            </p>
+          </div>
+          <div>
+            <h3>Plain folders</h3>
+            <p>
+              A project is a folder with its media beside it, saved wherever you like. Autosave, crash recovery and
+              version history keep it safe.
+            </p>
+          </div>
+        </div>
 
-    <section class="get" id="get" aria-labelledby="get-title">
-      <div class="wrap">
-        <div class="get-head">
-          <p class="eyebrow">Get Emaki</p>
-          <h2 id="get-title">Free, and open source soon</h2>
-          <p>
-            Emaki is nearly ready. It's completely free, and its code will be public soon under the MIT and Apache 2.0
-            licences. No account, no tracking, and your projects stay on your computer.
+        <div class="release">
+          <div>
+            <p class="release-line">
+              One AppImage for 64-bit distributions, with FFmpeg included. Builds for macOS and Windows come later.
+              {RELEASES_URL && <a href={RELEASES_URL}>All releases</a>}
+            </p>
+            <Cta />
+          </div>
+          <p class="release-links">
+            <a href="/get-started">Get started</a>
+            <a href="/faq">FAQ</a>
+            <a href="/roadmap">Roadmap</a>
           </p>
-          <Cta />
-          <p class="get-links">
-            <a href="/get-started">Get started</a> · <a href="/faq">FAQ</a> · <a href="/privacy">Privacy</a>
-          </p>
         </div>
-
-        <div class="platforms">
-          <div class="platform first">
-            <h3>Linux <span class="tag">First</span></h3>
-            <p>One AppImage for 64-bit distributions, with FFmpeg included.</p>
-            {
-              RELEASES_URL && (
-                <p class="small">
-                  <a href={RELEASES_URL}>All releases</a>
-                </p>
-              )
-            }
-          </div>
-          <div class="platform">
-            <h3>macOS <span class="tag soon">Later</span></h3>
-            <p>For Apple silicon and Intel Macs.</p>
-          </div>
-          <div class="platform">
-            <h3>Windows <span class="tag soon">Later</span></h3>
-            <p>For 64-bit Windows.</p>
-          </div>
-        </div>
-
-        <div class="reqs">
-          <h3>What it needs on Linux</h3>
-          <ul>
-            <li>
-              <Icon name="check" size={18} />
-              <span>A graphics card with Vulkan support. Emaki draws and exports on the GPU.</span>
-            </li>
-            <li>
-              <Icon name="check" size={18} />
-              <span>Wayland or X11, and glibc 2.30 or newer (Ubuntu 20.04 and later, or similar).</span>
-            </li>
-            <li>
-              <Icon name="check" size={18} />
-              <span>Nothing else: FFmpeg is bundled, so every export format works out of the box.</span>
-            </li>
-          </ul>
-        </div>
+        <p class="next">
+          Next on the roadmap: one design in every format, data-driven templates, auto captions and audio-driven motion.
+        </p>
       </div>
     </section>
   </main>
@@ -416,439 +375,400 @@ const storyPoints = [
 </Base>
 
 <style>
-  /* Hero */
+  /* Hero: headline left, the lede and actions right, the scroll below. */
   .hero {
-    padding-top: clamp(2rem, 6vw, 4.5rem);
-    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+    padding-top: clamp(48px, 8vw, 96px);
+    padding-bottom: clamp(64px, 9vw, 128px);
     overflow: hidden;
   }
   .hero-copy {
-    text-align: center;
-    max-width: 52rem;
+    display: grid;
+    gap: 24px 64px;
+    align-items: end;
   }
-  .pill {
-    display: inline-block;
-    margin: 0 0 1.25rem;
-    padding: 0.3rem 0.85rem;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-dim);
+  @media (min-width: 960px) {
+    .hero-copy {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
   }
-  .promises {
-    list-style: none;
-    margin: 1.5rem 0 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 1.5rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text-dim);
-  }
-  .promises li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .promises :global(svg) {
-    color: var(--accent);
+  .hero h1 {
+    margin: 0;
+    max-width: 12ch;
   }
   .lede {
-    font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    line-height: 1.5;
     color: var(--text-dim);
-    max-width: 40rem;
-    margin: 1rem auto 2rem;
-  }
-  .hero-copy :global(.hero-cta) {
-    justify-content: center;
+    margin: 0 0 24px;
   }
   .hero-scroll {
-    position: relative;
-    margin-top: clamp(2.5rem, 6vw, 4rem);
+    margin-top: clamp(40px, 6vw, 64px);
   }
-  .glow {
-    position: absolute;
-    inset: -10% 2% 0;
-    background:
-      radial-gradient(closest-side at 18% 40%, color-mix(in srgb, var(--pink) 70%, transparent), transparent),
-      radial-gradient(closest-side at 50% 25%, color-mix(in srgb, var(--lilac) 55%, transparent), transparent),
-      radial-gradient(closest-side at 82% 50%, color-mix(in srgb, var(--peri) 70%, transparent), transparent),
-      radial-gradient(closest-side at 45% 80%, color-mix(in srgb, var(--mint) 50%, transparent), transparent);
-    filter: blur(48px);
-    opacity: 0.7;
-    z-index: 0;
+
+  /* Scenes */
+  .scene {
+    padding-block: clamp(64px, 10vw, 128px);
+    border-top: 1px solid var(--border);
   }
-  @media (prefers-color-scheme: dark) {
-    .glow {
-      opacity: 0.3;
+  .head {
+    margin-bottom: clamp(32px, 5vw, 48px);
+  }
+  .head h2 {
+    margin: 0;
+    max-width: 18ch;
+  }
+  .head.split {
+    display: grid;
+    gap: 16px 64px;
+    align-items: end;
+  }
+  @media (min-width: 960px) {
+    .head.split {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     }
   }
-  .hero-scroll :global(.scroll) {
-    z-index: 1;
-  }
-
-  /* The editor */
-  .editor {
-    padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
-  }
-  .editor-head {
-    max-width: 42rem;
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  }
-  .editor-head p:not(.eyebrow) {
-    color: var(--text-dim);
-  }
-
-  .made {
-    padding-block: 0 clamp(3rem, 6vw, 5rem);
-  }
-  .made-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: end;
-    justify-content: space-between;
-    gap: 1rem 2rem;
-    margin-bottom: clamp(1.25rem, 3vw, 2rem);
-  }
-  .made-head h2 {
-    margin: 0;
-  }
-  .made-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    align-items: start;
-  }
-  .get-links {
-    margin-top: 1.25rem;
-    font-size: 0.95rem;
-  }
-
-  #features {
-    border-top: 1px solid var(--border);
-  }
-
-  /* Formats */
-  .formats {
-    list-style: none;
-    padding: 0 !important;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-    gap: 0.5rem;
-    margin: 1.25rem 0 1rem !important;
-  }
-  .formats li {
-    margin: 0 !important;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    line-height: 1.35;
-  }
-  .formats strong {
-    color: var(--text);
-    font-size: 0.95rem;
-  }
-  .formats span {
-    font-size: 0.85rem;
-  }
-  .note {
-    font-size: 0.92rem;
-  }
-
-  :global(kbd) {
-    font-family: inherit;
-    font-size: 0.85em;
-    padding: 0.1em 0.4em;
-    border: 1px solid var(--border);
-    border-bottom-width: 2px;
-    border-radius: 5px;
-    background: var(--surface);
-    color: var(--text);
-  }
-
-  /* And more */
-  .more {
-    border-top: 1px solid var(--border);
-    padding-block: clamp(3rem, 7vw, 6rem);
-  }
-  .more ul {
-    list-style: none;
-    margin: 2rem 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    gap: 1rem;
-  }
-  .more li {
-    padding: 1.25rem;
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    border: 1px solid var(--border);
-  }
-  .more h3 {
-    margin: 0.85rem 0 0.35rem;
-  }
-  .more li p {
+  .head.split > p {
     margin: 0;
     color: var(--text-dim);
-    font-size: 0.95rem;
   }
-  .more-icon {
+
+  /* The editor, with numbered pins and a legend that follows the window's layout. */
+  .pinned {
+    position: relative;
+  }
+  .pin {
+    position: absolute;
     display: grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--accent-soft);
-    color: var(--accent);
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg) 70%, transparent);
   }
-  .more-note {
-    margin: 1.5rem 0 0;
-    font-size: 0.92rem;
+  @media (max-width: 600px) {
+    .pin {
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      font-size: 0.6875rem;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--bg) 70%, transparent);
+    }
+  }
+  .legend {
+    list-style: none;
+    counter-reset: part;
+    margin: 32px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+  .legend li {
+    counter-increment: part;
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    column-gap: 12px;
+  }
+  .legend li::before {
+    content: counter(part);
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .legend h3 {
+    margin: 0 0 4px;
+  }
+  .legend p {
+    margin: 0;
+    font-size: 0.9375rem;
     color: var(--text-dim);
   }
 
-  /* Privacy cards */
-  .cards {
+  /* Made in Emaki: the clips side by side like panels on a scroll, under a ruler that scrolls with them. */
+  .strip {
+    --h: clamp(240px, 32vw, 400px);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 16px;
+  }
+  .strip:focus-visible {
+    outline-offset: -2px;
+  }
+  .strip ul {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    list-style: none;
+    margin: 0;
+    padding: 24px max(1.25rem, (100vw - var(--wrap)) / 2) 0;
+    background:
+      repeating-linear-gradient(90deg, var(--border-strong) 0 1px, transparent 1px 16px) 0 0 / 100% 8px no-repeat,
+      linear-gradient(var(--border-strong), var(--border-strong)) 0 8px / 100% 1px no-repeat;
+  }
+  .strip li {
+    flex: none;
+    width: calc(var(--h) * var(--ar));
+    scroll-snap-align: center;
+  }
+  .clip-meta {
+    font-variant-numeric: tabular-nums;
+    margin: 12px 0 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+  .clip-meta span {
+    color: var(--text);
+    font-weight: 500;
+    margin-right: 8px;
+  }
+
+  /* What's inside: one catalogue, the words on the left and the evidence on the right. */
+  .rows {
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: 0.75rem;
-  }
-  .cards li {
-    padding: 1.25rem;
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-  .cards :global(svg) {
-    color: var(--accent);
-    margin-bottom: 0.4rem;
-  }
-  .cards span {
-    color: var(--text-dim);
-    font-size: 0.95rem;
-  }
-
-  /* The name */
-  .name {
-    background: var(--bg-alt);
-    border-top: 1px solid var(--border);
-    padding-block: clamp(3rem, 8vw, 6rem);
-  }
-  .name-grid {
-    display: grid;
-    gap: clamp(2rem, 5vw, 4rem);
+    gap: 24px 64px;
     align-items: center;
+    padding-block: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .row:first-child {
+    border-top: 0;
+    padding-top: 0;
   }
   @media (min-width: 900px) {
-    .name-grid {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    .row {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     }
   }
-  .name-copy p:not(.eyebrow) {
-    color: var(--text-dim);
-    max-width: 38rem;
+  .kind {
+    margin: 0 0 8px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
   }
-  .name-copy p:not(.eyebrow) [lang='ja'] {
+  .row h3 {
+    font-family: var(--font-head);
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .row-copy p:last-child {
+    margin: 0;
+    color: var(--text-dim);
+  }
+  .list {
+    list-style: none;
+    counter-reset: step;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border-strong);
+  }
+  .list li {
+    counter-increment: step;
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .list.numbered li::before {
+    content: counter(step);
+    flex: none;
+    width: 16px;
+    color: var(--text-muted);
+  }
+  .formats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .also {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-strong);
+  }
+  .also h3 {
+    margin-bottom: 24px;
+  }
+  .also dl {
+    display: grid;
+    gap: 24px 32px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    margin: 0 0 32px;
+  }
+  .also dt {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .also dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+  }
+  .small {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* The name and the story, with the title slip on the right, where a scroll starts. */
+  .origin {
+    background: var(--bg-alt);
+  }
+  .origin-grid {
+    display: grid;
+    gap: 48px 96px;
+  }
+  @media (min-width: 900px) {
+    .origin-grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+  .origin-copy {
+    max-width: 40rem;
+  }
+  .origin-copy p:not(.mark) {
+    color: var(--text-dim);
+  }
+  .story-title {
+    margin-top: 64px;
+  }
+  .contribute {
+    margin: 0;
+    padding-left: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .contribute a {
+    margin-left: 4px;
+  }
+  .slip {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  @media (min-width: 900px) {
+    .slip {
+      position: sticky;
+      top: 48px;
+      align-self: start;
+      flex-direction: row-reverse;
+    }
+  }
+  .kanji {
+    margin: 0;
+    writing-mode: vertical-rl;
+    font-family: 'Noto Serif CJK JP', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    font-size: clamp(4rem, 9vw, 8rem);
+    line-height: 1;
     color: var(--text);
+    padding-inline: 16px;
+    border-inline: 1px solid var(--border-strong);
   }
   .gloss {
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
-    padding: clamp(1.25rem, 3vw, 2rem);
-    border-radius: var(--radius-lg);
-    border-block: 6px solid color-mix(in srgb, var(--peri) 50%, var(--surface));
-    background: var(--surface);
-    box-shadow: var(--shadow);
+    gap: 16px;
+    align-content: start;
   }
   .gloss div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    align-items: baseline;
+    gap: 12px;
   }
   .gloss dt {
     font-family: 'Noto Serif CJK JP', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-size: 1.5rem;
     line-height: 1;
-    color: var(--text);
   }
   .gloss dd {
     margin: 0;
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
   }
-  .gloss dd i {
-    display: block;
-    font-style: normal;
-    font-weight: 600;
+  .gloss dd span {
     color: var(--text);
-  }
-
-  /* The story */
-  .story {
-    padding-block: clamp(3rem, 8vw, 6rem);
-    border-top: 1px solid var(--border);
-  }
-  .story-grid {
-    display: grid;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
-  }
-  @media (min-width: 900px) {
-    .story-grid {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    }
-  }
-  .story-copy p:not(.eyebrow) {
-    color: var(--text-dim);
-    max-width: 38rem;
-  }
-  .contribute {
-    padding-left: 1rem;
-    border-left: 3px solid color-mix(in srgb, var(--pink) 70%, var(--border));
-  }
-  .story-list {
-    list-style: none;
-    margin: 0;
-    padding: clamp(1.25rem, 3vw, 1.75rem);
-    display: grid;
-    gap: 0.6rem;
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-  }
-  .story-list li {
-    display: flex;
-    gap: 0.6rem;
     font-weight: 500;
   }
-  .story-list :global(svg) {
-    color: var(--accent);
-    margin-top: 0.3rem;
-    flex: none;
-  }
-
-  /* Coming next */
-  .next {
-    border-block: 1px solid var(--border);
-    padding-block: clamp(3rem, 7vw, 5rem);
-  }
-  .next-note {
-    color: var(--text-dim);
-  }
-  .next ul {
-    list-style: none;
-    margin: 2rem 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1rem;
-  }
-  .next li {
-    padding: 1.25rem;
-    border: 1px dashed color-mix(in srgb, var(--text-dim) 35%, var(--border));
-    border-radius: var(--radius-lg);
-  }
-  .next li p {
-    color: var(--text-dim);
-    margin: 0;
-    font-size: 0.95rem;
+  @media (max-width: 899px) {
+    .slip {
+      order: -1;
+    }
+    .kanji {
+      writing-mode: horizontal-tb;
+      font-size: 4rem;
+      padding: 0 0 0 16px;
+      border-inline: 0;
+      border-left: 1px solid var(--border-strong);
+    }
   }
 
   /* Get Emaki */
-  .get {
-    padding-block: clamp(3rem, 8vw, 6rem);
-    background: var(--bg-alt);
+  .get h2 {
+    max-width: 20ch;
   }
-  .get-head {
-    max-width: 42rem;
-  }
-  .get-head p:not(.eyebrow) {
-    color: var(--text-dim);
-  }
-  .get-head :global(.cta) {
-    margin-top: 1.5rem;
-  }
-  .platforms {
+  .terms {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem;
-    margin-top: 2.5rem;
+    gap: 32px 48px;
+    margin-top: 48px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   }
-  .platform {
-    padding: 1.5rem;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-    background: var(--surface);
+  .terms h3 {
+    margin-bottom: 8px;
   }
-  .platform h3 {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  .platform p {
+  .terms p {
+    margin: 0;
     color: var(--text-dim);
+  }
+  .release {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-strong);
+  }
+  .release-line {
+    font-family: var(--font-head);
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    line-height: 1.3;
+    max-width: 30ch;
+    margin: 0 0 24px;
+  }
+  .release-links {
+    display: flex;
+    gap: 24px;
     margin: 0;
   }
-  .platform.first {
-    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-    box-shadow: var(--shadow);
-  }
-  .platform .small {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-  }
-  .tag {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    font-family: var(--font-text);
-    font-size: 0.75rem;
-    font-weight: 600;
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-  .tag.soon {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-  }
-  .reqs {
-    margin-top: 2.5rem;
-  }
-  .reqs ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.6rem;
-  }
-  .reqs li {
-    display: flex;
-    gap: 0.6rem;
-    color: var(--text-dim);
-  }
-  .reqs :global(svg) {
-    color: var(--accent);
-    margin-top: 0.3rem;
-    flex: none;
+  .next {
+    margin: 32px 0 0;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
   }
 </style>

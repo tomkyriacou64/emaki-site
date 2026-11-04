@@ -4,8 +4,9 @@ import Logo from './Logo.astro';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
-  { href: '/#features', label: 'Features', hide: 'narrow' },
+  { href: '/#inside', label: 'Features', hide: 'narrow' },
   { href: '/showcase', label: 'Showcase' },
+  { href: '/use-cases', label: 'Use cases', hide: 'narrow' },
   { href: '/roadmap', label: 'Roadmap', hide: 'narrow' },
   { href: '/changelog', label: 'Changelog', hide: 'narrow' },
   { href: '/get-started', label: 'Get started' },
@@ -35,7 +36,7 @@ const links = [
 
 <style>
   .top {
-    padding-block: 1.25rem;
+    padding-block: 20px;
   }
   .top-row {
     display: flex;
@@ -50,7 +51,7 @@ const links = [
   }
   ul {
     display: flex;
-    gap: clamp(0.75rem, 3vw, 1.75rem);
+    gap: clamp(12px, 2.4vw, 28px);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -59,18 +60,19 @@ const links = [
     color: var(--text);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.5rem 0.1rem;
+    font-size: 0.9375rem;
+    padding: 8px 0;
+    transition: color 150ms var(--ease);
   }
-  a:not(.brand):hover,
-  a[aria-current='page'] {
+  a:not(.brand):hover {
     color: var(--accent);
   }
   a[aria-current='page'] {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 860px) {
     .narrow {
       display: none;
     }

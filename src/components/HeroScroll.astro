@@ -20,7 +20,7 @@ const rows = [
 
 const pct = (s: number) => `${((s / LENGTH) * 100).toFixed(3)}%`;
 const ticks = Array.from({ length: LENGTH * 2 + 1 }, (_, i) => i / 2);
-const title = 'Make it move';
+const title = 'Good morning';
 const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${String(Math.floor((s % 1) * 30)).padStart(2, '0')}`;
 ---
 
@@ -34,11 +34,11 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
           <svg class="scene" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet">
             <defs>
               <radialGradient id="hs-glow-a">
-                <stop offset="0" stop-color="#b8b3ff" stop-opacity="0.45" />
-                <stop offset="1" stop-color="#b8b3ff" stop-opacity="0" />
+                <stop offset="0" stop-color="#ffe3a8" stop-opacity="0.22" />
+                <stop offset="1" stop-color="#ffe3a8" stop-opacity="0" />
               </radialGradient>
               <radialGradient id="hs-glow-b">
-                <stop offset="0" stop-color="#ffb3c7" stop-opacity="0.35" />
+                <stop offset="0" stop-color="#ffb3c7" stop-opacity="0.22" />
                 <stop offset="1" stop-color="#ffb3c7" stop-opacity="0" />
               </radialGradient>
             </defs>
@@ -94,7 +94,7 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
             <p class="title">
               {[...title].map((ch) => <span data-letter>{ch === ' ' ? ' ' : ch}</span>)}
             </p>
-            <p class="tagline" data-tagline>Design · Animate · Export</p>
+            <p class="tagline" data-tagline>Fresh coffee from 7am</p>
           </div>
         </div>
       </div>
@@ -142,7 +142,7 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
   </div>
   <div class="roller-lane" aria-hidden="true"><div class="roller roller-left"></div></div>
   <figcaption class="visually-hidden">
-    A sketch of Emaki at work: on an artboard, a square pops in, a ball follows a curved path, the title rises
+    A sketch of Emaki at work: on an artboard, a square pops in, a ball follows a curved path, the words Good morning rise
     letter by letter and a ribbon draws on, while the playhead moves along the timeline below.
   </figcaption>
 </figure>
@@ -306,7 +306,8 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
     box-shadow:
       inset 0 1px 0 var(--paper-edge),
       inset 0 -1px 0 var(--paper-edge),
-      var(--shadow);
+      0 1px 2px rgb(30 27 46 / 0.06),
+      0 24px 48px -24px rgb(30 27 46 / 0.3);
   }
   .paper-inner {
     position: relative;
@@ -453,7 +454,7 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
     top: 40%;
     margin: 0;
     font-family: var(--font-head);
-    font-weight: 800;
+    font-weight: 600;
     font-size: 9.4cqw;
     line-height: 1;
     letter-spacing: -0.01em;
@@ -469,7 +470,7 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
     margin: 0;
     font-size: 3.2cqw;
     font-weight: 500;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
     color: #d9d4ff;
     white-space: nowrap;
   }
@@ -506,13 +507,13 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
     height: 28px;
     flex: none;
     border: 0;
-    border-radius: 7px;
-    background: var(--accent-soft);
-    color: var(--accent);
+    border-radius: 6px;
+    background: var(--raised);
+    color: var(--text);
     cursor: pointer;
   }
   .play:hover {
-    background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+    background: var(--border-strong);
   }
   .play .i-pause,
   .is-playing .play .i-play {
@@ -610,7 +611,7 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
     font-size: 0.7rem;
     overflow: hidden;
     white-space: nowrap;
-    transition: box-shadow 0.15s;
+    transition: background-color 150ms var(--ease), border-color 150ms var(--ease);
   }
   .seg span {
     overflow: hidden;
@@ -618,7 +619,7 @@ const timecode = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}.${S
   }
   .seg.on {
     background: var(--c);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 45%, transparent);
+    border-color: color-mix(in srgb, var(--c) 60%, #1e1b2e 40%);
   }
   .playhead-lane {
     position: absolute;
