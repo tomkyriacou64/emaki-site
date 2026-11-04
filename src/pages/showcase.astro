@@ -12,8 +12,8 @@ const clips = showcaseOrder.map(byFile);
   heading="Made in Emaki"
 >
   <p slot="intro">
-    Every clip here was made in Emaki from one of its built-in templates and exported with Emaki 0.9.2. Open the same
-    template in the app, swap the words and colours, and the motion stays.
+    Seven built-in templates, exported with Emaki 0.9.2 and only made smaller for the web. Each one opens in the app
+    with its timing in place, ready for your own words and colours.
   </p>
 
   <div class="grid">
@@ -21,15 +21,15 @@ const clips = showcaseOrder.map(byFile);
   </div>
 
   <p class="foot-note">
-    Exported as MP4 with <code>emaki --export</code>, then made smaller for the web. In the app you can also export WebM,
-    ProRes 4444 with transparency, GIF, Lottie and PNG. <a href="/use-cases">See what people make with it</a>
+    Exported as MP4 with <code>emaki --export</code>. In the app you can also export WebM,
+    ProRes 4444 with transparency, GIF, Lottie and PNG. <a href="/use-cases">What each kind of clip is for</a>
   </p>
 </Page>
 
 <style>
   .grid {
     display: grid;
-    gap: clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
+    gap: clamp(32px, 4vw, 48px) 24px;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
     align-items: start;
   }
@@ -48,7 +48,9 @@ const clips = showcaseOrder.map(byFile);
     }
   }
   .foot-note {
-    margin-top: 3rem;
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
     color: var(--text-dim);
     max-width: 46rem;
   }

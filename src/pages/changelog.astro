@@ -17,8 +17,7 @@ const longDate = (d: string) =>
   <SiteHeader />
   <main id="main" class="wrap page-body">
     <div class="page-head">
-      <p class="eyebrow">Changelog</p>
-      <h1>What’s new in Emaki</h1>
+      <h1>Changelog</h1>
       <p>Every release, newest first. These are preview releases on the way to 1.0.</p>
     </div>
 
@@ -76,7 +75,7 @@ const longDate = (d: string) =>
     }
   }
   h2 {
-    font-size: 1.6rem;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
     margin-bottom: 0.25rem;
   }
   h2 a {
@@ -87,7 +86,7 @@ const longDate = (d: string) =>
     color: var(--accent);
   }
   time {
-    color: var(--text-dim);
+    color: var(--text-muted);
     font-size: 0.95rem;
   }
   .body {
@@ -101,14 +100,12 @@ const longDate = (d: string) =>
     margin-top: 1.5rem;
   }
   h3 {
-    display: inline-block;
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
     font-family: var(--font-text);
     font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
+    letter-spacing: 0;
+    color: var(--text);
+    margin-bottom: 8px;
   }
   ul {
     margin: 0;

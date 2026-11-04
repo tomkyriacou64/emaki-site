@@ -38,6 +38,7 @@ const shape = clip.height > clip.width ? 'tall' : clip.height === clip.width ? '
     caption && (
       <figcaption>
         <strong>{clip.title}</strong> {clip.caption}
+        <span class="meta">{clip.width} × {clip.height} · {clip.use}</span>
       </figcaption>
     )
   }
@@ -121,6 +122,13 @@ const shape = clip.height > clip.width ? 'tall' : clip.height === clip.width ? '
     margin-top: 12px;
     font-size: 0.9375rem;
     color: var(--text-dim);
+  }
+  .meta {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
   }
   figcaption strong {
     color: var(--text);

@@ -7,9 +7,9 @@ import Page from '../layouts/Page.astro';
   description="Short answers about Emaki: price, platforms, offline use, accounts, Figma import, motion tracking, file format, export formats and open source."
   heading="Questions and answers"
 >
-  <p slot="intro">Short, honest answers. If yours isn't here, it may be on the <a href="/roadmap">roadmap</a>.</p>
+  <p slot="intro">Price, platforms, privacy and file formats, answered briefly. If yours isn't here, it may be on the <a href="/roadmap">roadmap</a>.</p>
 
-  <div class="faq prose">
+  <div class="faq">
     <section>
       <h2>Is it free? For good?</h2>
       <p>
@@ -105,12 +105,43 @@ import Page from '../layouts/Page.astro';
 
 <style>
   .faq section {
-    padding-block: 1.5rem;
+    display: grid;
+    gap: 8px 64px;
+    padding-block: 32px;
     border-top: 1px solid var(--border);
   }
+  @media (min-width: 900px) {
+    .faq section {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+    .faq section > :not(h2) {
+      grid-column: 2;
+    }
+  }
   .faq h2 {
-    margin-top: 0;
-    font-size: 1.25rem;
+    margin: 0;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.25;
+  }
+  .faq p,
+  .faq li {
+    color: var(--text-dim);
+  }
+  .faq ul {
+    padding-left: 20px;
+    margin: 0 0 16px;
+  }
+  .faq li + li {
+    margin-top: 8px;
+  }
+  .faq strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .faq em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--text);
   }
   .faq p:last-child,
   .faq ul:last-child {
