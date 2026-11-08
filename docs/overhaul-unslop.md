@@ -102,3 +102,25 @@ layout and visuals.
 7. **Details.** Nothing to change; radii already nest (10 controls, 12 cards).
 8. **Visuals.** Nothing to change (see the image-editing note above).
 9. **Motion.** Nothing to change.
+
+## Follow-up: warm bands and more rhythm (user feedback)
+
+The kachi-iro indigo clashed with the brown-black hero, and the light run in
+the middle was too long. Now every band is warm and they alternate:
+
+| Band | Tone | Colour |
+| --- | --- | --- |
+| Hero | dark | 墨 sumi, warmed, #1C1A17 |
+| Editor legend | light | 白練 shiro-neri #FCFAF2 |
+| Made in Emaki | dark | 黒鳶 kurotobi #432F2F |
+| What's inside: design, animate, type | light | 白練 shiro-neri #FCFAF2 |
+| Video and pictures: track, colour, image editing (coming) | dark | 檳榔子黒 binrōjiguro #2B2522 |
+| Export and "Also in the app" | light | 象牙色 zōge-iro #F8F4E6 |
+| Get Emaki | dark | 焦茶 kogecha, deepened, #3A2E28 |
+| Footer | light | 生成色 kinari-iro #F3ECDB |
+
+Checklist on the changed bands: three text roles per band (dark: #FCFAF2,
+#CBC3B4, #B8AE9E; light: #23201B, #5B5348, #6E6559), all at least 4.86:1;
+beni-hi stays a mark (the ruler's playhead), never text; akane is text only on
+light bands (5.3:1 or more); no cool colours left in the chrome; band edges are
+flat. Screenshots and crops keep their hairline frame and read on the dark bands.
