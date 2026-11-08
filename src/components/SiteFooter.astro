@@ -66,13 +66,13 @@ const groups = [
 <style>
   .foot {
     border-top: 1px solid var(--border);
-    padding-block: clamp(2rem, 5vw, 3rem) 2rem;
+    padding-block: var(--group-gap) var(--s-6);
     font-size: 0.9375rem;
     color: var(--text-dim);
   }
   .foot-grid {
     display: grid;
-    gap: 2rem;
+    gap: var(--s-6) var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   }
   @media (min-width: 860px) {
@@ -108,8 +108,8 @@ const groups = [
     text-decoration: underline;
   }
   .legal {
-    margin-top: 2rem;
-    padding-top: 1.25rem;
+    margin-top: var(--s-6);
+    padding-top: var(--s-5);
     border-top: 1px solid var(--border);
     font-size: 0.8125rem;
   }

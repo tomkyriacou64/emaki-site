@@ -106,6 +106,12 @@ kinari-iro #F3ECDB for the light ones, gofun-iro #FFFFFB for raised surfaces.
 The one accent is the logo's sun, beni-hi #E2483A, for marks only; where it
 carries text it is akane-iro #B7282E. The hero shows the real editor
 screenshot (`mockups.png`).
+Spacing comes from one scale in `global.css` (4 px grid: `--s-1` to
+`--s-10`, 4 to 112 px) and its roles: `--band-y` (band top and bottom: 64,
+96, 112 px at phone, 600 and 1024 px), `--head-gap` (32 then 48),
+`--group-gap` (48 then 64), `--grid-gap` (24 then 32), `--col-gap` (32, 48,
+64), `--card-pad` (24 then 32) and `--caption-gap` (12). Use the role, not a
+raw number, so the same kind of thing gets the same space everywhere.
 The audit behind the layout is in `docs/overhaul-audit.md`.
 
 ## The tracking clip

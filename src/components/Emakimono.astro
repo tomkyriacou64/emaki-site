@@ -387,7 +387,8 @@
   }
   .emaki {
     position: relative;
-    padding: 36px var(--egutter) 44px;
+    /* The heading to the paper is the page-wide heading gap; the roller knobs fit inside it. */
+    padding: var(--head-gap) var(--egutter) var(--s-7);
     max-width: 1520px;
     margin-inline: auto;
     overflow-x: clip;

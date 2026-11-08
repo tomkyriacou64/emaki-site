@@ -478,12 +478,12 @@ const platforms = [
   /* Hero: headline left, the lede and actions right, the real editor below,
      sitting across the line where the dark band meets the light one. */
   .hero-band {
-    padding-top: clamp(40px, 7vw, 80px);
-    padding-bottom: clamp(40px, 6vw, 64px);
+    padding-top: var(--group-gap);
+    padding-bottom: var(--group-gap);
   }
   .hero-copy {
     display: grid;
-    gap: 24px 64px;
+    gap: var(--s-5) var(--col-gap);
     align-items: end;
   }
   @media (min-width: 960px) {
@@ -499,7 +499,7 @@ const platforms = [
     font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
     line-height: 1.5;
     color: var(--text-dim);
-    margin: 0 0 24px;
+    margin: 0 0 var(--s-5);
   }
   /* Two flat bands with a hard edge, not a fade. */
   .hero-view {
@@ -510,7 +510,7 @@ const platforms = [
     box-shadow: 0 2px 4px rgb(0 0 0 / 0.2), 0 24px 48px rgb(0 0 0 / 0.24);
   }
   .legend-band {
-    padding-block: 32px clamp(48px, 7vw, 80px);
+    padding-block: var(--s-6) var(--band-y);
   }
 
   /* The editor rises and flattens as it scrolls into view, the way a canvas
@@ -547,10 +547,10 @@ const platforms = [
 
   /* Scenes */
   .scene {
-    padding-block: clamp(64px, 9vw, 112px);
+    padding-block: var(--band-y);
   }
   .head {
-    margin-bottom: clamp(32px, 5vw, 48px);
+    margin-bottom: var(--head-gap);
   }
   .head h2 {
     margin: 0;
@@ -558,7 +558,7 @@ const platforms = [
   }
   .head.split {
     display: grid;
-    gap: 16px 64px;
+    gap: var(--s-4) var(--col-gap);
     align-items: end;
   }
   @media (min-width: 960px) {
@@ -615,7 +615,7 @@ const platforms = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 24px;
+    gap: var(--s-5) var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   }
   .legend li {
@@ -651,11 +651,11 @@ const platforms = [
      needs at the row's one height; on phones a strip to swipe. */
   .clip-rows {
     display: grid;
-    gap: 24px;
+    gap: var(--s-7);
   }
   .clip-row {
     display: flex;
-    gap: 16px;
+    gap: var(--grid-gap);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -699,7 +699,7 @@ const platforms = [
   }
   .clip-meta {
     font-variant-numeric: tabular-nums;
-    margin: 12px 0 0;
+    margin: var(--caption-gap) 0 0;
     font-size: 0.8125rem;
     color: var(--text-muted);
   }
@@ -827,14 +827,17 @@ const platforms = [
   }
   .row {
     display: grid;
-    gap: 24px 64px;
+    gap: var(--s-6) var(--col-gap);
     align-items: center;
-    padding-block: 40px;
+    padding-block: calc(var(--group-gap) / 2);
     border-top: 1px solid var(--border);
   }
   .row:first-child {
     border-top: 0;
     padding-top: 0;
+  }
+  .row:last-child {
+    padding-bottom: 0;
   }
   @media (min-width: 900px) {
     .row {
@@ -886,14 +889,14 @@ const platforms = [
   .formats {
     margin: 0;
     display: grid;
-    gap: 0 32px;
+    gap: 0 var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   }
   .formats > div {
     display: grid;
     align-content: start;
     gap: 4px;
-    padding: 16px 0 24px;
+    padding: var(--s-4) 0 var(--s-5);
     border-top: 1px solid var(--border-strong);
   }
   .formats dt {
@@ -919,23 +922,23 @@ const platforms = [
     margin: 0;
   }
   .tracked figcaption {
-    margin-top: 12px;
+    margin-top: var(--caption-gap);
     font-size: 0.8125rem;
     color: var(--text-muted);
   }
   .also {
-    margin-top: 64px;
-    padding-top: 32px;
+    margin-top: var(--group-gap);
+    padding-top: var(--s-6);
     border-top: 1px solid var(--border-strong);
   }
   .also h3 {
-    margin-bottom: 24px;
+    margin-bottom: var(--s-5);
   }
   .also dl {
     display: grid;
-    gap: 16px 32px;
+    gap: var(--s-5) var(--grid-gap);
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
-    margin: 0 0 32px;
+    margin: 0 0 var(--s-6);
   }
   .also dt {
     font-weight: 500;
@@ -954,7 +957,7 @@ const platforms = [
 
   /* The name, told on the scroll. */
   .meaning {
-    padding-bottom: clamp(48px, 6vw, 80px);
+    padding-bottom: var(--band-y);
   }
   .meaning-head h2 {
     margin: 0;
@@ -969,7 +972,7 @@ const platforms = [
   /* Get Emaki: one plan card (free) beside what it runs on. */
   .get-grid {
     display: grid;
-    gap: 32px 64px;
+    gap: var(--group-gap) var(--col-gap);
     align-items: start;
   }
   @media (min-width: 900px) {
@@ -978,7 +981,7 @@ const platforms = [
     }
   }
   .plan {
-    padding: clamp(24px, 3vw, 32px);
+    padding: var(--card-pad);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -989,7 +992,7 @@ const platforms = [
     color: var(--text-dim);
   }
   .plan-price {
-    margin: 4px 0 24px;
+    margin: var(--s-1) 0 var(--s-5);
     font-family: var(--font-head);
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 500;
@@ -998,10 +1001,10 @@ const platforms = [
   }
   .plan-terms {
     list-style: none;
-    margin: 0 0 32px;
+    margin: 0 0 var(--s-5);
     padding: 0;
     display: grid;
-    gap: 12px;
+    gap: var(--s-3);
   }
   .plan-terms li {
     display: flex;
@@ -1015,7 +1018,7 @@ const platforms = [
     color: var(--text-muted);
   }
   .caveat {
-    margin: 24px 0 0;
+    margin: var(--s-5) 0 0;
     font-size: 0.8125rem;
     color: var(--text-muted);
   }
@@ -1029,7 +1032,7 @@ const platforms = [
   }
   .platforms {
     list-style: none;
-    margin: 0 0 24px;
+    margin: 0 0 var(--s-5);
     padding: 0;
     border-top: 1px solid var(--border-strong);
   }
@@ -1062,8 +1065,8 @@ const platforms = [
     color: var(--text-muted);
   }
   .open {
-    margin-top: 48px;
-    padding-top: 24px;
+    margin-top: var(--group-gap);
+    padding-top: var(--s-6);
     border-top: 1px solid var(--border-strong);
   }
   .open p {
@@ -1078,8 +1081,8 @@ const platforms = [
     margin: 0;
   }
   .next {
-    margin: 48px 0 0;
-    padding-top: 24px;
+    margin: var(--group-gap) 0 0;
+    padding-top: var(--s-6);
     border-top: 1px solid var(--border);
     font-size: 0.9375rem;
     color: var(--text-muted);
