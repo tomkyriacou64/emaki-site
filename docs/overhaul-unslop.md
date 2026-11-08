@@ -124,3 +124,14 @@ Checklist on the changed bands: three text roles per band (dark: #FCFAF2,
 beni-hi stays a mark (the ruler's playhead), never text; akane is text only on
 light bands (5.3:1 or more); no cool colours left in the chrome; band edges are
 flat. Screenshots and crops keep their hairline frame and read on the dark bands.
+
+## Round 3 check (timeline page, scroll back, new Get Emaki)
+
+- Spacing: new values on the 4 px grid (timeline rail 10rem, keys sticky at 96, rows 40, platform rows 12); the 15 px line offset centres a 2 px line on the 16 px diamond column.
+- Colour: one accent, the playhead red, now carried by the section rulers, the keyframe diamonds and the timeline line that fills: one meaning (where you are in time). The scroll's brocade cover keeps a brown silk shading: a rendered object, not chrome. No cool colours; no glows; the hero window keeps a neutral shadow.
+- Text roles: three per band, unchanged.
+- Icons: download and bell at 18 px, 1.5 stroke.
+- Type: Outfit and Inter; the brush face only for the scroll's Japanese characters, loaded by that section.
+- Copy: dropped the trailing period on two one-line notes (platform line, scroll hint). No hype, no counts ("Six formats" heading replaced).
+- Motion: the hero tilt and the timeline fill are tied to scroll and explain something (the canvas coming up, the playhead moving through features); both are off with reduced motion, without scroll timelines and in very tall viewports. The scroll unrolls only on wide screens with motion. Nothing loops except the clips, which are the product's output.
+- Template check: ruler, playhead, keyframes and the scroll are this product's own.
