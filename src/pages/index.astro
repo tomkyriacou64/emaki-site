@@ -133,7 +133,7 @@ const needs = [
       </div>
     </section>
 
-    <section class="scene band band-zoge made" aria-labelledby="made-title">
+    <section class="scene band band-kurotobi made" aria-labelledby="made-title">
       <div class="wrap">
         <div class="head split">
           <div>
@@ -166,7 +166,7 @@ const needs = [
       <div class="wrap">
         <div class="head">
           <p class="mark"><time>0:12</time> What’s inside</p>
-          <h2 id="inside-title">Draw it, time it, track it, export it</h2>
+          <h2 id="inside-title">Draw it, then time it</h2>
         </div>
 
         <ol class="rows">
@@ -223,6 +223,18 @@ const needs = [
             />
           </li>
 
+        </ol>
+      </div>
+    </section>
+
+    <section class="scene band band-binro footage" aria-labelledby="footage-title">
+      <div class="wrap">
+        <div class="head">
+          <p class="mark"><time>0:20</time> Video and pictures</p>
+          <h2 id="footage-title">Work over footage and photos</h2>
+        </div>
+
+        <ol class="rows">
           <li class="row">
             <div class="row-copy">
               <p class="kind">Track</p>
@@ -262,30 +274,6 @@ const needs = [
 
           <li class="row">
             <div class="row-copy">
-              <p class="kind">Export</p>
-              <h3>Six formats, each for a job</h3>
-              <p>
-                Export one artboard or all of them at once, at the size the place you post to expects. Sound comes along
-                in the video formats.
-              </p>
-            </div>
-            <dl class="formats">
-              {
-                formats.map((f) => (
-                  <div>
-                    <dt>{f.use}</dt>
-                    <dd>
-                      <b>{f.names}</b>
-                      <span>{f.text}</span>
-                    </dd>
-                  </div>
-                ))
-              }
-            </dl>
-          </li>
-
-          <li class="row">
-            <div class="row-copy">
               <p class="kind">Coming in the next release</p>
               <h3>Edit pictures without leaving the canvas</h3>
               <p>
@@ -305,6 +293,35 @@ const needs = [
             />
           </li>
         </ol>
+      </div>
+    </section>
+
+    <section class="scene band band-zoge export" aria-labelledby="export-title">
+      <div class="wrap">
+        <div class="head split">
+          <div>
+            <p class="mark"><time>0:26</time> Export</p>
+            <h2 id="export-title">Six formats, each for a job</h2>
+          </div>
+          <p>
+            Export one artboard or all of them at once, at the size the place you post to expects. Sound comes along in
+            the video formats.
+          </p>
+        </div>
+
+        <dl class="formats">
+          {
+            formats.map((f) => (
+              <div>
+                <dt>{f.use}</dt>
+                <dd>
+                  <b>{f.names}</b>
+                  <span>{f.text}</span>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
 
         <div class="also">
           <h3>Also in the app</h3>
@@ -334,7 +351,7 @@ const needs = [
       </div>
     </section>
 
-    <section class="scene band band-kachi get" id="get" aria-labelledby="get-title">
+    <section class="scene band band-kogecha get" id="get" aria-labelledby="get-title">
       <div class="wrap">
         <div class="head split">
           <div>
@@ -634,26 +651,28 @@ const needs = [
     border-bottom: 1px solid var(--border);
     color: var(--text-dim);
   }
+  /* Export: the four jobs side by side, one column each. */
   .formats {
     margin: 0;
-    border-top: 1px solid var(--border-strong);
+    display: grid;
+    gap: 0 32px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   }
   .formats > div {
     display: grid;
-    grid-template-columns: 9rem minmax(0, 1fr);
-    gap: 4px 24px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
+    align-content: start;
+    gap: 4px;
+    padding: 16px 0 24px;
+    border-top: 1px solid var(--border-strong);
   }
   .formats dt {
     font-size: 0.8125rem;
     color: var(--text-muted);
-    padding-top: 4px;
   }
   .formats dd {
     margin: 0;
     display: grid;
-    gap: 2px;
+    gap: 4px;
   }
   .formats b {
     font-family: var(--font-head);
@@ -664,14 +683,6 @@ const needs = [
   .formats span {
     font-size: 0.9375rem;
     color: var(--text-dim);
-  }
-  @media (max-width: 480px) {
-    .formats > div {
-      grid-template-columns: 1fr;
-    }
-    .formats dt {
-      padding-top: 0;
-    }
   }
   .tracked {
     margin: 0;

@@ -1,14 +1,18 @@
 /* One fixed look, in bands. Colours are traditional Japanese ones (nihon no dentō-shoku):
-   warm whites for the light bands, sumi ink and kachi-iro indigo for the dark ones, and one
-   accent, the red of the Sunrise logo's sun. Each band sets its own background and text. */
+   warm whites for the light bands, warm ink and brown-blacks for the dark ones (one family,
+   each a step apart), and one accent, the red of the Sunrise logo's sun. Each band sets its
+   own background and text. */
 :root {
   color-scheme: light;
 
   --shironeri: #fcfaf2; /* 白練 shiro-neri, the main light band */
   --zoge: #f8f4e6; /* 象牙色 zōge-iro, the second light band */
+  --kinari: #f3ecdb; /* 生成色 kinari-iro, unbleached: the footer */
   --gofun: #fffffb; /* 胡粉色 gofun-iro, raised surfaces on light */
   --sumi: #1c1a17; /* 墨 sumi, warmed: the hero */
-  --kachi: #08192d; /* 褐色 kachi-iro: the closing band */
+  --kurotobi: #432f2f; /* 黒鳶 kurotobi, kite brown-black */
+  --binro: #2b2522; /* 檳榔子黒 binrōjiguro, the near-black brown */
+  --kogecha: #3a2e28; /* 焦茶 kogecha, deepened: scorched tea */
   --benihi: #e2483a; /* 紅緋 beni-hi, the logo's sun: marks only, never text */
   --akane: #b7282e; /* 茜色 akane-iro: the accent where it carries text */
   --shu: var(--benihi);
@@ -61,16 +65,21 @@
 .band-zoge {
   --bg: var(--zoge);
 }
+.band-kinari {
+  --bg: var(--kinari);
+}
 .band-sumi,
-.band-kachi {
+.band-kurotobi,
+.band-binro,
+.band-kogecha {
   --bg: var(--sumi);
   --surface: #26231f;
   --raised: #302c27;
   --ink: #fcfaf2;
   --text: #fcfaf2;
   --text-dim: #cbc3b4;
-  --text-muted: #a39a8b;
-  --border: rgb(252 250 242 / 0.1);
+  --text-muted: #b8ae9e;
+  --border: rgb(252 250 242 / 0.12);
   --border-strong: rgb(252 250 242 / 0.22);
   /* On dark the primary action is the paper white, with ink on it. */
   --accent: #fcfaf2;
@@ -79,10 +88,20 @@
   --focus: #fcfaf2;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.3);
 }
-.band-kachi {
-  --bg: var(--kachi);
-  --surface: #0f2238;
-  --raised: #162b44;
+.band-kurotobi {
+  --bg: var(--kurotobi);
+  --surface: #4f3a39;
+  --raised: #5a4442;
+}
+.band-binro {
+  --bg: var(--binro);
+  --surface: #36302c;
+  --raised: #413a35;
+}
+.band-kogecha {
+  --bg: var(--kogecha);
+  --surface: #463830;
+  --raised: #514239;
 }
 
 *,

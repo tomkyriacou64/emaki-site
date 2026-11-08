@@ -97,14 +97,15 @@ it shows the poster until the visitor presses play.
 
 ## The look
 
-One fixed look, no light and dark switching: the page is a run of bands, each
-setting its own background and text through a class in `global.css`
-(`band band-sumi`, `band-paper`, `band-zoge`, `band-kachi`). The colours are
-traditional Japanese ones: shiro-neri #FCFAF2 and zōge-iro #F8F4E6 for the
-light bands, gofun-iro #FFFFFB for raised surfaces, warmed sumi #1C1A17 for
-the hero and kachi-iro #08192D for the closing band. The one accent is the
-logo's sun, beni-hi #E2483A, for marks only; where it carries text it is
-akane-iro #B7282E. The hero shows the real editor screenshot (`mockups.png`).
+One fixed look, no light and dark switching: the page is a run of bands that
+alternate dark and light, each setting its own background and text through a
+class in `global.css`. All warm, from the traditional Japanese colours: warmed
+sumi #1C1A17 (hero), kurotobi #432F2F, binrōjiguro #2B2522 and a deepened
+kogecha #3A2E28 for the dark bands; shiro-neri #FCFAF2, zōge-iro #F8F4E6 and
+kinari-iro #F3ECDB for the light ones, gofun-iro #FFFFFB for raised surfaces.
+The one accent is the logo's sun, beni-hi #E2483A, for marks only; where it
+carries text it is akane-iro #B7282E. The hero shows the real editor
+screenshot (`mockups.png`).
 The audit behind the layout is in `docs/overhaul-audit.md`.
 
 ## The tracking clip
