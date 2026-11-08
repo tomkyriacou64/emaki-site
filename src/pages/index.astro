@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 // The landing page, read like a scroll: each section is a scene, marked on a
 // small timeline ruler (`.mark`) with its timecode. One fixed look in bands:
 // the dark hero, warm light bands, and a dark closing band (see global.css).
@@ -154,7 +155,7 @@ const platforms = [
           </div>
           <p>
             Menu boards, a social post and a reveal, exported as they come with nothing touched up afterwards. Open a
-            template, put in your own words and colours, and the timing is already done. <a href="/showcase">See them all</a>
+            template, put in your own words and colours, and the timing is already done. <a href={url('/showcase')}>See them all</a>
           </p>
         </div>
       </div>
@@ -302,11 +303,11 @@ const platforms = [
 
           <li class="row">
             <div class="row-copy">
-              <p class="kind"><time>0:27</time> Coming in the next release</p>
+              <p class="kind"><time>0:27</time> New in 0.9.5</p>
               <h3>Edit pictures without leaving the canvas</h3>
               <p>
                 Paint, select and adjust a picture where it sits. Remove its background or an object, fill from the
-                surroundings, select the subject, straighten a photo’s perspective and upscale it. Each edit stays a
+                surroundings, select the subject and straighten a photo’s perspective. Each edit stays a
                 row you can hide, and you can copy edits from one picture to others. The tools that need a model
                 download it once, then run on your computer.
               </p>
@@ -412,7 +413,7 @@ const platforms = [
             </ul>
             <p class="caveat">
               It goes online only when you ask: for the Google Fonts tab in the font picker, or to import a frame from
-              Figma. <a href="/privacy">Privacy</a>
+              Figma. <a href={url('/privacy')}>Privacy</a>
             </p>
           </div>
 
@@ -439,9 +440,9 @@ const platforms = [
               }
             </ul>
             <p class="get-links">
-              <a href="/get-started">Get started</a>
-              <a href="/faq">FAQ</a>
-              <a href="/roadmap">Roadmap</a>
+              <a href={url('/get-started')}>Get started</a>
+              <a href={url('/faq')}>FAQ</a>
+              <a href={url('/roadmap')}>Roadmap</a>
               {RELEASES_URL && <a href={RELEASES_URL}>All releases</a>}
             </p>
           </div>
@@ -461,7 +462,7 @@ const platforms = [
               GITHUB_URL ? (
                 <a href={GITHUB_URL}>Contribute on GitHub</a>
               ) : (
-                <a href="/contributing">How contributing will work</a>
+                <a href={url('/contributing')}>How contributing will work</a>
               )
             }
           </p>

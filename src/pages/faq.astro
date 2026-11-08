@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Page from '../layouts/Page.astro';
 ---
 
@@ -7,7 +8,7 @@ import Page from '../layouts/Page.astro';
   description="Short answers about Emaki: price, platforms, offline use, accounts, Figma import, motion tracking, file format, export formats and open source."
   heading="Questions and answers"
 >
-  <p slot="intro">Price, platforms, privacy and file formats, answered briefly. If yours isn't here, it may be on the <a href="/roadmap">roadmap</a>.</p>
+  <p slot="intro">Price, platforms, privacy and file formats, answered briefly. If yours isn't here, it may be on the <a href={url('/roadmap')}>roadmap</a>.</p>
 
   <div class="faq">
     <section>
@@ -41,7 +42,7 @@ import Page from '../layouts/Page.astro';
         ask it to: when you open the Google Fonts tab in the font picker (and download a font from it), or when you
         import a frame from Figma with a link. A few optional tools download a helper the first time you choose to
         use them; after that it works offline on your computer, and your pictures never leave it.
-        <a href="/privacy">More on privacy</a>
+        <a href={url('/privacy')}>More on privacy</a>
       </p>
       </div>
     </section>
@@ -128,7 +129,7 @@ import Page from '../layouts/Page.astro';
       <div class="long">
       <p>
         Once the code is public, bug reports, ideas and pull requests are all welcome. See
-        <a href="/contributing">Contributing</a> for how to build it and how changes are made.
+        <a href={url('/contributing')}>Contributing</a> for how to build it and how changes are made.
       </p>
       </div>
     </section>

@@ -1,0 +1,53 @@
+# Builds the site and publishes it to GitHub Pages:
+# https://tomkyriacou64.github.io/emaki-site/
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push replaces a queued one, a running one finishes.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          # The project site lives under /emaki-site. For a custom domain, set
+          # SITE_URL to it and BASE_PATH to / (repository variables).
+          SITE_URL: ${{ vars.SITE_URL || 'https://tomkyriacou64.github.io' }}
+          BASE_PATH: ${{ vars.BASE_PATH || '/emaki-site' }}
+          # Empty unless set as repository variables: the page then says "Coming soon".
+          NOTIFY_URL: ${{ vars.NOTIFY_URL }}
+          APPIMAGE_URL: ${{ vars.APPIMAGE_URL }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

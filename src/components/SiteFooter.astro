@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 // The footer on every page: the logo, then the site in three short lists.
 import Logo from './Logo.astro';
 import { GITHUB_URL, LICENCE_URL } from '../config';
@@ -8,26 +9,26 @@ const groups = [
   {
     title: 'Emaki',
     links: [
-      { href: '/#inside', label: 'Features' },
-      { href: '/showcase', label: 'Showcase' },
-      { href: '/get-started', label: 'Get started' },
-      { href: '/faq', label: 'FAQ' },
+      { href: url('/#inside'), label: 'Features' },
+      { href: url('/showcase'), label: 'Showcase' },
+      { href: url('/get-started'), label: 'Get started' },
+      { href: url('/faq'), label: 'FAQ' },
     ],
   },
   {
     title: 'Project',
     links: [
-      { href: '/#name', label: 'The name' },
-      { href: '/roadmap', label: 'Roadmap' },
-      { href: '/changelog', label: 'Changelog' },
-      { href: '/contributing', label: 'Contributing' },
+      { href: url('/#name'), label: 'The name' },
+      { href: url('/roadmap'), label: 'Roadmap' },
+      { href: url('/changelog'), label: 'Changelog' },
+      { href: url('/contributing'), label: 'Contributing' },
     ],
   },
   {
     title: 'Trust',
     links: [
-      { href: '/privacy', label: 'Privacy' },
-      { href: '/licence', label: 'Licence and credits' },
+      { href: url('/privacy'), label: 'Privacy' },
+      { href: url('/licence'), label: 'Licence and credits' },
       ...(GITHUB_URL ? [{ href: GITHUB_URL, label: 'GitHub' }] : []),
     ],
   },

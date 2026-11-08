@@ -15,27 +15,41 @@ npm run preview   # serve dist/ locally
 
 Upload the contents of `dist/` to any static host.
 
-## Before publishing
+## Publishing (GitHub Pages)
 
-The links live in `src/config.ts`. Each one is empty for now, and an empty
-link hides whatever it drives, so the page never points at something that
-isn't there yet.
+The site is a GitHub Pages project site at
+https://tomkyriacou64.github.io/emaki-site/. `.github/workflows/deploy.yml`
+builds it on every push to `master` (or by hand from the Actions tab) and
+deploys it with GitHub's Pages actions. In the repository settings, Pages
+must be set to deploy from GitHub Actions.
 
-- **Notify link (`NOTIFY_URL`):** the sign-up page of a mailing list
-  service, for "Get notified when it's out". There is no backend and no
-  form on the site; the button is a plain link. While it is empty, the call
-  to action reads "Coming soon to Linux", with no button.
-- **Download link (`APPIMAGE_URL`):** the real AppImage URL (for example a
-  GitHub release asset). Set it and a "Download for Linux" button appears
-  in the hero and in Get Emaki.
-- **Source code (`GITHUB_URL`):** the public repository, once it is open.
-  Set it and the page gains the GitHub, releases, licence and Figma plugin
-  links, plus "Contribute on GitHub" in the story. Keep it empty while the
-  repository is private.
-- **Site address:** build with `SITE_URL=https://your-domain npm run build`
-  (or change the fallback in `astro.config.mjs`). It makes the canonical
-  link and the social card (`og:image`) absolute. The placeholder is
-  `https://emaki.example`.
+Internal links and files go through `url()` in `src/lib/url.ts`, so the same
+code builds for the sub-path or for the root. `astro.config.mjs` reads:
+
+- **`SITE_URL`** (default `https://tomkyriacou64.github.io`): makes the
+  canonical link and the social card (`og:image`) absolute.
+- **`BASE_PATH`** (default `/emaki-site`): the sub-path. For a custom domain
+  later, set `SITE_URL=https://your-domain` and `BASE_PATH=/`.
+
+Locally, `npm run build` builds for `/emaki-site/`; to check it, copy `dist/`
+into a folder named `emaki-site` and serve its parent (for example
+`python3 -m http.server`), then open `/emaki-site/`.
+
+### Links that switch parts of the page on
+
+`NOTIFY_URL` and `APPIMAGE_URL` come from the build environment. Add them as
+**repository variables** (Settings › Secrets and variables › Actions ›
+Variables); the workflow passes them to the build. While they are unset the
+page says "Coming soon".
+
+- **`NOTIFY_URL`:** the sign-up page of a mailing list service, for "Get
+  notified". There is no backend and no form; the button is a plain link.
+  It also drives the Mac and Windows rows in Get Emaki.
+- **`APPIMAGE_URL`:** the real AppImage URL (for example a GitHub release
+  asset). Set it and "Download for Linux" appears in the hero and Get Emaki.
+- **`GITHUB_URL`** lives in `src/config.ts`: set it once the app's repository
+  is public, and the page gains the GitHub, releases, licence and Figma
+  plugin links.
 
 ## Pages
 

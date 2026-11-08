@@ -1,4 +1,5 @@
 ---
+import { url, pagePath } from '../lib/url';
 // The top bar on every page. On narrow screens the links that don't fit move
 // into a menu behind one button. The button only appears once the script runs;
 // without JavaScript those pages are still in the footer.
@@ -15,20 +16,20 @@ interface Props {
   dark?: boolean;
 }
 const { dark = false } = Astro.props;
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = pagePath(Astro.url.pathname);
 const links = [
-  { href: '/#inside', label: 'Features', hide: 'narrow' },
-  { href: '/showcase', label: 'Showcase', hide: 'tiny' },
-  { href: '/roadmap', label: 'Roadmap', hide: 'narrow' },
-  { href: '/changelog', label: 'Changelog', hide: 'narrow' },
-  { href: '/get-started', label: 'Get started', button: true },
+  { href: url('/#inside'), label: 'Features', hide: 'narrow' },
+  { href: url('/showcase'), label: 'Showcase', hide: 'tiny' },
+  { href: url('/roadmap'), label: 'Roadmap', hide: 'narrow' },
+  { href: url('/changelog'), label: 'Changelog', hide: 'narrow' },
+  { href: url('/get-started'), label: 'Get started', button: true },
 ];
 const more = links.filter((l) => l.hide);
 ---
 
 <header class:list={['top band', dark ? 'band-sumi' : 'band-paper']} data-home-tone={dark ? 'band-sumi' : 'band-paper'}>
   <div class="wrap top-row">
-    <a href="/" class="brand" aria-label="Emaki home">
+    <a href={url('/')} class="brand" aria-label="Emaki home">
       <Logo id="logo-top" animate={path === '/'} height={36} />
     </a>
     <nav aria-label="Main" class="main-nav">
@@ -39,7 +40,7 @@ const more = links.filter((l) => l.hide);
               <a
                 href={l.href}
                 class:list={{ 'nav-btn': l.button }}
-                aria-current={path === l.href ? 'page' : undefined}
+                aria-current={url(path) === l.href ? 'page' : undefined}
               >
                 {l.label}
               </a>
@@ -58,7 +59,7 @@ const more = links.filter((l) => l.hide);
         {
           more.map((l) => (
             <li class:list={[`in-${l.hide}`]}>
-              <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+              <a href={l.href} aria-current={url(path) === l.href ? 'page' : undefined}>
                 {l.label}
               </a>
             </li>

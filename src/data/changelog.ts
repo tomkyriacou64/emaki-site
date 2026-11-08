@@ -11,6 +11,40 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    version: '0.9.5',
+    date: '2026-11-08',
+    summary: 'Image editing arrives: fix, cut out and adjust pictures right inside Emaki, without leaving the canvas.',
+    sections: [
+      {
+        title: 'New',
+        items: [
+          'Edit image. Double-click a picture, or press Edit image in the Image section, to edit it in place. Every edit stays separate and can be changed or taken off later: Revert takes them all off, and holding Compare shows the original.',
+          'Paint, clone and heal, with soft brushes and an eraser that only takes off paint.',
+          'Selections: rectangle, ellipse, lasso, polygon, magic wand and smart select, with add, subtract, grow, shrink, invert and smooth edges. Move or transform a selection, or copy and cut it to a new layer.',
+          'Adjustments limited to a selection: exposure, contrast, colour and more, each animatable.',
+          'Remove (`R`): brush over something to take it out of the photo. Fill fills a selection from its surroundings.',
+          'Remove background and Select subject in one click.',
+          'Find whole objects: smart select picks out a whole object under the pointer.',
+          'Perspective and straighten (`P`): drag four corners onto a menu, a shop front or a screen shot at an angle and it comes out square.',
+          'Copy and paste edits onto many pictures at once with Copy style and Paste style (`Ctrl+Alt+C`, `Ctrl+Alt+V`). Background removal runs again on each picture.',
+          'The AI tools run on your computer. Each downloads its model once, the first time you use it, and works offline after that.',
+        ],
+      },
+      {
+        title: 'Improved',
+        items: [
+          'Empty sections like Stroke or Effects show just their title and +, with nothing to fold.',
+          'Clearer buttons for Compare and Revert.',
+          'Dragging files in works on Wayland.',
+        ],
+      },
+      {
+        title: 'Known limits',
+        items: ['Linux AppImage only. Mac and Windows come later.'],
+      },
+    ],
+  },
+  {
     version: '0.9.3',
     date: '2026-11-04',
     summary: 'A fresh look: new colour themes, new sample content and a cleaner interface.',

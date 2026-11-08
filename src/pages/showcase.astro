@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 // Showcase: what you can make in Emaki, by where it plays. Each use case is a
 // band with its real clips hung at their true shape (every clip in a row at
 // one height), then what in the app it leans on. Replaces the old Showcase and
@@ -144,7 +145,7 @@ const cases = [
 
     <p class="wrap foot-note">
       These were saved as MP4 video. The app can also save WebM, ProRes 4444 with a transparent background, GIF,
-      Lottie and PNG. <a href="/#inside">See what's inside the app</a>
+      Lottie and PNG. <a href={url('/#inside')}>See what's inside the app</a>
     </p>
   </main>
   <SiteFooter />

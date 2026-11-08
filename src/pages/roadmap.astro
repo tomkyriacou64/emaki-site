@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 // The roadmap as a timeline: the playhead sits at Now, Next runs on from it,
 // and Later fades out to the right, where plans are least certain.
 import Base from '../layouts/Base.astro';
@@ -52,7 +53,7 @@ import { GITHUB_URL } from '../config';
       <h2 id="idea-title">Have an idea?</h2>
       <p>
         Once the code is public, ideas, issues and contributions are all welcome.
-        {GITHUB_URL ? <a href={GITHUB_URL}>Join in on GitHub</a> : <a href="/contributing">How contributing will work</a>}
+        {GITHUB_URL ? <a href={GITHUB_URL}>Join in on GitHub</a> : <a href={url('/contributing')}>How contributing will work</a>}
       </p>
     </section>
   </main>

@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 // A short looping clip made in Emaki. It plays muted and looped while on
 // screen; with reduced motion it shows the poster frame until the visitor
 // presses play. Without JavaScript, the poster shows.
@@ -22,12 +23,12 @@ const shape = clip.height > clip.width ? 'tall' : clip.height === clip.width ? '
       loop
       playsinline
       preload="none"
-      poster={`/showcase/${clip.file}.webp`}
+      poster={url(`/showcase/${clip.file}.webp`)}
       width={clip.width}
       height={clip.height}
       aria-label={`${clip.title}: ${clip.caption}`}
     >
-      <source src={`/showcase/${clip.file}.mp4`} type="video/mp4" />
+      <source src={url(`/showcase/${clip.file}.mp4`)} type="video/mp4" />
     </video>
     <button class="toggle" type="button" aria-label={`Play ${clip.title}`} data-label={clip.title} hidden>
       <svg class="i-play" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /></svg>

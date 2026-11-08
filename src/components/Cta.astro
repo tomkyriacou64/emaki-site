@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 // The main call to action. With NOTIFY_URL set it is a link to the sign-up
 // page; without it, an honest status line and no button. A download button
 // joins it once APPIMAGE_URL is set.
@@ -37,7 +38,7 @@ const { tour = false, class: className } = Astro.props;
   }
   {
     tour && (
-      <a class="btn btn-secondary" href="/showcase">
+      <a class="btn btn-secondary" href={url('/showcase')}>
         See what it makes
         <Icon name="arrow" size={18} />
       </a>
