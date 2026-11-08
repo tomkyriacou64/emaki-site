@@ -12,7 +12,7 @@ import Clip from '../components/Clip.astro';
 import Icon from '../components/Icon.astro';
 import Emakimono from '../components/Emakimono.astro';
 import { byFile } from '../data/showcase';
-import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL } from '../config';
+import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL, NOTIFY_URL, APPIMAGE_URL } from '../config';
 
 import editor from '../assets/shots/mockups.png';
 import graph from '../assets/shots/graph-editor.png';
@@ -61,13 +61,20 @@ const terms = [
   'Projects are plain folders, with autosave and version history',
 ];
 
-// From the Get started page.
-const needs = [
-  { title: '64-bit Linux', text: 'glibc 2.30 or newer, so most systems from 2020 on' },
-  { title: 'A Vulkan graphics card', text: 'Emaki draws and exports on the GPU' },
-  { title: 'Wayland or X11', text: 'File dialogs go through your desktop’s portal' },
-];
----
+// Where to get it. Linux follows the same links as the call to action (a
+// download once APPIMAGE_URL is set, else the notify sign-up); Mac and Windows
+// have no builds yet, so they offer the sign-up or say "Coming soon".
+const platforms = [
+  {
+    name: 'Linux',
+    href: APPIMAGE_URL || NOTIFY_URL,
+    label: APPIMAGE_URL ? 'Download' : NOTIFY_URL ? 'Get notified' : 'Coming soon',
+    icon: APPIMAGE_URL ? 'download' : 'bell',
+    primary: true,
+  },
+  { name: 'Mac', href: NOTIFY_URL, label: NOTIFY_URL ? 'Get notified' : 'Coming soon', icon: 'bell', primary: false },
+  { name: 'Windows', href: NOTIFY_URL, label: NOTIFY_URL ? 'Get notified' : 'Coming soon', icon: 'bell', primary: false },
+];---
 
 <Base
   title="Emaki: design a scene, then give it a timeline"
@@ -322,7 +329,7 @@ const needs = [
         <div class="head split">
           <div>
             <p class="mark"><time>0:30</time> Export</p>
-            <h2 id="export-title">Six formats, each for a job</h2>
+            <h2 id="export-title">Export to video, Lottie, GIF or stills</h2>
           </div>
           <p>
             Export one artboard or all of them at once, at the size the place you post to expects. Sound comes along in
@@ -384,27 +391,14 @@ const needs = [
 
     <section class="scene band band-paper get" id="get" aria-labelledby="get-title">
       <div class="wrap">
-        <div class="head split">
-          <div>
-            <p class="mark"><time>0:41</time> Get Emaki</p>
-            <h2 id="get-title">Free, and yours to keep</h2>
-          </div>
-          <p>
-            Emaki is made by someone who runs a digital signage company and wanted one tool to design and animate its
-            screens. It was started on honeymoon in Japan, and its code will be open source.
-            {
-              GITHUB_URL ? (
-                <a href={GITHUB_URL}>Contribute on GitHub</a>
-              ) : (
-                <a href="/contributing">How contributing will work</a>
-              )
-            }
-          </p>
+        <div class="head">
+          <p class="mark"><time>0:41</time> Get Emaki</p>
+          <h2 id="get-title">Free, and yours to keep</h2>
         </div>
 
         <div class="get-grid">
           <div class="plan">
-            <p class="plan-name">Emaki for Linux</p>
+            <p class="plan-name">What it costs</p>
             <p class="plan-price">Free</p>
             <ul class="plan-terms">
               {
@@ -416,26 +410,34 @@ const needs = [
                 ))
               }
             </ul>
-            <Cta />
             <p class="caveat">
               It goes online only when you ask: for the Google Fonts tab in the font picker, or to import a frame from
               Figma. <a href="/privacy">Privacy</a>
             </p>
           </div>
 
-          <div class="needs">
-            <h3>Runs on</h3>
-            <dl>
+          <div class="where">
+            <h3>Where to get it</h3>
+            <p class="where-lede">Emaki is coming soon to Linux, Mac and Windows, with Linux first.</p>
+            <ul class="platforms">
               {
-                needs.map((n) => (
-                  <div>
-                    <dt>{n.title}</dt>
-                    <dd>{n.text}</dd>
-                  </div>
+                platforms.map((pl) => (
+                  <li>
+                    <span class="platform-name">{pl.name}</span>
+                    {pl.href ? (
+                      <a class:list={['btn', pl.primary ? 'btn-primary' : 'btn-secondary']} href={pl.href}>
+                        <Icon name={pl.icon} />
+                        {pl.label}
+                      </a>
+                    ) : (
+                      <span class="btn btn-secondary is-off" aria-disabled="true">
+                        {pl.label}
+                      </span>
+                    )}
+                  </li>
                 ))
               }
-            </dl>
-            <p class="later">Mac and Windows come later</p>
+            </ul>
             <p class="get-links">
               <a href="/get-started">Get started</a>
               <a href="/faq">FAQ</a>
@@ -443,6 +445,22 @@ const needs = [
               {RELEASES_URL && <a href={RELEASES_URL}>All releases</a>}
             </p>
           </div>
+        </div>
+
+        <div class="open">
+          <h3>Open source</h3>
+          <p>
+            The code will be open source, so Emaki stays free and anyone can help make it better. Emaki is made by
+            someone who runs a digital signage company and wanted one tool to design and animate its screens. It was
+            started on honeymoon in Japan.
+            {
+              GITHUB_URL ? (
+                <a href={GITHUB_URL}>Contribute on GitHub</a>
+              ) : (
+                <a href="/contributing">How contributing will work</a>
+              )
+            }
+          </p>
         </div>
 
         <p class="next">
@@ -503,12 +521,16 @@ const needs = [
     transform-origin: 50% 0;
   }
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) and (min-width: 601px) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 601px) and (max-height: 1400px) {
       .pinned {
         perspective: 1400px;
       }
       .tilt {
         animation: rise linear both;
+      }
+      /* The timeline in its own rule: the CSS minifier would fold it into the
+         shorthand above, which browsers then reject. */
+      .pinned .tilt {
         animation-timeline: view();
         animation-range: entry 0% cover 40%;
       }
@@ -516,7 +538,7 @@ const needs = [
   }
   @keyframes rise {
     from {
-      transform: rotateX(16deg) scale(0.94);
+      transform: rotateX(22deg) scale(0.92);
     }
     to {
       transform: none;
@@ -758,22 +780,28 @@ const needs = [
     }
   }
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+    /* Not in very tall viewports (full-page captures): there every key shows set. */
+    @media (prefers-reduced-motion: no-preference) and (min-width: 900px) and (max-height: 1400px) {
       .timeline {
         view-timeline: --tl block;
       }
       .timeline::after {
         animation: fill linear both;
+      }
+      .inside .timeline::after {
         animation-timeline: --tl;
-        animation-range: entry 40% exit 60%;
+        /* From the top of the list at mid-screen to its end at mid-screen. */
+        animation-range: cover 50vh cover calc(100% - 50vh);
       }
       .timeline .row {
         view-timeline: --row block;
       }
       .key::after {
         animation: key-set linear both;
+      }
+      .timeline .key::after {
         animation-timeline: --row;
-        animation-range: entry 55% entry 60%;
+        animation-range: cover 50vh cover calc(50vh + 24px);
       }
     }
   }
@@ -991,27 +1019,56 @@ const needs = [
     font-size: 0.8125rem;
     color: var(--text-muted);
   }
-  .needs h3 {
-    margin-bottom: 16px;
+  .where h3,
+  .open h3 {
+    margin-bottom: 8px;
   }
-  .needs dl {
-    margin: 0;
-    border-top: 1px solid var(--border-strong);
-  }
-  .needs dl > div {
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .needs dt {
-    font-weight: 500;
-  }
-  .needs dd {
-    margin: 4px 0 0;
-    font-size: 0.9375rem;
+  .where-lede {
+    margin: 0 0 16px;
     color: var(--text-dim);
   }
-  .later {
-    margin: 24px 0;
+  .platforms {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    border-top: 1px solid var(--border-strong);
+  }
+  .platforms li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .platform-name {
+    font-family: var(--font-head);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 500;
+  }
+  .platforms .btn {
+    min-height: 40px;
+    padding: 0 16px;
+    font-size: 0.9375rem;
+  }
+  /* No build yet: a quiet button that does nothing. */
+  .platforms .is-off {
+    color: var(--text-muted);
+    border-style: dashed;
+    cursor: default;
+  }
+  .platforms .is-off:hover {
+    background: transparent;
+    color: var(--text-muted);
+  }
+  .open {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-strong);
+  }
+  .open p {
+    max-width: 46rem;
+    margin: 0;
     color: var(--text-dim);
   }
   .get-links {

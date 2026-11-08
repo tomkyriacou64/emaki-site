@@ -49,7 +49,7 @@ taken from the app.
 | U4 | The editor legend is a separate light band with four short notes; it reads as a footnote and splits the hero from the proof | Keep the legend, but tighten it to the screenshot (one band, less space) so the eye goes screenshot, legend, clips |
 | U5 | Signage and menu boards are named once in the hero lede and once in the export copy; a signage visitor has to infer that the app suits them | Say it where it matters: the clips caption names menu boards and screen loops; the export band keeps "signage players" |
 | U6 | The name and the story were cut; the user liked the scroll, and it explains the palette, the ruler marks and the name in one go | Bring the scroll back as its own band, complete on load, before "Get Emaki" |
-| U7 | Image editing is a row among finished features with only a small label; it is easy to read as shipped | Keep it last in its band with "Coming in the next release" as the label and a dashed keyframe (an unset key) on the timeline |
+| U7 | Image editing is a row among finished features with only a small label; it is easy to read as shipped | Keep it last in its band, labelled "Coming in the next release" beside its timecode |
 | U8 | The call to action: "Coming soon to Linux" plus "See what it makes" in the hero, and again on the plan card. Clear and honest; no change, wiring untouched | None |
 | U9 | Attention drops in the "Also in the app" grid: eight equal blocks after a long feature run | Keep it (it answers "does it do X"), but give it its own heading and a quieter, denser list |
 
@@ -88,3 +88,16 @@ taken from the app.
   round 2.
 - Not used: bento grid, beams, spotlight, sparkles, parallax and particle
   backgrounds (glow and decoration; they do not fit the app's rules).
+
+## Follow-up from the user (after round 3)
+
+- **Get Emaki** reads in order: what it costs (the Free card, its checklist and
+  the privacy note), where to get it (Linux, Mac and Windows, each with a
+  button: Linux follows the call to action's links, a download once
+  `APPIMAGE_URL` is set, else the notify sign-up; Mac and Windows offer the
+  sign-up when `NOTIFY_URL` is set and otherwise show a quiet "Coming soon"
+  that does nothing), then open source (the code will be open, the story line,
+  the contributing link). The "Runs on" list (glibc, Vulkan, Wayland or X11)
+  is gone from the home page; the same facts stay on Get started.
+- **Export heading**: "Six formats, each for a job" became "Export to video,
+  Lottie, GIF or stills".
