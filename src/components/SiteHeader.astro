@@ -5,6 +5,11 @@
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 
+interface Props {
+  /** Sit on the dark hero band (home page). */
+  dark?: boolean;
+}
+const { dark = false } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
   { href: '/#inside', label: 'Features', hide: 'narrow' },
@@ -17,7 +22,7 @@ const links = [
 const more = links.filter((l) => l.hide);
 ---
 
-<header class="top">
+<header class:list={['top band', dark ? 'band-sumi' : 'band-paper']}>
   <div class="wrap top-row">
     <a href="/" class="brand" aria-label="Emaki home">
       <Logo id="logo-top" animate={path === '/'} height={36} />

@@ -1,8 +1,8 @@
 # Emaki website
 
 A one-page static site for Emaki, built with [Astro](https://astro.build).
-No UI framework; plain `.astro` components and a little CSS. Light and dark
-follow the visitor's system setting.
+No UI framework; plain `.astro` components and a little CSS. One fixed look:
+a dark hero, then warm light bands (see "The look").
 
 ## Run it
 
@@ -95,31 +95,17 @@ Portrait clips are 720 × 1280, square ones 960 × 960. Each clip plays
 muted and looped while on screen, with a pause button; with reduced motion
 it shows the poster until the visitor presses play.
 
-## The hero
+## The look
 
-`src/components/HeroEditor.astro` draws the editor in code: layers, an
-artboard with a small café-screen scene, the inspector and the timeline. One
-`requestAnimationFrame` clock drives the scene, the playhead, the timecode and
-the inspector's X and Y; it pauses off screen and in hidden tabs, and the play
-button pauses it for good. The markup is the composed still frame, which is
-what visitors see without JavaScript or when they prefer reduced motion.
-
-## The scroll
-
-`src/components/Emakimono.astro` tells "Emaki means picture scroll" on a
-handscroll: brocade cover with a title slip, cord, washi sheets, ink pictures
-and the roller with its knobs. While the page scrolls past, it stays pinned and
-unrolls right to left a section at a time (dragging the paper, or the roller
-with the arrow keys, does the same). Everything moves by transforms; the
-brushed text is real text under one SVG filter (`#emaki-ink`, and a gentler
-`#emaki-ink-fine` for small text). Without JavaScript, or with reduced motion,
-it is laid open as a row that scrolls sideways where it doesn't fit.
-
-Fonts for it live in `public/fonts/`: Newsreader (latin and latin-ext) and
-Yuji Syuku cut down to the characters on the scroll. If you add Japanese text
-there, fetch a new cut with every character it needs, from
-`https://fonts.googleapis.com/css2?family=Yuji+Syuku&text=<characters>`
-(both SIL OFL).
+One fixed look, no light and dark switching: the page is a run of bands, each
+setting its own background and text through a class in `global.css`
+(`band band-sumi`, `band-paper`, `band-zoge`, `band-kachi`). The colours are
+traditional Japanese ones: shiro-neri #FCFAF2 and zōge-iro #F8F4E6 for the
+light bands, gofun-iro #FFFFFB for raised surfaces, warmed sumi #1C1A17 for
+the hero and kachi-iro #08192D for the closing band. The one accent is the
+logo's sun, beni-hi #E2483A, for marks only; where it carries text it is
+akane-iro #B7282E. The hero shows the real editor screenshot (`mockups.png`).
+The audit behind the layout is in `docs/overhaul-audit.md`.
 
 ## The tracking clip
 
@@ -187,5 +173,4 @@ Remember to update the `alt` text where a picture is used when it changes.
 - `public/og.png` (1200×630): made by `scripts/og-image.mjs` from
   `scripts/logo-stacked.svg`; `npm run og` rebuilds it on its own.
 
-Fonts are self-hosted: Inter and Outfit from `@fontsource`, Newsreader and a
-Yuji Syuku cut in `public/fonts/` (all SIL OFL).
+Fonts are self-hosted: Inter and Outfit from `@fontsource` (SIL OFL).

@@ -18,8 +18,6 @@ const groups = [
   {
     title: 'Project',
     links: [
-      { href: '/#story', label: 'Story' },
-      { href: '/#name', label: 'The name' },
       { href: '/roadmap', label: 'Roadmap' },
       { href: '/changelog', label: 'Changelog' },
       { href: '/contributing', label: 'Contributing' },
@@ -36,11 +34,11 @@ const groups = [
 ];
 ---
 
-<footer class="foot">
+<footer class="foot band band-zoge">
   <div class="wrap foot-grid">
     <div class="about">
       <Logo id="logo-foot" height={28} />
-      <p>A desktop app for designing and animating motion graphics, named after the Japanese picture scroll.</p>
+      <p>A desktop app for designing and animating motion graphics. Its name means picture scroll: the Japanese handscroll that tells a story a scene at a time.</p>
     </div>
     {
       groups.map((g) => (
