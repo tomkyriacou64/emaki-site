@@ -96,7 +96,7 @@ layout and visuals.
 1. **Spacing.** Header menu button pulled to the gutter (`-12px`), brand focus radius 8, `.formats dt` 4 px, plan card padding 24 to 32, "Mac and Windows come later" set apart from the list.
 2. **Colour.** Nothing to change.
 3. **Icons.** One size and stroke: 18 px, 1.5 stroke, default in `Icon.astro`, header menu icons 18.
-4. **Copy.** Dropped the period on the one-line platform note; the MP4 row now says "Signage players, phones and social posts".
+4. **Copy.** Dropped the period on the one-line platform note; the MP4 row now says "For signage players, phones and social posts".
 5. **Type.** Small text on three sizes only: 15 (secondary), 13 (meta) and the 17 body. Legend numbers 13 and tabular. Footer 15 with a 13 px legal line.
 6. **Layout.** Nothing to change.
 7. **Details.** Nothing to change; radii already nest (10 controls, 12 cards).
