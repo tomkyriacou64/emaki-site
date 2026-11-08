@@ -1,0 +1,862 @@
+---
+// "What emaki means", told on a handscroll (emakimono) that unrolls right to
+// left as the page scrolls, a section at a time, or as you drag it.
+//
+// The parts, from the right: the bamboo stave (hassō) with its cord (himo),
+// the silk brocade cover (hyōshi) with a title slip (daisen), then sheets of
+// washi joined edge to edge, and at the far left the roller (jiku) with its
+// end knobs, around which the scroll is kept rolled.
+//
+// The markup is the scroll laid open, which is what visitors see without
+// JavaScript, with reduced motion, on narrow screens and in a static capture (a
+// row they can scroll sideways, starting at the right). On wide screens with
+// motion, the script adds `is-live`, pins the scroll while the page scrolls a
+// short way past it and moves the rolls, all with transforms. It starts with
+// the first scene already open, so it never shows as an empty band.
+//
+// The text stays real, selectable text. The brushed look comes from one SVG
+// filter (#emaki-ink) and the paper from small noise tiles, both drawn once.
+
+// Ink pictures between the texts echo the app: a shape, a path, a playhead.
+---
+
+<div class="emaki-track" data-emaki>
+  <div class="emaki-pin">
+    <slot name="head" />
+    <div class="emaki">
+      <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="emaki-ink" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="2" result="wobble" />
+            <feDisplacementMap in="SourceGraphic" in2="wobble" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="shape" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9 0.08" numOctaves="2" seed="5" result="fibre" />
+            <feGaussianBlur in="shape" stdDeviation="0.8" result="soft" />
+            <feDisplacementMap in="soft" in2="fibre" scale="3.5" xChannelSelector="R" yChannelSelector="B" result="spread" />
+            <feColorMatrix in="spread" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.4 0" result="bleed" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="3" seed="9" result="grain" />
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.25 1.5" result="density" />
+            <feComposite in="shape" in2="density" operator="in" result="inked" />
+            <feMerge>
+              <feMergeNode in="bleed" />
+              <feMergeNode in="inked" />
+            </feMerge>
+          </filter>
+          <!-- The same ink, gentler, for small text so it stays easy to read. -->
+          <filter id="emaki-ink-fine" x="-4%" y="-4%" width="108%" height="108%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="3" result="wobble" />
+            <feDisplacementMap in="SourceGraphic" in2="wobble" scale="1.1" xChannelSelector="R" yChannelSelector="G" result="shape" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9 0.08" numOctaves="2" seed="5" result="fibre" />
+            <feGaussianBlur in="shape" stdDeviation="0.6" result="soft" />
+            <feDisplacementMap in="soft" in2="fibre" scale="2.5" xChannelSelector="R" yChannelSelector="B" result="spread" />
+            <feColorMatrix in="spread" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.3 0" result="bleed" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.45" numOctaves="2" seed="9" result="grain" />
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1 1.45" result="density" />
+            <feComposite in="shape" in2="density" operator="in" result="inked" />
+            <feMerge>
+              <feMergeNode in="bleed" />
+              <feMergeNode in="inked" />
+            </feMerge>
+          </filter>
+          <pattern id="emaki-hishi" width="16" height="16" patternUnits="userSpaceOnUse">
+            <g fill="none" stroke="#c9a85e" stroke-width="0.8" opacity="0.5">
+              <path d="M8 1 L15 8 L8 15 L1 8 Z" />
+              <path d="M8 5 L11 8 L8 11 L5 8 Z" />
+            </g>
+          </pattern>
+        </defs>
+      </svg>
+
+      <div class="viewer" data-viewer>
+        <div class="window" data-window>
+          <div class="sheet" data-sheet>
+            <!-- The cover, at the start (right). -->
+            <div class="cover" aria-hidden="true">
+              <svg class="brocade" preserveAspectRatio="none">
+                <rect width="100%" height="100%" fill="url(#emaki-hishi)" />
+              </svg>
+              <span class="daisen"><span lang="ja">絵巻</span></span>
+            </div>
+
+            <section class="panel title" data-stop aria-labelledby="emaki-t1">
+              <p class="big" lang="ja"><span class="ink">絵巻物</span></p>
+              <p class="kana ink" lang="ja" aria-hidden="true">えまきもの</p>
+              <div class="words">
+                <h3 id="emaki-t1" class="ink">A picture scroll</h3>
+                <dl class="gloss ink">
+                  <div><dt lang="ja">絵</dt><dd><b>e</b> picture</dd></div>
+                  <div><dt lang="ja">巻</dt><dd><b>maki</b> scroll</dd></div>
+                  <div><dt lang="ja">物</dt><dd><b>mono</b> thing</dd></div>
+                </dl>
+                <p class="ink">
+                  <span lang="ja-Latn">Emaki</span> (<span lang="ja">絵巻</span>) is short for
+                  <span lang="ja-Latn">emakimono</span> (<span lang="ja">絵巻物</span>).
+                </p>
+              </div>
+            </section>
+
+            <div class="panel pic" aria-hidden="true">
+              <svg viewBox="0 0 120 320">
+                <path class="stroke" pathLength="1" style="--d: 0s" d="M 88 96 C 96 66, 72 44, 52 48 C 28 52, 22 82, 32 100 C 42 118, 74 118, 84 100" stroke-width="5.5" />
+                <path class="stroke hair" pathLength="1" style="--d: 0.1s" d="M 86 92 C 92 68, 72 50, 54 53 C 33 57, 28 82, 36 98" stroke-width="1.4" />
+                <path class="stroke" pathLength="1" style="--d: 0.6s" d="M 36 168 L 86 166 L 88 218 L 38 220 Z" stroke-width="4.5" />
+                <path class="wash" d="M 20 268 C 50 258, 80 262, 104 270 L 104 276 C 70 272, 46 272, 20 278 Z" />
+              </svg>
+            </div>
+
+            <section class="panel text" data-stop aria-labelledby="emaki-t2">
+              <h3 id="emaki-t2" class="ink">Painted in the 12th century</h3>
+              <p class="ink">
+                Japanese illustrated handscrolls flourished from the 12th century, late in the Heian period. Among the
+                best known are the Tale of Genji scrolls and the playful animals of the
+                <span lang="ja-Latn">Chōjū-jinbutsu-giga</span>.
+              </p>
+              <p class="names ink" lang="ja" aria-hidden="true"><span>源氏物語絵巻</span><span>鳥獣人物戯画</span></p>
+            </section>
+
+            <div class="panel pic" aria-hidden="true">
+              <svg viewBox="0 0 150 320">
+                <path class="wash" d="M 0 250 C 30 214, 52 206, 78 228 C 98 244, 120 222, 150 214 L 150 262 L 0 262 Z" />
+                <path class="stroke" pathLength="1" style="--d: 0s" d="M 2 250 C 30 214, 52 206, 78 228 C 98 244, 120 222, 148 214" stroke-width="3" />
+                <path class="stroke dots" style="--d: 0.3s" d="M 18 196 C 34 96, 92 70, 132 112" stroke-width="3.5" />
+                <circle class="blot" cx="132" cy="112" r="7" />
+              </svg>
+            </div>
+
+            <section class="panel text" data-stop aria-labelledby="emaki-t3">
+              <h3 id="emaki-t3" class="ink">Read a scene at a time</h3>
+              <p class="ink">
+                You unroll an emaki from right to left, about a shoulder’s width at a time, and roll up what you have
+                seen. Scenes run into one another, so the story moves on as the paper moves.
+              </p>
+            </section>
+
+            <div class="panel pic" aria-hidden="true">
+              <svg viewBox="0 0 120 320">
+                <path class="stroke" pathLength="1" style="--d: 0s" d="M 6 200 C 40 196, 80 202, 116 198" stroke-width="3" />
+                <path class="stroke ticks" pathLength="1" style="--d: 0.2s" d="M 14 200 v -12 M 34 200 v -8 M 54 200 v -12 M 74 200 v -8 M 94 200 v -12 M 112 200 v -8" stroke-width="2.5" />
+                <path class="stroke shu" pathLength="1" style="--d: 0.6s" d="M 66 104 C 65 150, 67 210, 66 262" stroke-width="4" />
+                <path class="blot shu" d="M 58 92 L 74 92 L 74 104 L 66 112 L 58 104 Z" />
+              </svg>
+            </div>
+
+            <section class="panel text" data-stop aria-labelledby="emaki-t4">
+              <h3 id="emaki-t4" class="ink">A timeline on paper</h3>
+              <p class="ink">
+                A timeline in a motion editor works much the same way. Time runs along it, one scene leads into the
+                next, and you move back and forth to see them. That is where the app takes its name.
+              </p>
+            </section>
+
+            <!-- The end of the scroll, shown when it is laid open without the live rolls. -->
+            <div class="end" aria-hidden="true"><span class="rod"></span></div>
+          </div>
+        </div>
+
+        <!-- The live rolls: the unread part around the roller (left) and the part already read (right). -->
+        <div class="roll left" data-roll-left aria-hidden="true">
+          <span class="body"></span>
+          <span class="knob top"></span>
+          <span class="knob bottom"></span>
+        </div>
+        <div class="roll right" data-roll-right aria-hidden="true"><span class="body"></span></div>
+        <div
+          class="handle"
+          data-handle
+          role="slider"
+          tabindex="0"
+          aria-label="Unroll the scroll"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="100"
+          aria-valuetext="Open"
+        >
+        </div>
+        <svg class="cord" viewBox="0 0 60 120" aria-hidden="true">
+          <path d="M 4 40 C 30 40, 40 60, 34 84 C 30 100, 14 104, 12 116" />
+          <path class="braid" d="M 4 40 C 30 40, 40 60, 34 84 C 30 100, 14 104, 12 116" />
+        </svg>
+      </div>
+    </div>
+    <slot name="hint" />
+  </div>
+</div>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  // Only wide screens get the live, pinned scroll; phones get the open row.
+  const wide = matchMedia('(min-width: 900px)');
+  // A viewport this tall is a full-page capture or a huge screen: show it open.
+  const canLive = () => !reduce.matches && wide.matches && innerHeight <= 1400;
+  const smooth = (t: number) => t * t * (3 - 2 * t);
+  const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+
+  for (const track of document.querySelectorAll<HTMLElement>('[data-emaki]')) {
+    const emaki = track.querySelector<HTMLElement>('.emaki')!;
+    const viewer = track.querySelector<HTMLElement>('[data-viewer]')!;
+    const clip = track.querySelector<HTMLElement>('[data-window]')!;
+    const sheet = track.querySelector<HTMLElement>('[data-sheet]')!;
+    const left = track.querySelector<HTMLElement>('[data-roll-left]')!;
+    const leftBody = left.querySelector<HTMLElement>('.body')!;
+    const right = track.querySelector<HTMLElement>('[data-roll-right]')!;
+    const rightBody = right.querySelector<HTMLElement>('.body')!;
+    const handle = track.querySelector<HTMLElement>('[data-handle]')!;
+    const pin = track.querySelector<HTMLElement>('.emaki-pin')!;
+    const panels = [...track.querySelectorAll<HTMLElement>('.panel')];
+    const stopEls = [...track.querySelectorAll<HTMLElement>('[data-stop]')];
+
+    // Sizes, measured on layout and resize.
+    let V = 0; // the window the paper shows through
+    let W = 0; // the whole length of the paper
+    let stops: number[] = []; // how much is unrolled at each resting place
+    let edges: { el: HTMLElement; at: number }[] = []; // unrolled length at which a panel is inked
+    let distance = 0; // page scroll that unrolls it all
+    let progress = 0;
+    let raf = 0;
+
+    const measure = () => {
+      V = viewer.clientWidth;
+      W = sheet.scrollWidth;
+      // The first resting place has the cover and the title scene open.
+      stops = stopEls.map((el) => Math.min(W, Math.max(V * 0.55, W - el.offsetLeft)));
+      stops[stops.length - 1] = W;
+      edges = panels.map((el) => ({ el, at: W - el.offsetLeft - el.offsetWidth * 0.4 }));
+      distance = (stops.length - 1) * Math.min(360, Math.max(240, innerHeight * 0.35));
+      track.style.height = `${pin.offsetHeight + distance}px`;
+    };
+
+    // Page progress (0 to 1) to unrolled length, resting at each stop.
+    const unrolled = (p: number) => {
+      const n = stops.length - 1;
+      const x = clamp(p) * n;
+      const k = Math.min(n - 1, Math.floor(x));
+      const t = smooth(clamp((x - k - 0.08) / 0.62));
+      return stops[k] + (stops[k + 1] - stops[k]) * t;
+    };
+    const stopProgress = (k: number) => (k === 0 ? 0 : (k - 1 + 0.86) / (stops.length - 1));
+
+    const draw = () => {
+      raf = 0;
+      const r = unrolled(progress);
+      const edge = Math.max(0, V - r); // where the paper meets the left roll
+      const sheetX = Math.max(V, r) - W;
+      clip.style.transform = `translateX(${edge}px)`;
+      sheet.style.transform = `translateX(${sheetX - edge}px)`;
+      // The left roll thins as it gives up paper; at the end it is the roller alone.
+      const left01 = (W - r) / (W - stops[0]);
+      left.style.transform = `translateX(${edge}px)`;
+      leftBody.style.transform = `scaleX(${0.38 + 0.62 * left01})`;
+      // The right roll grows as the read part is rolled up.
+      const read = Math.max(0, r - V);
+      right.style.opacity = read > 1 ? '1' : '0';
+      rightBody.style.transform = `scaleX(${Math.min(1, 0.35 + read / 600)})`;
+      handle.style.transform = `translateX(${edge}px)`;
+      for (const e of edges) if (r >= e.at) e.el.classList.add('inked');
+      const k = stops.findIndex((s) => r <= s + 1);
+      handle.setAttribute('aria-valuenow', String(Math.round(progress * 100)));
+      handle.setAttribute(
+        'aria-valuetext',
+        k <= 0 ? 'Rolled up' : k >= stops.length - 1 ? 'Open to the end' : `Section ${k} of ${stops.length - 1}`,
+      );
+    };
+    const request = () => {
+      if (!raf) raf = requestAnimationFrame(draw);
+    };
+    const onScroll = () => {
+      const top = track.getBoundingClientRect().top;
+      progress = clamp(-top / distance);
+      request();
+    };
+    const scrollToProgress = (p: number, behavior: ScrollBehavior = 'smooth') => {
+      const top = track.getBoundingClientRect().top + scrollY;
+      scrollTo({ top: top + clamp(p) * distance, behavior });
+    };
+
+    // Keyboard: the roller is a slider. Left unrolls (the scroll is read leftwards), right rolls back.
+    handle.addEventListener('keydown', (e) => {
+      const n = stops.length - 1;
+      const r = unrolled(progress);
+      let current = 0;
+      stops.forEach((s, i) => {
+        if (s <= r + 1) current = i;
+      });
+      let next: number | null = null;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageDown') next = Math.min(n, current + 1);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageUp')
+        next = r > stops[current] + 1 ? current : Math.max(0, current - 1);
+      if (e.key === 'Home') next = 0;
+      if (e.key === 'End') next = n;
+      if (next === null) return;
+      e.preventDefault();
+      scrollToProgress(stopProgress(next));
+    });
+
+    // Dragging the paper or the roller: drag left to unroll, right to roll back, then rest at the nearest stop.
+    let dragX: number | null = null;
+    let dragFrom = 0;
+    viewer.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      dragX = e.clientX;
+      dragFrom = progress;
+      viewer.setPointerCapture(e.pointerId);
+      emaki.classList.add('dragging');
+    });
+    viewer.addEventListener('pointermove', (e) => {
+      if (dragX === null) return;
+      const dx = e.clientX - dragX;
+      scrollToProgress(dragFrom - dx / (W - stops[0]) * 1.1, 'instant');
+    });
+    const endDrag = () => {
+      if (dragX === null) return;
+      dragX = null;
+      emaki.classList.remove('dragging');
+      const r = unrolled(progress);
+      let best = 0;
+      stops.forEach((s, i) => {
+        if (Math.abs(s - r) < Math.abs(stops[best] - r)) best = i;
+      });
+      scrollToProgress(stopProgress(best));
+    };
+    viewer.addEventListener('pointerup', endDrag);
+    viewer.addEventListener('pointercancel', endDrag);
+
+    let live = false;
+    const start = () => {
+      if (live || !canLive()) return;
+      live = true;
+      track.classList.add('is-live');
+      measure();
+      onScroll();
+      draw();
+      addEventListener('scroll', onScroll, { passive: true });
+    };
+    const stop = () => {
+      if (!live) return;
+      live = false;
+      track.classList.remove('is-live');
+      removeEventListener('scroll', onScroll);
+      track.style.height = '';
+      for (const el of [clip, sheet, left, right, handle, leftBody, rightBody]) el.style.transform = '';
+      for (const p of panels) p.classList.add('inked');
+    };
+    new ResizeObserver(() => {
+      if (!canLive()) return stop();
+      if (!live) return start();
+      measure();
+      onScroll();
+      draw();
+    }).observe(emaki);
+    const recheck = () => (canLive() ? start() : stop());
+    reduce.addEventListener('change', recheck);
+    wide.addEventListener('change', recheck);
+    addEventListener('resize', recheck, { passive: true });
+    if (!canLive()) {
+      // Laid open: start the sideways row at its right end, where the scroll begins.
+      viewer.scrollLeft = 0;
+    } else {
+      start();
+      // Text widths change once the fonts arrive.
+      document.fonts.ready.then(() => {
+        if (!live) return;
+        measure();
+        onScroll();
+        draw();
+      });
+    }
+  }
+</script>
+
+<style>
+  /* The brush face, cut to the characters on the scroll; only this section uses it. */
+  @font-face {
+    font-family: 'Yuji Syuku';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/yuji-syuku-emaki.woff2') format('woff2');
+  }
+  .emaki-track {
+    --washi: #f2e7cf;
+    --font-brush: 'Yuji Syuku', 'Noto Serif CJK JP', 'Noto Serif JP', serif;
+    --paper-h: 400px;
+    --rollw: 52px;
+    --egutter: 24px;
+    position: relative;
+  }
+  .emaki-pin {
+    padding-block: 8px;
+  }
+  .emaki {
+    position: relative;
+    padding: 36px var(--egutter) 44px;
+    max-width: 1520px;
+    margin-inline: auto;
+    overflow-x: clip;
+  }
+  .defs {
+    position: absolute;
+  }
+
+  /* Laid open (no script, or reduced motion): a row that scrolls sideways if it doesn't fit, starting at the right. */
+  .viewer {
+    position: relative;
+    direction: rtl;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: thin;
+    touch-action: pan-y;
+  }
+  .window {
+    width: max-content;
+  }
+  .sheet {
+    display: flex;
+    height: var(--paper-h);
+    width: max-content;
+    color: #1a1612;
+    /* Washi: a cream base, long fibres, a finer grain and a faint mottling of age. */
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.03' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.33 0 0 0 0 0.2 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.18 0 0 0 0.1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='420'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.012' numOctaves='3' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.4 0 0 0 0 0.2 0 0 0 0.28 -0.06'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
+      var(--washi);
+    /* Edges a shade darker, as old paper browns from the outside in. */
+    box-shadow:
+      inset 0 14px 18px -14px rgb(120 84 40 / 0.45),
+      inset 0 -14px 18px -14px rgb(120 84 40 / 0.45),
+      0 1px 1px rgb(31 27 22 / 0.12),
+      0 18px 36px -20px rgb(31 27 22 / 0.45);
+    /* A slightly uneven edge, top and bottom. */
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 400' preserveAspectRatio='none'%3E%3Cpath d='M0 1.2 C 90 0.2, 180 2.1, 260 1 S 420 0.1, 520 1.6 S 700 0.4, 790 1.3 S 930 0.3, 1000 1.1 L 1000 398.8 C 900 399.9, 820 398.1, 720 399.2 S 560 398.3, 450 399.5 S 260 398.4, 160 399.3 S 40 398.7, 0 399 Z'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+  }
+
+  /* The brocade cover and its title slip. */
+  .cover {
+    position: relative;
+    flex: none;
+    width: 80px;
+    height: 100%;
+    /* Silk in kurotobi and ebicha browns: a material, not interface chrome. */
+    background: linear-gradient(90deg, #2e1d1a, #5a2e2a 45%, #46241f 80%, #2e1d1a);
+    border-left: 3px solid #b99a55;
+    box-shadow: inset 6px 0 0 #e8d7b0;
+  }
+  .brocade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .daisen {
+    position: absolute;
+    top: 24px;
+    left: 22px;
+    width: 30px;
+    padding: 12px 0;
+    background: #efe2c4;
+    box-shadow: 0 0 0 1px rgb(185 154 85 / 0.8);
+    display: grid;
+    justify-items: center;
+  }
+  .daisen span {
+    writing-mode: vertical-rl;
+    font-family: var(--font-brush);
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    color: #1a1612;
+    filter: url(#emaki-ink);
+  }
+
+  /* Sheets of paper, joined edge to edge. */
+  .panel {
+    position: relative;
+    flex: none;
+    direction: ltr;
+    height: 100%;
+    box-shadow: inset -1px 0 0 rgb(120 84 40 / 0.14);
+  }
+  .panel.text {
+    width: 228px;
+    padding: 48px 24px 32px;
+  }
+  .panel.pic {
+    width: 80px;
+  }
+  .panel.pic svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: url(#emaki-ink);
+  }
+  .panel.title {
+    width: 276px;
+    padding: 40px 20px 40px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 0 16px;
+  }
+  .ink {
+    filter: url(#emaki-ink);
+  }
+  p.ink,
+  .gloss.ink {
+    filter: url(#emaki-ink-fine);
+  }
+  .big .ink {
+    display: inline-block;
+  }
+  .panel .big {
+    order: 3;
+    margin: 0;
+    writing-mode: vertical-rl;
+    font-family: var(--font-brush);
+    font-size: 76px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+  .panel .kana {
+    order: 2;
+    margin: 6px 0 0;
+    writing-mode: vertical-rl;
+    font-family: var(--font-brush);
+    font-size: 15px;
+    line-height: 1;
+    letter-spacing: 0.3em;
+    color: #3b332b;
+  }
+  .words {
+    order: 1;
+    align-self: end;
+    font-family: var(--font-text);
+  }
+  .panel h3 {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: 0;
+    margin: 0 0 16px;
+    color: #1a1612;
+  }
+  .panel p {
+    font-family: var(--font-text);
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0;
+    color: #2a231c;
+    text-wrap: pretty;
+  }
+  .gloss {
+    margin: 0 0 16px;
+    display: grid;
+    gap: 8px;
+  }
+  .gloss div {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .gloss dt {
+    font-family: var(--font-brush);
+    font-size: 22px;
+    line-height: 1;
+  }
+  .gloss dd {
+    margin: 0;
+    font-size: 16px;
+    color: #3b332b;
+  }
+  .gloss b {
+    font-weight: 500;
+    color: #1a1612;
+    margin-right: 4px;
+  }
+  .words p {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #3b332b;
+  }
+  .names {
+    position: absolute;
+    right: 20px;
+    bottom: 28px;
+    display: flex;
+    gap: 10px;
+  }
+  .panel p.names span {
+    writing-mode: vertical-rl;
+    font-family: var(--font-brush);
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    color: #3b332b;
+  }
+  .panel.text:has(.names) {
+    width: 276px;
+    padding-right: 64px;
+  }
+
+  /* Ink pictures. */
+  .stroke {
+    fill: none;
+    stroke: #1a1612;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .stroke.hair {
+    opacity: 0.55;
+  }
+  .stroke.dots {
+    stroke-dasharray: 0.5 9;
+    opacity: 0.85;
+  }
+  .wash {
+    fill: #1a1612;
+    opacity: 0.14;
+  }
+  .blot {
+    fill: #1a1612;
+  }
+  .stroke.shu {
+    stroke: #b8432c;
+  }
+  .blot.shu {
+    fill: #b8432c;
+  }
+
+  /* The end of the paper, wound on its roller (laid-open view only). */
+  .end {
+    flex: none;
+    width: 44px;
+    height: 100%;
+    position: relative;
+  }
+  .end .rod,
+  .roll .body {
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #a08a63, #e9dcbd 32%, #f4ead2 46%, #d8c7a2 72%, #9b8459);
+    box-shadow: 0 10px 18px -8px rgb(31 27 22 / 0.5);
+  }
+  .end .rod {
+    left: 16px;
+    width: 22px;
+  }
+  .end::before,
+  .end::after,
+  .knob {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 22px;
+    border-radius: 5px 5px 7px 7px;
+    background: linear-gradient(90deg, #120d0b, #4a2a20 35%, #2a1611 60%, #0d0907);
+    box-shadow: inset 0 1px 0 rgb(255 240 220 / 0.18), 0 0 0 1px rgb(255 240 220 / 0.06);
+  }
+  .end::before {
+    left: 18px;
+    top: -26px;
+  }
+  .end::after {
+    left: 18px;
+    bottom: -26px;
+    border-radius: 7px 7px 5px 5px;
+  }
+
+  /* Live rolls and the handle, hidden until the script runs. */
+  .roll,
+  .handle,
+  .cord {
+    display: none;
+  }
+
+  .is-live .emaki-pin {
+    position: sticky;
+    top: max(0px, calc(50svh - 320px));
+  }
+  .is-live .viewer {
+    overflow: visible;
+    height: var(--paper-h);
+    direction: ltr;
+    cursor: grab;
+    user-select: none;
+  }
+  .is-live .emaki.dragging .viewer {
+    cursor: grabbing;
+  }
+  .is-live .window {
+    position: absolute;
+    inset: -40px 0;
+    width: auto;
+    overflow: hidden;
+    will-change: transform;
+  }
+  .is-live .sheet {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    direction: rtl;
+    will-change: transform;
+  }
+  .is-live .end {
+    display: none;
+  }
+  .is-live .roll,
+  .is-live .handle,
+  .is-live .cord {
+    display: block;
+  }
+  .roll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--paper-h);
+    width: 0;
+    will-change: transform;
+    pointer-events: none;
+  }
+  .roll .body {
+    left: calc(var(--rollw) / -2);
+    width: var(--rollw);
+    transform-origin: center;
+    will-change: transform;
+  }
+  .roll.left .knob {
+    left: -9px;
+  }
+  .roll.left .knob.top {
+    top: -28px;
+  }
+  .roll.left .knob.bottom {
+    bottom: -28px;
+    border-radius: 7px 7px 5px 5px;
+  }
+  .roll.right {
+    left: 100%;
+    transition: opacity 200ms var(--ease);
+  }
+  .roll.right .body {
+    left: calc(var(--rollw) * -1 + 6px);
+    transform-origin: right center;
+  }
+  .handle {
+    position: absolute;
+    top: -32px;
+    left: -24px;
+    width: 48px;
+    height: calc(var(--paper-h) + 64px);
+    border-radius: 12px;
+    cursor: grab;
+  }
+  .handle:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  /* The cord hangs from the start of the scroll, at the right. */
+  .cord {
+    position: absolute;
+    right: -36px;
+    top: calc(var(--paper-h) / 2 - 40px);
+    width: 36px;
+    height: 96px;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .cord path {
+    fill: none;
+    stroke: #8a6a35;
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+  .cord .braid {
+    stroke: #c9a562;
+    stroke-width: 2;
+    stroke-dasharray: 1.5 3;
+  }
+
+  /* Ink is written on when its part of the paper unrolls. */
+  @media (prefers-reduced-motion: no-preference) {
+    .is-live .panel:not(.inked) .ink {
+      opacity: 0;
+    }
+    .is-live .panel .ink {
+      mask-image: linear-gradient(100deg, #000 45%, transparent 55%);
+      mask-size: 260% 100%;
+      mask-position: 100% 0;
+      transition:
+        mask-position 1.1s var(--ease),
+        opacity 0s;
+    }
+    .is-live .panel.inked .ink {
+      mask-position: 0 0;
+    }
+    .is-live .panel .big .ink,
+    .is-live .panel .kana {
+      mask-image: linear-gradient(180deg, #000 45%, transparent 55%);
+      mask-size: 100% 260%;
+      mask-position: 0 100%;
+    }
+    .is-live .panel.inked .big .ink,
+    .is-live .panel.inked .kana {
+      mask-position: 0 0;
+    }
+    .is-live .panel.pic .stroke[pathLength] {
+      stroke-dasharray: 1 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1s cubic-bezier(0.45, 0, 0.25, 1) var(--d, 0s);
+    }
+    .is-live .panel.pic.inked .stroke[pathLength] {
+      stroke-dashoffset: 0;
+    }
+    .is-live .panel.pic:not(.inked) .dots {
+      opacity: 0;
+    }
+    .is-live .panel.pic .dots {
+      transition: opacity 600ms var(--ease) 0.4s;
+    }
+    .is-live .panel.pic:not(.inked) :is(.wash, .blot) {
+      opacity: 0;
+    }
+    .is-live .panel.pic :is(.wash, .blot) {
+      transition: opacity 600ms var(--ease) 0.9s;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .emaki-track {
+      --paper-h: 360px;
+      --rollw: 40px;
+      --egutter: 28px;
+    }
+    .panel.text {
+      width: 244px;
+      padding: 44px 20px 32px 28px;
+    }
+    .panel.title {
+      width: 264px;
+      padding: 32px 20px 32px 20px;
+    }
+    .panel .big {
+      font-size: 68px;
+    }
+    .panel h3 {
+      font-size: 21px;
+    }
+    .panel p {
+      font-size: 15px;
+    }
+    .cover {
+      width: 72px;
+    }
+    .daisen {
+      left: 18px;
+    }
+    .cord {
+      right: -26px;
+      width: 26px;
+    }
+  }
+</style>

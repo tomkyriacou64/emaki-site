@@ -10,6 +10,7 @@ import Crop from '../components/Crop.astro';
 import Cta from '../components/Cta.astro';
 import Clip from '../components/Clip.astro';
 import Icon from '../components/Icon.astro';
+import Emakimono from '../components/Emakimono.astro';
 import { byFile } from '../data/showcase';
 import { GITHUB_URL, RELEASES_URL, FIGMA_PLUGIN_URL } from '../config';
 
@@ -21,6 +22,8 @@ import imageEdit from '../assets/shots/image-edit.png';
 
 // The clips on the home page; the showcase has them all.
 const clips = ['morning-coffee', 'noodle-bar', 'social-post', 'mask-reveal'].map(byFile);
+// On wide screens the clips hang in two rows, each row at one height.
+const clipRows = [clips.slice(0, 2), clips.slice(2)];
 const tracked = byFile('price-tag-tracking');
 
 // The four parts of the editor window, pinned on the screenshot (x, y as % of it).
@@ -90,6 +93,7 @@ const needs = [
 
       <div class="hero-view">
         <div class="wrap pinned">
+          <div class="tilt">
           <Shot
             src={editor}
             eager
@@ -103,6 +107,7 @@ const needs = [
               </span>
             ))
           }
+          </div>
         </div>
         <div class="wrap pinned-phone">
           <Crop
@@ -141,10 +146,26 @@ const needs = [
             <h2 id="made-title">Every clip here is a built-in template</h2>
           </div>
           <p>
-            Exported as they come, with nothing touched up afterwards. Open a template, put in your own words and
-            colours, and the timing is already done. <a href="/showcase">See them all</a>
+            Menu boards, a social post and a reveal, exported as they come with nothing touched up afterwards. Open a
+            template, put in your own words and colours, and the timing is already done. <a href="/showcase">See them all</a>
           </p>
         </div>
+      </div>
+      <div class="wrap clip-rows">
+        {
+          clipRows.map((row) => (
+            <ul class="clip-row">
+              {row.map((c) => (
+                <li style={`--ar: ${c.width / c.height}`}>
+                  <Clip clip={c} caption={false} />
+                  <p class="clip-meta">
+                    <span>{c.title}</span> {c.width} × {c.height}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ))
+        }
       </div>
       <div class="strip" role="region" aria-label="Clips made in Emaki" tabindex="0">
         <ul>
@@ -169,10 +190,10 @@ const needs = [
           <h2 id="inside-title">Draw it, then time it</h2>
         </div>
 
-        <ol class="rows">
+        <ol class="rows timeline">
           <li class="row">
+            <p class="key"><time>0:12</time> Design</p>
             <div class="row-copy">
-              <p class="kind">Design</p>
               <h3>Artboards on an endless canvas</h3>
               <p>
                 Each artboard has its own size, background, frame rate and length, and you can add as many as you need.
@@ -186,8 +207,8 @@ const needs = [
           </li>
 
           <li class="row">
+            <p class="key"><time>0:15</time> Animate</p>
             <div class="row-copy">
-              <p class="kind">Animate</p>
               <h3>A gallery of presets, with keyframes underneath</h3>
               <p>
                 Pick an animation from the gallery and it lands on the timeline as a bar you can drag. Open it into
@@ -205,8 +226,8 @@ const needs = [
           </li>
 
           <li class="row">
+            <p class="key"><time>0:18</time> Type</p>
             <div class="row-copy">
-              <p class="kind">Type</p>
               <h3>Text by the letter, word or line</h3>
               <p>
                 Set text along a path that stays editable, and animate how bold or wide a font is, for fonts that can
@@ -237,7 +258,7 @@ const needs = [
         <ol class="rows">
           <li class="row">
             <div class="row-copy">
-              <p class="kind">Track</p>
+              <p class="kind"><time>0:21</time> Track</p>
               <h3>Pin a layer to something in a video</h3>
               <p>
                 Motion tracking follows a point from frame to frame. Pin a layer to one point and it moves with it, or to
@@ -256,7 +277,7 @@ const needs = [
 
           <li class="row">
             <div class="row-copy">
-              <p class="kind">Colour</p>
+              <p class="kind"><time>0:24</time> Colour</p>
               <h3>Grade with looks and curves</h3>
               <p>
                 Start from a look such as Warm, Faded or Teal and orange, each previewed on your own layer. Adjust
@@ -274,7 +295,7 @@ const needs = [
 
           <li class="row">
             <div class="row-copy">
-              <p class="kind">Coming in the next release</p>
+              <p class="kind"><time>0:27</time> Coming in the next release</p>
               <h3>Edit pictures without leaving the canvas</h3>
               <p>
                 Paint, select and adjust a picture where it sits. Remove its background or an object, fill from the
@@ -300,7 +321,7 @@ const needs = [
       <div class="wrap">
         <div class="head split">
           <div>
-            <p class="mark"><time>0:26</time> Export</p>
+            <p class="mark"><time>0:30</time> Export</p>
             <h2 id="export-title">Six formats, each for a job</h2>
           </div>
           <p>
@@ -351,11 +372,21 @@ const needs = [
       </div>
     </section>
 
-    <section class="scene band band-kogecha get" id="get" aria-labelledby="get-title">
+    <section class="scene band band-kogecha meaning" id="name" aria-labelledby="name-title">
+      <Emakimono>
+        <div slot="head" class="wrap meaning-head">
+          <p class="mark"><time>0:34</time> The name</p>
+          <h2 id="name-title">Emaki means picture scroll</h2>
+        </div>
+        <p slot="hint" class="wrap hint">Read it from right to left; scroll on or drag the paper to unroll it.</p>
+      </Emakimono>
+    </section>
+
+    <section class="scene band band-paper get" id="get" aria-labelledby="get-title">
       <div class="wrap">
         <div class="head split">
           <div>
-            <p class="mark"><time>0:30</time> Get Emaki</p>
+            <p class="mark"><time>0:41</time> Get Emaki</p>
             <h2 id="get-title">Free, and yours to keep</h2>
           </div>
           <p>
@@ -461,7 +492,35 @@ const needs = [
     box-shadow: 0 2px 4px rgb(0 0 0 / 0.2), 0 24px 48px rgb(0 0 0 / 0.24);
   }
   .legend-band {
-    padding-block: 32px clamp(64px, 9vw, 112px);
+    padding-block: 32px clamp(48px, 7vw, 80px);
+  }
+
+  /* The editor rises and flattens as it scrolls into view, the way a canvas
+     comes up when a project opens (a container scroll). Flat without scroll
+     timelines or with reduced motion. */
+  .tilt {
+    position: relative;
+    transform-origin: 50% 0;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 601px) {
+      .pinned {
+        perspective: 1400px;
+      }
+      .tilt {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+      }
+    }
+  }
+  @keyframes rise {
+    from {
+      transform: rotateX(16deg) scale(0.94);
+    }
+    to {
+      transform: none;
+    }
   }
 
   /* Scenes */
@@ -566,9 +625,36 @@ const needs = [
     color: var(--text-dim);
   }
 
-  /* Made in Emaki: the clips side by side like panels on a scroll. */
+  /* Made in Emaki: on wide screens two rows, each clip as wide as its shape
+     needs at the row's one height; on phones a strip to swipe. */
+  .clip-rows {
+    display: grid;
+    gap: 24px;
+  }
+  .clip-row {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .clip-row li {
+    flex: var(--ar) 1 0%;
+    min-width: 0;
+  }
   .strip {
-    --h: clamp(240px, 32vw, 400px);
+    display: none;
+  }
+  @media (max-width: 700px) {
+    .clip-rows {
+      display: none;
+    }
+    .strip {
+      display: block;
+    }
+  }
+  .strip {
+    --h: 280px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
     padding-bottom: 16px;
@@ -601,6 +687,110 @@ const needs = [
     margin-right: 8px;
   }
 
+  /* What's inside as a timeline: a timecode and a keyframe for each feature on
+     a vertical ruler, and a red line that fills as you scroll past (after the
+     timeline section pattern). Without scroll timelines or with reduced motion
+     every key is set and the line is the plain ruler. */
+  .timeline {
+    position: relative;
+    --rail: 0px;
+  }
+  .key {
+    margin: 0 0 8px;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+  .key time {
+    color: var(--text);
+    font-weight: 500;
+    margin-right: 4px;
+  }
+  @media (min-width: 900px) {
+    .timeline {
+      --rail: 10rem;
+    }
+    .timeline::before,
+    .timeline::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--rail) + 15px);
+      width: 2px;
+    }
+    .timeline::before {
+      background: var(--border);
+    }
+    .timeline::after {
+      background: var(--benihi);
+      transform-origin: 50% 0;
+      transform: scaleY(0);
+    }
+    .timeline .row {
+      border-top: 0;
+      grid-template-columns: var(--rail) minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: 32px;
+      align-items: start;
+    }
+    .timeline .row > :last-child {
+      margin-left: 32px;
+    }
+    .key {
+      position: sticky;
+      top: 96px;
+      margin: 4px 0 0;
+      font-size: 0.9375rem;
+    }
+    /* The keyframe diamond on the ruler, set (filled) once the playhead passes. */
+    .key::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: calc(var(--rail) + 16px - 6px);
+      width: 10px;
+      height: 10px;
+      transform: rotate(45deg);
+      border: 1.5px solid var(--benihi);
+      background: var(--benihi);
+    }
+    .timeline .row-copy {
+      padding-left: 32px;
+    }
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+      .timeline {
+        view-timeline: --tl block;
+      }
+      .timeline::after {
+        animation: fill linear both;
+        animation-timeline: --tl;
+        animation-range: entry 40% exit 60%;
+      }
+      .timeline .row {
+        view-timeline: --row block;
+      }
+      .key::after {
+        animation: key-set linear both;
+        animation-timeline: --row;
+        animation-range: entry 55% entry 60%;
+      }
+    }
+  }
+  @keyframes fill {
+    to {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes key-set {
+    from {
+      background: var(--bg);
+    }
+    to {
+      background: var(--benihi);
+    }
+  }
+
   /* What's inside: one catalogue, the words on the left and the evidence on the right. */
   .rows {
     list-style: none;
@@ -622,6 +812,19 @@ const needs = [
     .row {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     }
+  }
+  @media (min-width: 900px) {
+    .footage .row {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    .footage .row > :last-child {
+      order: -1;
+    }
+  }
+  .kind time {
+    color: var(--text);
+    font-weight: 500;
+    margin-right: 4px;
   }
   .kind {
     margin: 0 0 8px;
@@ -702,7 +905,7 @@ const needs = [
   }
   .also dl {
     display: grid;
-    gap: 24px 32px;
+    gap: 16px 32px;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
     margin: 0 0 32px;
   }
@@ -719,6 +922,20 @@ const needs = [
     font-size: 0.8125rem;
     color: var(--text-muted);
     margin: 0;
+  }
+
+  /* The name, told on the scroll. */
+  .meaning {
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+  .meaning-head h2 {
+    margin: 0;
+  }
+  .hint {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
   }
 
   /* Get Emaki: one plan card (free) beside what it runs on. */
