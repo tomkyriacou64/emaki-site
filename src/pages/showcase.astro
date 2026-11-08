@@ -1,101 +1,208 @@
 ---
-// A wall of clips made in Emaki, each hung at its true shape: portrait menu
-// boards next to landscape screens, a square post beside a story.
+// Showcase: what you can make in Emaki, by where it plays. Each use case is a
+// band with its real clips hung at their true shape (every clip in a row at
+// one height), then what in the app it leans on. Replaces the old Showcase and
+// Use cases pages; /use-cases redirects here (astro.config.mjs).
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Clip from '../components/Clip.astro';
-import { showcaseRows, byFile } from '../data/showcase';
+import Shot from '../components/Shot.astro';
+import { byFile } from '../data/showcase';
+import mockups from '../assets/shots/mockups.png';
 
-const rows = showcaseRows.map((r) => r.map(byFile));
-const count = rows.flat().length;
-const words = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
+const cases = [
+  {
+    id: 'signage',
+    band: 'band-kurotobi',
+    time: '0:05',
+    kind: 'Digital signage',
+    title: 'Menu boards on a loop, from opening to close',
+    text: 'Menu boards, window screens and waiting-room loops. Design in landscape or portrait at the screen’s own size, set the length, and export a video that loops cleanly on a media player.',
+    specs: [
+      'Menu board templates in landscape and portrait, plus multi-screen sets such as a drive-thru pair and a four-screen counter wall',
+      'Preview the design on a TV mockup, turned either way, as you edit',
+      'Export MP4 for players and screens, or a PNG for a still board',
+    ],
+    clips: ['morning-coffee', 'noodle-bar'],
+  },
+  {
+    id: 'social',
+    band: 'band-paper',
+    time: '0:12',
+    kind: 'Social media',
+    title: 'Posts and stories at the right size',
+    text: 'Start from a square post or a vertical story, or put story, square and landscape artboards side by side in one project.',
+    specs: [
+      'Animate a headline by letter, word or line',
+      'Export sizes made for the platform you post to, with a note when the shape doesn’t match',
+      'GIF to drop into a group chat, MP4 or WebM for the feed',
+    ],
+    clips: ['social-post', 'vertical-story'],
+  },
+  {
+    id: 'events',
+    band: 'band-binro',
+    time: '0:20',
+    kind: 'Brands and events',
+    title: 'Logo reveals and title cards for the big screen',
+    text: 'Logo reveals, title cards and stage loops. Play an artboard full screen from the editor, or export it for the venue’s playback.',
+    specs: [
+      'Logo reveal, mask reveal and kinetic type templates to start from',
+      'ProRes 4444 with a transparent background, to sit over a camera feed or other video',
+      'Sound from audio and video layers mixed into the export',
+    ],
+    clips: ['logo-reveal', 'mask-reveal'],
+  },
+  {
+    id: 'demos',
+    band: 'band-zoge',
+    time: '0:28',
+    kind: 'Product demos and video',
+    title: 'An app at work, or a design pinned into footage',
+    text: 'Paste screens in from Figma with the plugin, animate them, and show the result on a live phone or laptop mockup. Or pin a layer into a video with motion tracking.',
+    specs: [
+      'Phone and laptop mockups showing the artboard at the frame you’re editing',
+      'Motion tracking and corner pin to put a design onto a screen in a video',
+      'Lottie, so the animation ships inside your app or site and stays sharp at any size',
+    ],
+    clips: ['price-tag-tracking'],
+    shot: true,
+  },
+].map((c) => ({ ...c, clips: c.clips.map(byFile) }));
 ---
 
 <Base
-  title="Showcase: Emaki"
-  description="Short looping clips made in Emaki, the desktop motion design app: menu boards for café screens, a social post, a story, a logo reveal and a title card."
+  title="Showcase: what you can make in Emaki"
+  description="Clips made in Emaki, the desktop motion design app, by where they play: menu boards for café screens, social posts and stories, logo reveals and title cards, and a design pinned into video with motion tracking."
 >
   <SiteHeader />
   <main id="main">
     <div class="wrap page-head split">
-      <h1>Clips at their real shape</h1>
+      <h1>What you can make</h1>
       <p>
-        {words[count - 1]} of Emaki's built-in templates and a price tag pinned with its motion tracking, only made
+        Every clip here was made in Emaki: built-in templates, plus a price tag pinned with motion tracking, only made
         smaller for the web. Each template opens in the app with its timing in place, waiting for your own words.
       </p>
     </div>
 
-    <section class="wall" aria-label="Clips">
-      <div class="wall-inner">
-        {
-          rows.map((row) => (
-            <div class="row">
-              {row.map((c) => (
-                <div class:list={['item', c.height > c.width ? 'tall' : c.height === c.width ? 'square' : 'wide']} style={`--ar: ${c.width / c.height}`}>
-                  <Clip clip={c} caption={false} class="hung" />
+    {
+      cases.map((c) => (
+        <section class:list={['case band', c.band]} id={c.id} aria-labelledby={`${c.id}-title`}>
+          <div class="wrap">
+            <div class="case-text">
+              <div>
+                <p class="mark">
+                  <time>{c.time}</time> {c.kind}
+                </p>
+                <h2 id={`${c.id}-title`}>{c.title}</h2>
+              </div>
+              <div>
+                <p>{c.text}</p>
+                <ul class="specs">
+                  {c.specs.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class:list={['hang', { 'with-shot': c.shot }]}>
+              {c.shot && (
+                <figure class="item shot-item" style="--ar: 1.6">
+                  <Shot
+                    src={mockups}
+                    sizes="(min-width: 1200px) 640px, 100vw"
+                    alt="Emaki with a vertical sale story artboard beside the same design on a phone mockup, both at the same frame."
+                  />
+                  <figcaption class="plaque">
+                    <b>Phone mockup</b>
+                    <span>A sale story beside the same design on a live phone mockup, in the editor.</span>
+                  </figcaption>
+                </figure>
+              )}
+              {c.clips.map((clip) => (
+                <div
+                  class:list={['item', clip.height > clip.width ? 'tall' : clip.height === clip.width ? 'square' : 'wide']}
+                  style={`--ar: ${clip.width / clip.height}`}
+                >
+                  <Clip clip={clip} caption={false} />
                   <p class="plaque">
-                    <b>{c.title}</b>
-                    <span>{c.caption}</span>
+                    <b>{clip.title}</b>
+                    <span>{clip.caption}</span>
                     <span class="meta">
-                      {c.width} × {c.height} · {c.use}
+                      {clip.width} × {clip.height}
                     </span>
                   </p>
                 </div>
               ))}
             </div>
-          ))
-        }
-      </div>
-    </section>
+          </div>
+        </section>
+      ))
+    }
 
     <p class="wrap foot-note">
       These were saved as MP4 video. The app can also save WebM, ProRes 4444 with a transparent background, GIF,
-      Lottie and PNG. <a href="/use-cases">What each kind of clip is for</a>
+      Lottie and PNG. <a href="/#inside">See what's inside the app</a>
     </p>
   </main>
   <SiteFooter />
 </Base>
 
 <style>
-  /* The wall: a band a shade darker than the page, with a picture rail along the top. */
-  .wall {
-    background: var(--bg-alt);
-    border-bottom: 1px solid var(--border);
-    padding-block: 0 clamp(48px, 7vw, 96px);
+  .case {
+    padding-block: clamp(56px, 8vw, 96px);
   }
-  .wall-inner {
-    width: min(100% - 2.5rem, 1320px);
-    margin-inline: auto;
-    border-top: 3px solid var(--border-strong);
-    padding-top: clamp(40px, 6vw, 72px);
+  .case-text {
     display: grid;
-    gap: clamp(48px, 6vw, 80px);
+    gap: 16px 64px;
+    margin-bottom: clamp(32px, 5vw, 48px);
   }
-  .row {
+  @media (min-width: 900px) {
+    .case-text {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+  .case-text h2 {
+    margin: 0;
+    max-width: 18ch;
+  }
+  .case-text p {
+    margin: 0;
+    color: var(--text-dim);
+    max-width: 40rem;
+  }
+  .specs {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border-strong);
+  }
+  .specs li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+  }
+
+  /* The clips in one row, each as wide as its shape needs at the row's height. */
+  .hang {
     display: flex;
-    gap: clamp(24px, 3vw, 48px);
+    gap: clamp(16px, 3vw, 40px);
     align-items: flex-start;
   }
-  /* Grow in proportion to shape, so every clip in a row hangs at one height. */
   .item {
-    flex: var(--ar) 1 0;
+    flex: var(--ar) 1 0%;
     min-width: 0;
-  }
-  .item :global(.hung .frame) {
-    border-radius: 4px;
-    border: 0;
-    box-shadow:
-      0 0 0 1px rgb(31 27 22 / 0.12),
-      0 2px 4px rgb(31 27 22 / 0.08),
-      0 18px 36px -18px rgb(31 27 22 / 0.4);
+    margin: 0;
   }
   .plaque {
     display: grid;
     gap: 4px;
-    margin: 16px 0 0;
-    max-width: 34ch;
-    font-size: 0.875rem;
+    margin: 12px 0 0;
+    max-width: 40ch;
+    font-size: 0.8125rem;
     line-height: 1.45;
     color: var(--text-dim);
   }
@@ -104,15 +211,13 @@ const words = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
     color: var(--text);
   }
   .meta {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
     color: var(--text-muted);
     font-variant-numeric: tabular-nums;
   }
   @media (max-width: 700px) {
-    .row {
+    .hang {
       flex-direction: column;
-      gap: 48px;
+      gap: 32px;
     }
     .item {
       flex: none;

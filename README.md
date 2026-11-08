@@ -40,7 +40,7 @@ isn't there yet.
 ## Pages
 
 - `/` (`src/pages/index.astro`): the landing page.
-- `/showcase`, `/use-cases`, `/get-started`, `/faq`: clips made in Emaki,
+- `/showcase` (what you can make, by use case; `/use-cases` redirects there), `/get-started`, `/faq`: clips made in Emaki,
   what it's for, how to start, short answers.
 - `/roadmap` and `/changelog`: from `src/data/roadmap.ts` and
   `src/data/changelog.ts`. The roadmap has no dates and no promises; write
