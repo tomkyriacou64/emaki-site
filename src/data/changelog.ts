@@ -11,6 +11,79 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    version: '0.9.6',
+    date: '2026-11-09',
+    summary: 'A reliability release: safer exports, faster big projects, tidier templates and clearer messages.',
+    sections: [
+      {
+        title: 'Templates',
+        items: [
+          'Every template is centred, with even margins and no cut-off text. Mask reveal and Ripple have new designs.',
+          'Centred and right-aligned text with several lines now lines up each line properly, in templates and in your own projects.',
+        ],
+      },
+      {
+        title: 'Export',
+        items: [
+          'Important: a frame drawn in several passes could be written with parts missing and no warning. This now stops the export with an error instead.',
+          'Very large scenes (2,000 to 5,000 layers) now draw.',
+          'Heavy frames with fading layers no longer come out mostly blank.',
+          'Quitting during an export can’t freeze Emaki.',
+          'Ctrl+C stops a command-line export cleanly and removes the unfinished file.',
+          'Emaki no longer waits forever when FFmpeg stops responding.',
+        ],
+      },
+      {
+        title: 'Faster',
+        items: [
+          'Panning over straightened or corner-pinned 8K pictures is smooth (done on the graphics card).',
+          'Hour-long timelines are much faster to scroll and zoom.',
+          'Heavy frames draw faster.',
+        ],
+      },
+      {
+        title: 'Image editing',
+        items: [
+          'Select subject keeps hair, even dark hair on a dark background.',
+          'Locking a group, or changing another layer, while you paint cancels the stroke cleanly instead of leaving half of it behind.',
+        ],
+      },
+      {
+        title: 'Clearer messages',
+        items: [
+          'Error dialogs wait their turn instead of covering each other.',
+          'If audio can’t play, Emaki tells you.',
+          'FFmpeg’s raw output goes under Details, and export errors say what to do next.',
+          'Damaged videos are no longer reported as missing.',
+          'Figma import names the layers it skipped.',
+        ],
+      },
+      {
+        title: 'Polish',
+        items: [
+          'Zooming no longer jumps.',
+          'Effect names show whole beside their summary.',
+          'Colour styles in Assets are named rows, like text styles.',
+          'Gradient stops read From, Stop 2, Stop 3… To.',
+          'Warning icons and spacing tidied across the app.',
+        ],
+      },
+      {
+        title: 'Other fixes',
+        items: [
+          'Waveforms retry if they fail and update when the audio file changes.',
+          'After a graphics reset, every open tab comes back.',
+          'Opening a file while Emaki is already running works even with a long runtime folder path.',
+          'Morph shapes on perfectly straight lines keep their shape.',
+        ],
+      },
+      {
+        title: 'Known limits',
+        items: ['Linux AppImage only. Mac and Windows come later.'],
+      },
+    ],
+  },
+  {
     version: '0.9.5',
     date: '2026-11-08',
     summary: 'Image editing arrives: fix, cut out and adjust pictures right inside Emaki, without leaving the canvas.',
