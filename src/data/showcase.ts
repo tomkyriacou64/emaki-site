@@ -1,5 +1,5 @@
 // Clips for /showcase, all made in Emaki: built-in templates exported with
-// Emaki 0.9.3's `emaki --export` (the menu boards with 0.9.2), plus the price
+// Emaki 0.9.6's `emaki --export`, plus the price
 // tag made with motion tracking, re-encoded small for the web. Files are in public/showcase/<file>.mp4 with a poster
 // frame at <file>.webp. See README.md for how to make more.
 

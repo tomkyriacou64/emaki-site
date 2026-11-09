@@ -92,9 +92,7 @@ Each release gets an anchor, such as `/changelog#v1.0.0`.
 Clips live in `public/showcase/` as `<name>.mp4` (H.264, no sound) with a
 poster frame `<name>.webp`, and are listed in `src/data/showcase.ts`. Only
 use clips really made in Emaki. The current ones are built-in templates,
-exported with the released AppImage in a throwaway profile (Social post,
-Vertical story, Logo reveal and Mask reveal with 0.9.3; the two menu boards
-with 0.9.2). Kinetic type is left off while its template still reads "MAKE IT
+exported with the released 0.9.6 AppImage in a throwaway profile. Kinetic type is left off while its template still reads "MAKE IT
 MOVE TODAY.". For the poster, pick a moment after everything has landed:
 
 ```sh
