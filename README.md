@@ -149,7 +149,9 @@ To update one, replace the PNG with a new light-mode screenshot under the
 same name (or add a file and import it). The current ones were taken on
 4 November 2026 (app main after task 068, the 0.9.3 look) from the app's
 screenshot tests in the Washi theme, which matches the site's paper and
-indigo. Run from the app repo, after any gate there has finished:
+indigo. `mockups.png` and `templates.png` were retaken on 9 November 2026
+from 0.9.6 (tidied templates), the same way, into `site-2026-11-09-washi/app`.
+Run from the app repo, after any gate there has finished:
 
 ```sh
 MS_UI_THEME=washi MS_UI_LIGHT=1 MS_UI_SNAPSHOTS=$PWD/target/shots/site-2026-11-04-washi target/emaki-cargo.sh \
