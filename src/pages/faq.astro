@@ -5,7 +5,7 @@ import Page from '../layouts/Page.astro';
 
 <Page
   title="FAQ"
-  description="Short answers about Emaki: price, platforms, offline use, accounts, Figma import, motion tracking, file format, export formats and open source."
+  description="Short answers about Emaki: price, platforms, design and animate modes, offline use, accounts, Figma import, motion tracking, file format, export formats and open source."
   heading="Questions and answers"
 >
   <p slot="intro">Price, platforms, privacy and file formats, answered briefly. If yours isn't here, it may be on the <a href={url('/roadmap')}>roadmap</a>.</p>
@@ -29,6 +29,43 @@ import Page from '../layouts/Page.astro';
       <p>
         Linux now, as an AppImage that runs on most 64-bit distributions. macOS and Windows builds are planned for
         later, once they've been tested on real machines.
+      </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Can I use Emaki just for design?</h2>
+      <p class="short">Yes</p>
+      <div class="long">
+      <p>
+        Design mode is a design tool on its own: artboards, shapes, text, images, components, auto layout and masks,
+        with no timeline in the way. No edit there ever adds a keyframe, and you can export any artboard as a PNG.
+        Still projects open in Design, so you only see the timeline if you ask for it.
+      </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>What's the difference between Design and Animate?</h2>
+      <p class="short">Layout, or motion over time</p>
+      <div class="long">
+      <p>
+        They're two modes of the same editor, chosen with the switch at the top of the window or with
+        <kbd>Ctrl</kbd>+<kbd>1</kbd> and <kbd>Ctrl</kbd>+<kbd>2</kbd>.
+      </p>
+      <ul>
+        <li>
+          <strong>Design</strong> shows your design at rest and hides the timeline. Layers that only appear later show
+          as dashed outlines, and properties that move are marked <em>Animated</em> instead of showing keyframes.
+        </li>
+        <li>
+          <strong>Animate</strong> brings back the timeline, keyframes, presets, motion paths, sound and preview, and
+          edits happen at the playhead.
+        </li>
+      </ul>
+      <p>
+        Both work on the same layers, so everything you lay out in Design is waiting on the timeline in Animate. Ask
+        for an animation command in Design and Emaki switches to Animate first, and says so.
       </p>
       </div>
     </section>
@@ -108,7 +145,8 @@ import Page from '../layouts/Page.astro';
       <p class="short">Six formats, sound included</p>
       <div class="long">
       <p>
-        MP4 (H.264), WebM, ProRes 4444 with transparency, GIF, Lottie, and PNG as a single frame or a sequence. You can
+        MP4 (H.264), WebM, ProRes 4444 with transparency, GIF, Lottie, and PNG as a single frame or a sequence. A PNG
+        can show the design at rest or the frame at the playhead. You can
         export one artboard or all of them at once. Sound from audio and video layers is mixed into MP4, WebM and
         ProRes. FFmpeg comes inside the AppImage, so every format works out of the box.
       </p>
