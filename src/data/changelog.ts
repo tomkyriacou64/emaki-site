@@ -18,7 +18,7 @@ export const releases: Release[] = [
       {
         title: 'Templates',
         items: [
-          'Every template is centred, with even margins and no cut-off text. Mask reveal and Ripple have new designs.',
+          'Every template is centred, with even margins and no cut-off text. Mask reveal and the Ripple animation in Emaki logo have new designs.',
           'Centred and right-aligned text with several lines now lines up each line properly, in templates and in your own projects.',
         ],
       },
