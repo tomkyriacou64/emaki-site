@@ -11,9 +11,16 @@ import { APPIMAGE_URL } from '../config';
 // From the app's own shortcut sheet (hold ? in Emaki to see them all).
 const groups = [
   {
+    title: 'Modes',
+    keys: [
+      { keys: ['Ctrl', '1'], does: 'Design: layout, with no timeline' },
+      { keys: ['Ctrl', '2'], does: 'Animate: the timeline and motion' },
+    ],
+  },
+  {
     title: 'Play',
     keys: [
-      { keys: ['Space'], does: 'Play or pause' },
+      { keys: ['Space'], does: 'Play or pause, in Animate (in Design it pans)' },
       { keys: [','], or: ['.'], does: 'Back or forward one frame (with Shift: 10 frames)' },
       { keys: ['Ctrl', 'Enter'], does: 'Full-screen preview' },
     ],
@@ -56,9 +63,9 @@ const groups = [
 
 // Text in [brackets] shows as a keycap.
 const steps = [
-  { title: 'Start a project', text: 'On Home, click New project, or pick a template to start from a finished animation.' },
-  { title: 'Draw something', text: 'Press [R] for a rectangle or [T] for text, then drag on the artboard.' },
-  { title: 'Animate it', text: 'With the layer selected, press [A] and pick an animation from the gallery. It lands on the timeline.' },
+  { title: 'Start a project', text: 'On Home, click New project, or pick a template to start from a finished animation. Both open in Design.' },
+  { title: 'Draw something', text: 'In Design, press [R] for a rectangle or [T] for text, then drag on the artboard.' },
+  { title: 'Animate it', text: 'Press [Ctrl]+[2] for Animate. With the layer selected, press [A] and pick an animation. It lands on the timeline.' },
   { title: 'Retime it', text: 'Drag the bar to move it, or its edges to change its length. Press [Space] to play.' },
   { title: 'Export', text: 'Press [Ctrl]+[E] and choose MP4, GIF or another format. [Ctrl]+[S] saves the project as a .emaki folder.' },
 ];
@@ -73,7 +80,11 @@ const parts = (text: string) => text.split(/\[(.+?)\]/).map((t, i) => ({ key: i 
   <main id="main">
     <div class="wrap page-head">
       <h1>From download to first export</h1>
-      <p>Emaki runs on Linux. Here's how to start it, how to make a first animation, and the shortcuts worth knowing.</p>
+      <p>
+        Emaki runs on Linux. Here's how to start it, how to make a first animation, and the shortcuts worth knowing.
+        The editor has two modes: Design for layout (<kbd>Ctrl</kbd>+<kbd>1</kbd>) and Animate for motion
+        (<kbd>Ctrl</kbd>+<kbd>2</kbd>).
+      </p>
     </div>
 
     <section class="wrap install" aria-labelledby="download">

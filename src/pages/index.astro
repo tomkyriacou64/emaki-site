@@ -20,6 +20,10 @@ import graph from '../assets/shots/graph-editor.png';
 import textPath from '../assets/shots/text-path.png';
 import colour from '../assets/shots/colour.png';
 import imageEdit from '../assets/shots/image-edit.png';
+// TODO(task 209): replace these two stand-ins with src/assets/shots/mode-design.png
+// and src/assets/shots/mode-animate.png, then drop the crops in the modes section.
+import modeDesign from '../assets/shots/artboards.png';
+import modeAnimate from '../assets/shots/hero-editor.png';
 
 // The clips on the home page; the showcase has them all.
 const clips = ['morning-coffee', 'noodle-bar', 'social-post', 'mask-reveal'].map(byFile);
@@ -31,25 +35,23 @@ const tracked = byFile('price-tag-tracking');
 const parts = [
   { x: 12, y: 46, title: 'Layers', text: 'Shapes, text, images, video and sound, in groups and masks' },
   { x: 42, y: 13, title: 'Canvas', text: 'Artboards side by side, with live phone, laptop and TV mockups beside them' },
-  { x: 88, y: 60, title: 'Inspector', text: 'Size, timing and styles, with a Design tab and an Animate tab' },
-  { x: 30, y: 88, title: 'Timeline', text: 'Drag a bar to retime it, or its edges to change its length' },
+  { x: 88, y: 60, title: 'Inspector', text: 'Size, layout and styles, and in Animate the layer’s animations' },
+  { x: 30, y: 88, title: 'Timeline', text: 'In Animate: drag a bar to retime it, or its edges to change its length' },
 ];
 
 // Export formats, grouped by what they're for.
 const formats = [
+  { use: 'Stills', names: 'PNG', text: 'The design at rest, one frame, or every frame as a sequence' },
   { use: 'Screens and social', names: 'MP4 · WebM', text: 'For signage players, phones and social posts' },
   { use: 'Editing', names: 'ProRes 4444', text: 'Keeps the transparency, to lay over other footage' },
   { use: 'Web and apps', names: 'Lottie · GIF', text: 'Lottie stays sharp inside apps and sites; GIF for chats and docs' },
-  { use: 'Stills', names: 'PNG', text: 'One frame, or every frame as a sequence' },
 ];
 
 const also = [
-  { title: 'Masks', text: 'Clip layers to a shape and animate the shape to reveal them' },
-  { title: 'Components', text: 'Make a layer a component and place live copies, each with its own timing' },
-  { title: 'Brand kits', text: 'Colours, text styles, logos and fonts in every project' },
-  { title: 'Version history', text: 'Save named versions of a project and go back to any of them' },
+  { title: 'Masks in motion', text: 'Animate a mask’s shape to reveal the layers it clips' },
+  { title: 'Component timing', text: 'Each copy of a component can start at its own time' },
+  { title: 'Colour keying', text: 'Key a colour out of an image or video, like a green screen' },
   { title: 'Audio and video', text: 'Trim clips on the timeline and hear the sound as you preview' },
-  { title: 'Effects', text: 'Blur, frosted glass, soft shadows, blend modes and colour keying' },
   { title: 'Templates', text: 'Social posts, logo reveals, lower thirds, kinetic type, stories and menu boards' },
   { title: 'Figma plugin', text: 'Copy frames in Figma and paste them in as editable layers' },
 ];
@@ -78,8 +80,8 @@ const platforms = [
 ];---
 
 <Base
-  title="Emaki: design a scene, then give it a timeline"
-  description="Emaki is a free desktop app for motion graphics. Design on artboards, animate on a timeline with sound, and export MP4, WebM, ProRes, GIF, Lottie or PNG. Runs offline, with no account. Open source soon."
+  title="Emaki: a design tool and a motion editor in one free app"
+  description="Emaki is a free desktop app for design and motion graphics. Lay out artboards, text, images and components in Design, then switch to Animate for a timeline with sound. Export PNG, MP4, WebM, ProRes, GIF or Lottie. Runs offline, with no account. Open source soon."
 >
   <SiteHeader dark />
 
@@ -87,12 +89,12 @@ const platforms = [
     <section class="hero" aria-labelledby="hero-title">
       <div class="band band-sumi hero-band">
         <div class="wrap hero-copy">
-          <h1 id="hero-title">Design a scene, then give it a timeline</h1>
+          <h1 id="hero-title">Design it. Animate it.</h1>
           <div class="hero-side">
             <p class="lede">
-              Emaki is a free desktop app for motion graphics: menu boards and screen loops, social posts and logo
-              reveals. Lay out artboards, animate them with sound, and export video, GIF or Lottie. It runs on your own
-              computer, offline, with no account.
+              Emaki is a free desktop app for social posts, menu boards, screen loops and logo reveals, still or
+              moving. Lay out artboards in Design and export a PNG, or switch to Animate and give the same layers a
+              timeline with sound. It runs on your own computer, offline, with no account.
             </p>
             <Cta tour />
           </div>
@@ -146,6 +148,73 @@ const platforms = [
       </div>
     </section>
 
+    <section class="scene band band-zoge modes" id="modes" aria-labelledby="modes-title">
+      <div class="wrap">
+        <div class="head split">
+          <div>
+            <p class="mark"><time>0:03</time> Design and Animate</p>
+            <h2 id="modes-title">Two modes, one project</h2>
+          </div>
+          <p>
+            A switch at the top of the window changes what the editor is for. Press <kbd>Ctrl</kbd>+<kbd>1</kbd> for
+            Design and <kbd>Ctrl</kbd>+<kbd>2</kbd> for Animate. Still projects and templates open in Design; projects
+            with animation open in Animate.
+          </p>
+        </div>
+
+        <p class="switch" aria-hidden="true">
+          <span class="seg seg-design">Design</span>
+          <span class="seg seg-animate">Animate</span>
+        </p>
+
+        <div class="modes-grid">
+          <article class="mode">
+            <h3><span class="mode-name">Design · <kbd>Ctrl</kbd>+<kbd>1</kbd></span> Lay it out</h3>
+            <p>
+              A plain design tool. There’s no timeline, no edit ever adds a keyframe, and you see your design at rest.
+              Layers that only appear later show as dashed outlines, so nothing is hidden from you.
+            </p>
+            <ul class="list" aria-label="In Design">
+              <li>Artboards, shapes, pen paths and rich text</li>
+              <li>Images, components, auto layout and masks</li>
+              <li>PNG export of the design as it looks at rest</li>
+            </ul>
+            <!-- TODO(task 209): src/assets/shots/mode-design.png, the editor in Design. -->
+            <Crop
+              src={modeDesign}
+              x={0.475}
+              y={0.38}
+              zoom={1.6}
+              ratio={1.6}
+              alt="The Emaki canvas with two artboards side by side, a landscape title card and a square card."
+            />
+          </article>
+
+          <article class="mode">
+            <h3><span class="mode-name">Animate · <kbd>Ctrl</kbd>+<kbd>2</kbd></span> Give it motion</h3>
+            <p>
+              The timeline comes back, and everything you laid out is waiting on it. Add presets, open them into
+              keyframes, draw motion paths, add sound and preview it full screen.
+            </p>
+            <ul class="list" aria-label="In Animate">
+              <li>Presets, keyframes and a graph editor for easing</li>
+              <li>Motion paths, sound and full-screen preview</li>
+              <li>Export to MP4, WebM, ProRes, GIF or Lottie</li>
+            </ul>
+            <!-- TODO(task 209): src/assets/shots/mode-animate.png, the editor in Animate. -->
+            <Crop
+              src={modeAnimate}
+              x={0.475}
+              y={0.8}
+              zoom={1.6}
+              ratio={1.6}
+              alt="The Emaki timeline with animation bars for a card, a horizon and a line being drawn on, and the playhead at three seconds."
+            />
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="scene band band-kurotobi made" aria-labelledby="made-title">
       <div class="wrap">
         <div class="head split">
@@ -154,8 +223,8 @@ const platforms = [
             <h2 id="made-title">Every clip here is a built-in template</h2>
           </div>
           <p>
-            Menu boards, a social post and a reveal, exported as they come with nothing touched up afterwards. Open a
-            template, put in your own words and colours, and the timing is already done. <a href={url('/showcase')}>See them all</a>
+            Menu boards, a social post and a reveal, exported as they come with nothing touched up afterwards. Templates
+            open in Design, so you can put in your own words and colours first; the timing is already done. <a href={url('/showcase')}>See them all</a>
           </p>
         </div>
       </div>
@@ -195,7 +264,7 @@ const platforms = [
       <div class="wrap">
         <div class="head">
           <p class="mark"><time>0:12</time> What’s inside</p>
-          <h2 id="inside-title">Draw it, then time it</h2>
+          <h2 id="inside-title">Draw it, and time it if you want to</h2>
         </div>
 
         <ol class="rows timeline">
@@ -210,12 +279,50 @@ const platforms = [
             <ul class="list" aria-label="Design tools">
               <li>Shapes, a pen for paths, and rich text you edit right on the canvas</li>
               <li>Images, SVG as editable paths, video and audio</li>
-              <li>Smart guides, auto layout and measuring as you drag</li>
+              <li>Smart guides and measuring as you drag</li>
+              <li>Live phone, laptop and TV mockups beside your artboards</li>
             </ul>
           </li>
 
           <li class="row">
-            <p class="key"><time>0:15</time> Animate</p>
+            <p class="key"><time>0:14</time> Layout</p>
+            <div class="row-copy">
+              <h3>Components, auto layout and masks</h3>
+              <p>
+                Make a layer a component and place live copies of it on any artboard. Auto layout arranges a group or an
+                artboard in a row, a column or wrapping rows, with gaps and padding, and can hug what’s inside. A mask
+                clips layers to a shape.
+              </p>
+            </div>
+            <ul class="list" aria-label="Layout and styling">
+              <li>Brand kits: colours, text styles, logos and fonts in every project</li>
+              <li>Blur, frosted glass, soft shadows and blend modes</li>
+              <li>Named versions of a project, to go back to any of them</li>
+            </ul>
+          </li>
+
+          <li class="row">
+            <p class="key"><time>0:16</time> Type</p>
+            <div class="row-copy">
+              <h3>Text on a path, by the letter or by the line</h3>
+              <p>
+                Set text along a path that stays editable, with the fonts on your computer, plus Google Fonts when you
+                ask for them. In Animate, move it by the letter, word or line, or animate how bold or wide a font is, for
+                fonts that can change.
+              </p>
+            </div>
+            <Crop
+              src={textPath}
+              x={0.476}
+              y={0.505}
+              zoom={2.72}
+              ratio={1.5}
+              alt="Text set around a ring on a path, with a variable font at weight 537 in the middle."
+            />
+          </li>
+
+          <li class="row">
+            <p class="key"><time>0:18</time> Animate</p>
             <div class="row-copy">
               <h3>A gallery of presets, with keyframes underneath</h3>
               <p>
@@ -233,24 +340,6 @@ const platforms = [
             />
           </li>
 
-          <li class="row">
-            <p class="key"><time>0:18</time> Type</p>
-            <div class="row-copy">
-              <h3>Text by the letter, word or line</h3>
-              <p>
-                Set text along a path that stays editable, and animate how bold or wide a font is, for fonts that can
-                change. Use the fonts on your computer, plus Google Fonts when you ask for them.
-              </p>
-            </div>
-            <Crop
-              src={textPath}
-              x={0.476}
-              y={0.505}
-              zoom={2.72}
-              ratio={1.5}
-              alt="Text set around a ring on a path, with a variable font at weight 537 in the middle."
-            />
-          </li>
 
         </ol>
       </div>
@@ -259,28 +348,30 @@ const platforms = [
     <section class="scene band band-binro footage" aria-labelledby="footage-title">
       <div class="wrap">
         <div class="head">
-          <p class="mark"><time>0:20</time> Video and pictures</p>
-          <h2 id="footage-title">Work over footage and photos</h2>
+          <p class="mark"><time>0:20</time> Pictures and video</p>
+          <h2 id="footage-title">Work on photos and footage</h2>
         </div>
 
         <ol class="rows">
           <li class="row">
             <div class="row-copy">
-              <p class="kind"><time>0:21</time> Track</p>
-              <h3>Pin a layer to something in a video</h3>
+              <p class="kind"><time>0:21</time> Pictures</p>
+              <h3>Edit pictures without leaving the canvas</h3>
               <p>
-                Motion tracking follows a point from frame to frame. Pin a layer to one point and it moves with it, or to
-                two and it also scales and turns. Track a screen’s four corners and your design sits on it. If the
-                tracker is unsure about a frame, it marks it for you to fix.
+                Paint, select and adjust a picture where it sits. Remove its background or an object, fill from the
+                surroundings, select the subject and straighten a photo’s perspective. Each edit stays a
+                row you can hide, and you can copy edits from one picture to others. The tools that need a model
+                download it once, then run on your computer.
               </p>
             </div>
-            <figure class="tracked">
-              <Clip clip={tracked} caption={false} />
-              <figcaption>
-                Tracked in Emaki: the price tag is pinned to the cup’s handle and the spoon, so it moves, grows and turns
-                with them. The footage is a drawn café table under a simulated handheld camera.
-              </figcaption>
-            </figure>
+            <Crop
+              src={imageEdit}
+              x={0.36}
+              y={0.34}
+              zoom={1.5}
+              ratio={1.6}
+              alt="A landscape picture being edited in Emaki: a lasso selection drawn around the sun on the canvas, with the picture tools in a bar below it."
+            />
           </li>
 
           <li class="row">
@@ -303,23 +394,21 @@ const platforms = [
 
           <li class="row">
             <div class="row-copy">
-              <p class="kind"><time>0:27</time> New in 0.9.5</p>
-              <h3>Edit pictures without leaving the canvas</h3>
+              <p class="kind"><time>0:27</time> Track</p>
+              <h3>Pin a layer to something in a video</h3>
               <p>
-                Paint, select and adjust a picture where it sits. Remove its background or an object, fill from the
-                surroundings, select the subject and straighten a photo’s perspective. Each edit stays a
-                row you can hide, and you can copy edits from one picture to others. The tools that need a model
-                download it once, then run on your computer.
+                Motion tracking follows a point from frame to frame. Pin a layer to one point and it moves with it, or to
+                two and it also scales and turns. Track a screen’s four corners and your design sits on it. If the
+                tracker is unsure about a frame, it marks it for you to fix.
               </p>
             </div>
-            <Crop
-              src={imageEdit}
-              x={0.36}
-              y={0.34}
-              zoom={1.5}
-              ratio={1.6}
-              alt="A landscape picture being edited in Emaki: a lasso selection drawn around the sun on the canvas, with the picture tools in a bar below it."
-            />
+            <figure class="tracked">
+              <Clip clip={tracked} caption={false} />
+              <figcaption>
+                Tracked in Emaki: the price tag is pinned to the cup’s handle and the spoon, so it moves, grows and turns
+                with them. The footage is a drawn café table under a simulated handheld camera.
+              </figcaption>
+            </figure>
           </li>
         </ol>
       </div>
@@ -330,11 +419,11 @@ const platforms = [
         <div class="head split">
           <div>
             <p class="mark"><time>0:30</time> Export</p>
-            <h2 id="export-title">Export to video, Lottie, GIF or stills</h2>
+            <h2 id="export-title">Export stills, video, GIF or Lottie</h2>
           </div>
           <p>
-            Export one artboard or all of them at once, at the size the place you post to expects. Sound comes along in
-            the video formats.
+            Export one artboard or all of them at once, at the size the place you post to expects. A PNG shows the design
+            at rest or the frame at the playhead, and sound comes along in the video formats.
           </p>
         </div>
 
@@ -498,7 +587,7 @@ const platforms = [
   }
   .hero h1 {
     margin: 0;
-    max-width: 12ch;
+    max-width: 15ch;
   }
   .lede {
     font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
@@ -650,6 +739,79 @@ const platforms = [
     margin: 0;
     font-size: 0.9375rem;
     color: var(--text-dim);
+  }
+
+  /* Design and Animate: the app's mode switch, small and centred over the two
+     columns, Design in ink and Animate in the red as in the editor. Phones
+     stack the columns, so there each one's own label stands in for it. */
+  .switch {
+    display: none;
+    width: max-content;
+    margin: 0 auto var(--s-6);
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  @media (min-width: 900px) {
+    .switch {
+      display: flex;
+    }
+  }
+  .seg {
+    display: grid;
+    place-items: center;
+    min-height: 32px;
+    padding: 0 20px;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--shironeri);
+  }
+  .seg-design {
+    background: var(--ink);
+  }
+  .seg-animate {
+    background: var(--akane);
+  }
+  .modes-grid {
+    display: grid;
+    gap: var(--group-gap) var(--grid-gap);
+  }
+  @media (min-width: 900px) {
+    .modes-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .mode {
+    display: grid;
+    align-content: start;
+    gap: var(--s-5);
+  }
+  .mode h3 {
+    margin: 0;
+    font-family: var(--font-head);
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  /* The mode's name above its heading, where the switch would be on phones. */
+  .mode-name {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--font-text);
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+    color: var(--text-muted);
+  }
+  .mode > p {
+    margin: 0;
+    color: var(--text-dim);
+  }
+  .modes .list {
+    margin: 0;
   }
 
   /* Made in Emaki: on wide screens two rows, each clip as wide as its shape
