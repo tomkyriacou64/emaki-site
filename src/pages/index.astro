@@ -31,8 +31,8 @@ const tracked = byFile('price-tag-tracking');
 const parts = [
   { x: 12, y: 46, title: 'Layers', text: 'Shapes, text, images, video and sound, in groups and masks' },
   { x: 42, y: 13, title: 'Canvas', text: 'Artboards side by side, with live phone, laptop and TV mockups beside them' },
-  { x: 88, y: 60, title: 'Inspector', text: 'Size, timing and styles, with a Design tab and an Animate tab' },
-  { x: 30, y: 88, title: 'Timeline', text: 'Drag a bar to retime it, or its edges to change its length' },
+  { x: 88, y: 60, title: 'Inspector', text: 'Size, layout and styles, and in Animate the layer’s animations' },
+  { x: 30, y: 88, title: 'Timeline', text: 'In Animate: drag a bar to retime it, or its edges to change its length' },
 ];
 
 // Export formats, grouped by what they're for.
@@ -78,8 +78,8 @@ const platforms = [
 ];---
 
 <Base
-  title="Emaki: design a scene, then give it a timeline"
-  description="Emaki is a free desktop app for motion graphics. Design on artboards, animate on a timeline with sound, and export MP4, WebM, ProRes, GIF, Lottie or PNG. Runs offline, with no account. Open source soon."
+  title="Emaki: a design tool and a motion editor in one free app"
+  description="Emaki is a free desktop app for design and motion graphics. Lay out artboards, text, images and components in Design, then switch to Animate for a timeline with sound. Export PNG, MP4, WebM, ProRes, GIF or Lottie. Runs offline, with no account. Open source soon."
 >
   <SiteHeader dark />
 
@@ -87,12 +87,12 @@ const platforms = [
     <section class="hero" aria-labelledby="hero-title">
       <div class="band band-sumi hero-band">
         <div class="wrap hero-copy">
-          <h1 id="hero-title">Design a scene, then give it a timeline</h1>
+          <h1 id="hero-title">A design tool and a motion editor, one switch apart</h1>
           <div class="hero-side">
             <p class="lede">
-              Emaki is a free desktop app for motion graphics: menu boards and screen loops, social posts and logo
-              reveals. Lay out artboards, animate them with sound, and export video, GIF or Lottie. It runs on your own
-              computer, offline, with no account.
+              Emaki is a free desktop app for social posts, menu boards, screen loops and logo reveals, still or
+              moving. Lay out artboards in Design and export a PNG, or switch to Animate and give the same layers a
+              timeline with sound. It runs on your own computer, offline, with no account.
             </p>
             <Cta tour />
           </div>
@@ -498,7 +498,7 @@ const platforms = [
   }
   .hero h1 {
     margin: 0;
-    max-width: 12ch;
+    max-width: 15ch;
   }
   .lede {
     font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
