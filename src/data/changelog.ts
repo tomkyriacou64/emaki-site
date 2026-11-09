@@ -11,6 +11,50 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    version: '0.10.0',
+    date: '2026-11-09',
+    summary: 'Emaki is now a design tool and a motion editor, one switch apart.',
+    sections: [
+      {
+        title: 'Design and Animate',
+        items: [
+          'A Design | Animate switch at the top of the window (`Ctrl+1` / `Ctrl+2`).',
+          'Design is for layout: no timeline, and no edit ever adds a keyframe. You see your design at rest. Layers that only appear later show as dashed outlines, and are dimmed in the Layers panel.',
+          'Animate is the motion editor you know: timeline, keyframes, presets, motion paths, sound and preview.',
+          'Edit a layer that has keyframes in Design and the change lands on the keyframe you see. Preset animations follow your edits, so a change after Fade in is never lost.',
+          'Commands that need the timeline (Add animation, Move along path, pasting animations) switch to Animate and say so.',
+          'Space, Home and End in Design show how to preview instead of doing nothing.',
+          'PNG export has a Shows choice: the design, or the frame at the playhead. Copy as PNG and library thumbnails follow the mode.',
+          'Still projects and templates open in Design; animated projects open in Animate. A short hint explains the modes the first time.',
+        ],
+      },
+      {
+        title: 'Inspector',
+        items: [
+          'The Motion tab ends its list with a full-width Add animation button.',
+          'The artboard panel is split into Position, Size, Timing and Background. Timing shows in Animate only. A new button swaps width and height, and artboard positions show whole numbers.',
+        ],
+      },
+      {
+        title: 'Top bar',
+        items: [
+          'With several tabs open, clipped tabs fade at the edge and an All tabs menu lists them all.',
+          'The mode switch, Preview and Export are grouped more clearly, and the zoom control is slimmer.',
+        ],
+      },
+      {
+        title: 'Fixes',
+        items: [
+          'Dragging a field through 0 or past its limit no longer flattens an animation.',
+          'Undo messages read "Undone: …" and name a layer once.',
+          'Pasting into or out of a rotated group keeps the layer\'s rotation while it animates.',
+          'Resizing several layers keeps Fill on the side you didn\'t resize.',
+          'The inspector is faster with many layers selected.',
+        ],
+      },
+    ],
+  },
+  {
     version: '0.9.6',
     date: '2026-11-09',
     summary: 'A reliability release: safer exports, faster big projects, tidier templates and clearer messages.',

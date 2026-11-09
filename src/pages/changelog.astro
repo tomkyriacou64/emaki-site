@@ -19,7 +19,7 @@ const slots = marks.length + 1;
 const at = (i: number) => `${((i + 0.5) / slots) * 100}%`;
 ---
 
-<Base title="Changelog: Emaki" description="What changed in each release of Emaki, the desktop motion design app.">
+<Base title="Changelog: Emaki" description="What changed in each release of Emaki, the desktop design and motion app.">
   <SiteHeader />
   <main id="main">
     <div class="wrap page-head">
@@ -27,14 +27,6 @@ const at = (i: number) => `${((i + 0.5) / slots) * 100}%`;
       <p>Every release, newest first. These are preview releases on the way to 1.0.</p>
     </div>
 
-    <!--
-      Draft for the next release (not published; turn into an entry in src/data/changelog.ts when it ships):
-      Design and Animate. Emaki has two modes, one switch apart. Design is for layout: no timeline, edits never add
-      keyframes, and you see your design at rest, with layers that only appear later shown as dashed outlines.
-      Switch to Animate (or press Ctrl+2) when you're ready to add motion, and everything you laid out is waiting on
-      the timeline. Still projects and templates open in Design, animated projects in Animate. PNG export has a
-      Shows choice: the design at rest or the frame at the playhead.
-    -->
     <nav class="wrap track" aria-label="Releases">
       <ol class="marks">
         {
